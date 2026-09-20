@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>3Doku</title>
+
+    <!-- True fullscreen (no browser chrome) on iOS only happens for a page
+         added to the home screen and launched from there - Safari itself
+         never supports the standard Fullscreen API for ordinary web content,
+         only for <video>. These tags are what makes that home-screen launch
+         actually standalone instead of just reopening a normal Safari tab. -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="3Doku" />
+    <meta name="theme-color" content="#0a0a12" />
+    <link rel="apple-touch-icon" href="%BASE_URL%piece.png" />
+    <link rel="manifest" href="%BASE_URL%manifest.json" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

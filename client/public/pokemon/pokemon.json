@@ -1,0 +1,6152 @@
+[
+  {
+    "pokedex_number": 1,
+    "name": "Bulbasaur",
+    "rarity": "common",
+    "image_path": "pokemon/common/Bulbasaur.png"
+  },
+  {
+    "pokedex_number": 2,
+    "name": "Ivysaur",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Ivysaur.png"
+  },
+  {
+    "pokedex_number": 3,
+    "name": "Venusaur",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Venusaur.png"
+  },
+  {
+    "pokedex_number": 4,
+    "name": "Charmander",
+    "rarity": "common",
+    "image_path": "pokemon/common/Charmander.png"
+  },
+  {
+    "pokedex_number": 5,
+    "name": "Charmeleon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Charmeleon.png"
+  },
+  {
+    "pokedex_number": 6,
+    "name": "Charizard",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Charizard.png"
+  },
+  {
+    "pokedex_number": 7,
+    "name": "Squirtle",
+    "rarity": "common",
+    "image_path": "pokemon/common/Squirtle.png"
+  },
+  {
+    "pokedex_number": 8,
+    "name": "Wartortle",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Wartortle.png"
+  },
+  {
+    "pokedex_number": 9,
+    "name": "Blastoise",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Blastoise.png"
+  },
+  {
+    "pokedex_number": 10,
+    "name": "Caterpie",
+    "rarity": "common",
+    "image_path": "pokemon/common/Caterpie.png"
+  },
+  {
+    "pokedex_number": 11,
+    "name": "Metapod",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Metapod.png"
+  },
+  {
+    "pokedex_number": 12,
+    "name": "Butterfree",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Butterfree.png"
+  },
+  {
+    "pokedex_number": 13,
+    "name": "Weedle",
+    "rarity": "common",
+    "image_path": "pokemon/common/Weedle.png"
+  },
+  {
+    "pokedex_number": 14,
+    "name": "Kakuna",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Kakuna.png"
+  },
+  {
+    "pokedex_number": 15,
+    "name": "Beedrill",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Beedrill.png"
+  },
+  {
+    "pokedex_number": 16,
+    "name": "Pidgey",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pidgey.png"
+  },
+  {
+    "pokedex_number": 17,
+    "name": "Pidgeotto",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Pidgeotto.png"
+  },
+  {
+    "pokedex_number": 18,
+    "name": "Pidgeot",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Pidgeot.png"
+  },
+  {
+    "pokedex_number": 19,
+    "name": "Rattata",
+    "rarity": "common",
+    "image_path": "pokemon/common/Rattata.png"
+  },
+  {
+    "pokedex_number": 20,
+    "name": "Raticate",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Raticate.png"
+  },
+  {
+    "pokedex_number": 21,
+    "name": "Spearow",
+    "rarity": "common",
+    "image_path": "pokemon/common/Spearow.png"
+  },
+  {
+    "pokedex_number": 22,
+    "name": "Fearow",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Fearow.png"
+  },
+  {
+    "pokedex_number": 23,
+    "name": "Ekans",
+    "rarity": "common",
+    "image_path": "pokemon/common/Ekans.png"
+  },
+  {
+    "pokedex_number": 24,
+    "name": "Arbok",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Arbok.png"
+  },
+  {
+    "pokedex_number": 25,
+    "name": "Pikachu",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Pikachu.png"
+  },
+  {
+    "pokedex_number": 26,
+    "name": "Raichu",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Raichu.png"
+  },
+  {
+    "pokedex_number": 27,
+    "name": "Sandshrew",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sandshrew.png"
+  },
+  {
+    "pokedex_number": 28,
+    "name": "Sandslash",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Sandslash.png"
+  },
+  {
+    "pokedex_number": 29,
+    "name": "Nidoran♀",
+    "rarity": "common",
+    "image_path": "pokemon/common/Nidoran-F.png"
+  },
+  {
+    "pokedex_number": 30,
+    "name": "Nidorina",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Nidorina.png"
+  },
+  {
+    "pokedex_number": 31,
+    "name": "Nidoqueen",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Nidoqueen.png"
+  },
+  {
+    "pokedex_number": 32,
+    "name": "Nidoran♂",
+    "rarity": "common",
+    "image_path": "pokemon/common/Nidoran-M.png"
+  },
+  {
+    "pokedex_number": 33,
+    "name": "Nidorino",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Nidorino.png"
+  },
+  {
+    "pokedex_number": 34,
+    "name": "Nidoking",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Nidoking.png"
+  },
+  {
+    "pokedex_number": 35,
+    "name": "Clefairy",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Clefairy.png"
+  },
+  {
+    "pokedex_number": 36,
+    "name": "Clefable",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Clefable.png"
+  },
+  {
+    "pokedex_number": 37,
+    "name": "Vulpix",
+    "rarity": "common",
+    "image_path": "pokemon/common/Vulpix.png"
+  },
+  {
+    "pokedex_number": 38,
+    "name": "Ninetales",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Ninetales.png"
+  },
+  {
+    "pokedex_number": 39,
+    "name": "Jigglypuff",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Jigglypuff.png"
+  },
+  {
+    "pokedex_number": 40,
+    "name": "Wigglytuff",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Wigglytuff.png"
+  },
+  {
+    "pokedex_number": 41,
+    "name": "Zubat",
+    "rarity": "common",
+    "image_path": "pokemon/common/Zubat.png"
+  },
+  {
+    "pokedex_number": 42,
+    "name": "Golbat",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Golbat.png"
+  },
+  {
+    "pokedex_number": 43,
+    "name": "Oddish",
+    "rarity": "common",
+    "image_path": "pokemon/common/Oddish.png"
+  },
+  {
+    "pokedex_number": 44,
+    "name": "Gloom",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Gloom.png"
+  },
+  {
+    "pokedex_number": 45,
+    "name": "Vileplume",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Vileplume.png"
+  },
+  {
+    "pokedex_number": 46,
+    "name": "Paras",
+    "rarity": "common",
+    "image_path": "pokemon/common/Paras.png"
+  },
+  {
+    "pokedex_number": 47,
+    "name": "Parasect",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Parasect.png"
+  },
+  {
+    "pokedex_number": 48,
+    "name": "Venonat",
+    "rarity": "common",
+    "image_path": "pokemon/common/Venonat.png"
+  },
+  {
+    "pokedex_number": 49,
+    "name": "Venomoth",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Venomoth.png"
+  },
+  {
+    "pokedex_number": 50,
+    "name": "Diglett",
+    "rarity": "common",
+    "image_path": "pokemon/common/Diglett.png"
+  },
+  {
+    "pokedex_number": 51,
+    "name": "Dugtrio",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dugtrio.png"
+  },
+  {
+    "pokedex_number": 52,
+    "name": "Meowth",
+    "rarity": "common",
+    "image_path": "pokemon/common/Meowth.png"
+  },
+  {
+    "pokedex_number": 53,
+    "name": "Persian",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Persian.png"
+  },
+  {
+    "pokedex_number": 54,
+    "name": "Psyduck",
+    "rarity": "common",
+    "image_path": "pokemon/common/Psyduck.png"
+  },
+  {
+    "pokedex_number": 55,
+    "name": "Golduck",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Golduck.png"
+  },
+  {
+    "pokedex_number": 56,
+    "name": "Mankey",
+    "rarity": "common",
+    "image_path": "pokemon/common/Mankey.png"
+  },
+  {
+    "pokedex_number": 57,
+    "name": "Primeape",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Primeape.png"
+  },
+  {
+    "pokedex_number": 58,
+    "name": "Growlithe",
+    "rarity": "common",
+    "image_path": "pokemon/common/Growlithe.png"
+  },
+  {
+    "pokedex_number": 59,
+    "name": "Arcanine",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Arcanine.png"
+  },
+  {
+    "pokedex_number": 60,
+    "name": "Poliwag",
+    "rarity": "common",
+    "image_path": "pokemon/common/Poliwag.png"
+  },
+  {
+    "pokedex_number": 61,
+    "name": "Poliwhirl",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Poliwhirl.png"
+  },
+  {
+    "pokedex_number": 62,
+    "name": "Poliwrath",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Poliwrath.png"
+  },
+  {
+    "pokedex_number": 63,
+    "name": "Abra",
+    "rarity": "common",
+    "image_path": "pokemon/common/Abra.png"
+  },
+  {
+    "pokedex_number": 64,
+    "name": "Kadabra",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Kadabra.png"
+  },
+  {
+    "pokedex_number": 65,
+    "name": "Alakazam",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Alakazam.png"
+  },
+  {
+    "pokedex_number": 66,
+    "name": "Machop",
+    "rarity": "common",
+    "image_path": "pokemon/common/Machop.png"
+  },
+  {
+    "pokedex_number": 67,
+    "name": "Machoke",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Machoke.png"
+  },
+  {
+    "pokedex_number": 68,
+    "name": "Machamp",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Machamp.png"
+  },
+  {
+    "pokedex_number": 69,
+    "name": "Bellsprout",
+    "rarity": "common",
+    "image_path": "pokemon/common/Bellsprout.png"
+  },
+  {
+    "pokedex_number": 70,
+    "name": "Weepinbell",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Weepinbell.png"
+  },
+  {
+    "pokedex_number": 71,
+    "name": "Victreebel",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Victreebel.png"
+  },
+  {
+    "pokedex_number": 72,
+    "name": "Tentacool",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tentacool.png"
+  },
+  {
+    "pokedex_number": 73,
+    "name": "Tentacruel",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Tentacruel.png"
+  },
+  {
+    "pokedex_number": 74,
+    "name": "Geodude",
+    "rarity": "common",
+    "image_path": "pokemon/common/Geodude.png"
+  },
+  {
+    "pokedex_number": 75,
+    "name": "Graveler",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Graveler.png"
+  },
+  {
+    "pokedex_number": 76,
+    "name": "Golem",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Golem.png"
+  },
+  {
+    "pokedex_number": 77,
+    "name": "Ponyta",
+    "rarity": "common",
+    "image_path": "pokemon/common/Ponyta.png"
+  },
+  {
+    "pokedex_number": 78,
+    "name": "Rapidash",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Rapidash.png"
+  },
+  {
+    "pokedex_number": 79,
+    "name": "Slowpoke",
+    "rarity": "common",
+    "image_path": "pokemon/common/Slowpoke.png"
+  },
+  {
+    "pokedex_number": 80,
+    "name": "Slowbro",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Slowbro.png"
+  },
+  {
+    "pokedex_number": 81,
+    "name": "Magnemite",
+    "rarity": "common",
+    "image_path": "pokemon/common/Magnemite.png"
+  },
+  {
+    "pokedex_number": 82,
+    "name": "Magneton",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Magneton.png"
+  },
+  {
+    "pokedex_number": 83,
+    "name": "Farfetch’d",
+    "rarity": "common",
+    "image_path": "pokemon/common/Farfetchd.png"
+  },
+  {
+    "pokedex_number": 84,
+    "name": "Doduo",
+    "rarity": "common",
+    "image_path": "pokemon/common/Doduo.png"
+  },
+  {
+    "pokedex_number": 85,
+    "name": "Dodrio",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dodrio.png"
+  },
+  {
+    "pokedex_number": 86,
+    "name": "Seel",
+    "rarity": "common",
+    "image_path": "pokemon/common/Seel.png"
+  },
+  {
+    "pokedex_number": 87,
+    "name": "Dewgong",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dewgong.png"
+  },
+  {
+    "pokedex_number": 88,
+    "name": "Grimer",
+    "rarity": "common",
+    "image_path": "pokemon/common/Grimer.png"
+  },
+  {
+    "pokedex_number": 89,
+    "name": "Muk",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Muk.png"
+  },
+  {
+    "pokedex_number": 90,
+    "name": "Shellder",
+    "rarity": "common",
+    "image_path": "pokemon/common/Shellder.png"
+  },
+  {
+    "pokedex_number": 91,
+    "name": "Cloyster",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Cloyster.png"
+  },
+  {
+    "pokedex_number": 92,
+    "name": "Gastly",
+    "rarity": "common",
+    "image_path": "pokemon/common/Gastly.png"
+  },
+  {
+    "pokedex_number": 93,
+    "name": "Haunter",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Haunter.png"
+  },
+  {
+    "pokedex_number": 94,
+    "name": "Gengar",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Gengar.png"
+  },
+  {
+    "pokedex_number": 95,
+    "name": "Onix",
+    "rarity": "common",
+    "image_path": "pokemon/common/Onix.png"
+  },
+  {
+    "pokedex_number": 96,
+    "name": "Drowzee",
+    "rarity": "common",
+    "image_path": "pokemon/common/Drowzee.png"
+  },
+  {
+    "pokedex_number": 97,
+    "name": "Hypno",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Hypno.png"
+  },
+  {
+    "pokedex_number": 98,
+    "name": "Krabby",
+    "rarity": "common",
+    "image_path": "pokemon/common/Krabby.png"
+  },
+  {
+    "pokedex_number": 99,
+    "name": "Kingler",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Kingler.png"
+  },
+  {
+    "pokedex_number": 100,
+    "name": "Voltorb",
+    "rarity": "common",
+    "image_path": "pokemon/common/Voltorb.png"
+  },
+  {
+    "pokedex_number": 101,
+    "name": "Electrode",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Electrode.png"
+  },
+  {
+    "pokedex_number": 102,
+    "name": "Exeggcute",
+    "rarity": "common",
+    "image_path": "pokemon/common/Exeggcute.png"
+  },
+  {
+    "pokedex_number": 103,
+    "name": "Exeggutor",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Exeggutor.png"
+  },
+  {
+    "pokedex_number": 104,
+    "name": "Cubone",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cubone.png"
+  },
+  {
+    "pokedex_number": 105,
+    "name": "Marowak",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Marowak.png"
+  },
+  {
+    "pokedex_number": 106,
+    "name": "Hitmonlee",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Hitmonlee.png"
+  },
+  {
+    "pokedex_number": 107,
+    "name": "Hitmonchan",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Hitmonchan.png"
+  },
+  {
+    "pokedex_number": 108,
+    "name": "Lickitung",
+    "rarity": "common",
+    "image_path": "pokemon/common/Lickitung.png"
+  },
+  {
+    "pokedex_number": 109,
+    "name": "Koffing",
+    "rarity": "common",
+    "image_path": "pokemon/common/Koffing.png"
+  },
+  {
+    "pokedex_number": 110,
+    "name": "Weezing",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Weezing.png"
+  },
+  {
+    "pokedex_number": 111,
+    "name": "Rhyhorn",
+    "rarity": "common",
+    "image_path": "pokemon/common/Rhyhorn.png"
+  },
+  {
+    "pokedex_number": 112,
+    "name": "Rhydon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Rhydon.png"
+  },
+  {
+    "pokedex_number": 113,
+    "name": "Chansey",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Chansey.png"
+  },
+  {
+    "pokedex_number": 114,
+    "name": "Tangela",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tangela.png"
+  },
+  {
+    "pokedex_number": 115,
+    "name": "Kangaskhan",
+    "rarity": "common",
+    "image_path": "pokemon/common/Kangaskhan.png"
+  },
+  {
+    "pokedex_number": 116,
+    "name": "Horsea",
+    "rarity": "common",
+    "image_path": "pokemon/common/Horsea.png"
+  },
+  {
+    "pokedex_number": 117,
+    "name": "Seadra",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Seadra.png"
+  },
+  {
+    "pokedex_number": 118,
+    "name": "Goldeen",
+    "rarity": "common",
+    "image_path": "pokemon/common/Goldeen.png"
+  },
+  {
+    "pokedex_number": 119,
+    "name": "Seaking",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Seaking.png"
+  },
+  {
+    "pokedex_number": 120,
+    "name": "Staryu",
+    "rarity": "common",
+    "image_path": "pokemon/common/Staryu.png"
+  },
+  {
+    "pokedex_number": 121,
+    "name": "Starmie",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Starmie.png"
+  },
+  {
+    "pokedex_number": 122,
+    "name": "Mr. Mime",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/MrMime.png"
+  },
+  {
+    "pokedex_number": 123,
+    "name": "Scyther",
+    "rarity": "common",
+    "image_path": "pokemon/common/Scyther.png"
+  },
+  {
+    "pokedex_number": 124,
+    "name": "Jynx",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Jynx.png"
+  },
+  {
+    "pokedex_number": 125,
+    "name": "Electabuzz",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Electabuzz.png"
+  },
+  {
+    "pokedex_number": 126,
+    "name": "Magmar",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Magmar.png"
+  },
+  {
+    "pokedex_number": 127,
+    "name": "Pinsir",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pinsir.png"
+  },
+  {
+    "pokedex_number": 128,
+    "name": "Tauros",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tauros.png"
+  },
+  {
+    "pokedex_number": 129,
+    "name": "Magikarp",
+    "rarity": "common",
+    "image_path": "pokemon/common/Magikarp.png"
+  },
+  {
+    "pokedex_number": 130,
+    "name": "Gyarados",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Gyarados.png"
+  },
+  {
+    "pokedex_number": 131,
+    "name": "Lapras",
+    "rarity": "common",
+    "image_path": "pokemon/common/Lapras.png"
+  },
+  {
+    "pokedex_number": 132,
+    "name": "Ditto",
+    "rarity": "common",
+    "image_path": "pokemon/common/Ditto.png"
+  },
+  {
+    "pokedex_number": 133,
+    "name": "Eevee",
+    "rarity": "common",
+    "image_path": "pokemon/common/Eevee.png"
+  },
+  {
+    "pokedex_number": 134,
+    "name": "Vaporeon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Vaporeon.png"
+  },
+  {
+    "pokedex_number": 135,
+    "name": "Jolteon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Jolteon.png"
+  },
+  {
+    "pokedex_number": 136,
+    "name": "Flareon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Flareon.png"
+  },
+  {
+    "pokedex_number": 137,
+    "name": "Porygon",
+    "rarity": "common",
+    "image_path": "pokemon/common/Porygon.png"
+  },
+  {
+    "pokedex_number": 138,
+    "name": "Omanyte",
+    "rarity": "common",
+    "image_path": "pokemon/common/Omanyte.png"
+  },
+  {
+    "pokedex_number": 139,
+    "name": "Omastar",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Omastar.png"
+  },
+  {
+    "pokedex_number": 140,
+    "name": "Kabuto",
+    "rarity": "common",
+    "image_path": "pokemon/common/Kabuto.png"
+  },
+  {
+    "pokedex_number": 141,
+    "name": "Kabutops",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Kabutops.png"
+  },
+  {
+    "pokedex_number": 142,
+    "name": "Aerodactyl",
+    "rarity": "common",
+    "image_path": "pokemon/common/Aerodactyl.png"
+  },
+  {
+    "pokedex_number": 143,
+    "name": "Snorlax",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Snorlax.png"
+  },
+  {
+    "pokedex_number": 144,
+    "name": "Articuno",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Articuno.png"
+  },
+  {
+    "pokedex_number": 145,
+    "name": "Zapdos",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Zapdos.png"
+  },
+  {
+    "pokedex_number": 146,
+    "name": "Moltres",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Moltres.png"
+  },
+  {
+    "pokedex_number": 147,
+    "name": "Dratini",
+    "rarity": "common",
+    "image_path": "pokemon/common/Dratini.png"
+  },
+  {
+    "pokedex_number": 148,
+    "name": "Dragonair",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dragonair.png"
+  },
+  {
+    "pokedex_number": 149,
+    "name": "Dragonite",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Dragonite.png"
+  },
+  {
+    "pokedex_number": 150,
+    "name": "Mewtwo",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Mewtwo.png"
+  },
+  {
+    "pokedex_number": 151,
+    "name": "Mew",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Mew.png"
+  },
+  {
+    "pokedex_number": 152,
+    "name": "Chikorita",
+    "rarity": "common",
+    "image_path": "pokemon/common/Chikorita.png"
+  },
+  {
+    "pokedex_number": 153,
+    "name": "Bayleef",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Bayleef.png"
+  },
+  {
+    "pokedex_number": 154,
+    "name": "Meganium",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Meganium.png"
+  },
+  {
+    "pokedex_number": 155,
+    "name": "Cyndaquil",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cyndaquil.png"
+  },
+  {
+    "pokedex_number": 156,
+    "name": "Quilava",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Quilava.png"
+  },
+  {
+    "pokedex_number": 157,
+    "name": "Typhlosion",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Typhlosion.png"
+  },
+  {
+    "pokedex_number": 158,
+    "name": "Totodile",
+    "rarity": "common",
+    "image_path": "pokemon/common/Totodile.png"
+  },
+  {
+    "pokedex_number": 159,
+    "name": "Croconaw",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Croconaw.png"
+  },
+  {
+    "pokedex_number": 160,
+    "name": "Feraligatr",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Feraligatr.png"
+  },
+  {
+    "pokedex_number": 161,
+    "name": "Sentret",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sentret.png"
+  },
+  {
+    "pokedex_number": 162,
+    "name": "Furret",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Furret.png"
+  },
+  {
+    "pokedex_number": 163,
+    "name": "Hoothoot",
+    "rarity": "common",
+    "image_path": "pokemon/common/Hoothoot.png"
+  },
+  {
+    "pokedex_number": 164,
+    "name": "Noctowl",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Noctowl.png"
+  },
+  {
+    "pokedex_number": 165,
+    "name": "Ledyba",
+    "rarity": "common",
+    "image_path": "pokemon/common/Ledyba.png"
+  },
+  {
+    "pokedex_number": 166,
+    "name": "Ledian",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Ledian.png"
+  },
+  {
+    "pokedex_number": 167,
+    "name": "Spinarak",
+    "rarity": "common",
+    "image_path": "pokemon/common/Spinarak.png"
+  },
+  {
+    "pokedex_number": 168,
+    "name": "Ariados",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Ariados.png"
+  },
+  {
+    "pokedex_number": 169,
+    "name": "Crobat",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Crobat.png"
+  },
+  {
+    "pokedex_number": 170,
+    "name": "Chinchou",
+    "rarity": "common",
+    "image_path": "pokemon/common/Chinchou.png"
+  },
+  {
+    "pokedex_number": 171,
+    "name": "Lanturn",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Lanturn.png"
+  },
+  {
+    "pokedex_number": 172,
+    "name": "Pichu",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pichu.png"
+  },
+  {
+    "pokedex_number": 173,
+    "name": "Cleffa",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cleffa.png"
+  },
+  {
+    "pokedex_number": 174,
+    "name": "Igglybuff",
+    "rarity": "common",
+    "image_path": "pokemon/common/Igglybuff.png"
+  },
+  {
+    "pokedex_number": 175,
+    "name": "Togepi",
+    "rarity": "common",
+    "image_path": "pokemon/common/Togepi.png"
+  },
+  {
+    "pokedex_number": 176,
+    "name": "Togetic",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Togetic.png"
+  },
+  {
+    "pokedex_number": 177,
+    "name": "Natu",
+    "rarity": "common",
+    "image_path": "pokemon/common/Natu.png"
+  },
+  {
+    "pokedex_number": 178,
+    "name": "Xatu",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Xatu.png"
+  },
+  {
+    "pokedex_number": 179,
+    "name": "Mareep",
+    "rarity": "common",
+    "image_path": "pokemon/common/Mareep.png"
+  },
+  {
+    "pokedex_number": 180,
+    "name": "Flaaffy",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Flaaffy.png"
+  },
+  {
+    "pokedex_number": 181,
+    "name": "Ampharos",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Ampharos.png"
+  },
+  {
+    "pokedex_number": 182,
+    "name": "Bellossom",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Bellossom.png"
+  },
+  {
+    "pokedex_number": 183,
+    "name": "Marill",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Marill.png"
+  },
+  {
+    "pokedex_number": 184,
+    "name": "Azumarill",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Azumarill.png"
+  },
+  {
+    "pokedex_number": 185,
+    "name": "Sudowoodo",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Sudowoodo.png"
+  },
+  {
+    "pokedex_number": 186,
+    "name": "Politoed",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Politoed.png"
+  },
+  {
+    "pokedex_number": 187,
+    "name": "Hoppip",
+    "rarity": "common",
+    "image_path": "pokemon/common/Hoppip.png"
+  },
+  {
+    "pokedex_number": 188,
+    "name": "Skiploom",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Skiploom.png"
+  },
+  {
+    "pokedex_number": 189,
+    "name": "Jumpluff",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Jumpluff.png"
+  },
+  {
+    "pokedex_number": 190,
+    "name": "Aipom",
+    "rarity": "common",
+    "image_path": "pokemon/common/Aipom.png"
+  },
+  {
+    "pokedex_number": 191,
+    "name": "Sunkern",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sunkern.png"
+  },
+  {
+    "pokedex_number": 192,
+    "name": "Sunflora",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Sunflora.png"
+  },
+  {
+    "pokedex_number": 193,
+    "name": "Yanma",
+    "rarity": "common",
+    "image_path": "pokemon/common/Yanma.png"
+  },
+  {
+    "pokedex_number": 194,
+    "name": "Wooper",
+    "rarity": "common",
+    "image_path": "pokemon/common/Wooper.png"
+  },
+  {
+    "pokedex_number": 195,
+    "name": "Quagsire",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Quagsire.png"
+  },
+  {
+    "pokedex_number": 196,
+    "name": "Espeon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Espeon.png"
+  },
+  {
+    "pokedex_number": 197,
+    "name": "Umbreon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Umbreon.png"
+  },
+  {
+    "pokedex_number": 198,
+    "name": "Murkrow",
+    "rarity": "common",
+    "image_path": "pokemon/common/Murkrow.png"
+  },
+  {
+    "pokedex_number": 199,
+    "name": "Slowking",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Slowking.png"
+  },
+  {
+    "pokedex_number": 200,
+    "name": "Misdreavus",
+    "rarity": "common",
+    "image_path": "pokemon/common/Misdreavus.png"
+  },
+  {
+    "pokedex_number": 201,
+    "name": "Unown",
+    "rarity": "common",
+    "image_path": "pokemon/common/Unown.png"
+  },
+  {
+    "pokedex_number": 202,
+    "name": "Wobbuffet",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Wobbuffet.png"
+  },
+  {
+    "pokedex_number": 203,
+    "name": "Girafarig",
+    "rarity": "common",
+    "image_path": "pokemon/common/Girafarig.png"
+  },
+  {
+    "pokedex_number": 204,
+    "name": "Pineco",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pineco.png"
+  },
+  {
+    "pokedex_number": 205,
+    "name": "Forretress",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Forretress.png"
+  },
+  {
+    "pokedex_number": 206,
+    "name": "Dunsparce",
+    "rarity": "common",
+    "image_path": "pokemon/common/Dunsparce.png"
+  },
+  {
+    "pokedex_number": 207,
+    "name": "Gligar",
+    "rarity": "common",
+    "image_path": "pokemon/common/Gligar.png"
+  },
+  {
+    "pokedex_number": 208,
+    "name": "Steelix",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Steelix.png"
+  },
+  {
+    "pokedex_number": 209,
+    "name": "Snubbull",
+    "rarity": "common",
+    "image_path": "pokemon/common/Snubbull.png"
+  },
+  {
+    "pokedex_number": 210,
+    "name": "Granbull",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Granbull.png"
+  },
+  {
+    "pokedex_number": 211,
+    "name": "Qwilfish",
+    "rarity": "common",
+    "image_path": "pokemon/common/Qwilfish.png"
+  },
+  {
+    "pokedex_number": 212,
+    "name": "Scizor",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Scizor.png"
+  },
+  {
+    "pokedex_number": 213,
+    "name": "Shuckle",
+    "rarity": "common",
+    "image_path": "pokemon/common/Shuckle.png"
+  },
+  {
+    "pokedex_number": 214,
+    "name": "Heracross",
+    "rarity": "common",
+    "image_path": "pokemon/common/Heracross.png"
+  },
+  {
+    "pokedex_number": 215,
+    "name": "Sneasel",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sneasel.png"
+  },
+  {
+    "pokedex_number": 216,
+    "name": "Teddiursa",
+    "rarity": "common",
+    "image_path": "pokemon/common/Teddiursa.png"
+  },
+  {
+    "pokedex_number": 217,
+    "name": "Ursaring",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Ursaring.png"
+  },
+  {
+    "pokedex_number": 218,
+    "name": "Slugma",
+    "rarity": "common",
+    "image_path": "pokemon/common/Slugma.png"
+  },
+  {
+    "pokedex_number": 219,
+    "name": "Magcargo",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Magcargo.png"
+  },
+  {
+    "pokedex_number": 220,
+    "name": "Swinub",
+    "rarity": "common",
+    "image_path": "pokemon/common/Swinub.png"
+  },
+  {
+    "pokedex_number": 221,
+    "name": "Piloswine",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Piloswine.png"
+  },
+  {
+    "pokedex_number": 222,
+    "name": "Corsola",
+    "rarity": "common",
+    "image_path": "pokemon/common/Corsola.png"
+  },
+  {
+    "pokedex_number": 223,
+    "name": "Remoraid",
+    "rarity": "common",
+    "image_path": "pokemon/common/Remoraid.png"
+  },
+  {
+    "pokedex_number": 224,
+    "name": "Octillery",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Octillery.png"
+  },
+  {
+    "pokedex_number": 225,
+    "name": "Delibird",
+    "rarity": "common",
+    "image_path": "pokemon/common/Delibird.png"
+  },
+  {
+    "pokedex_number": 226,
+    "name": "Mantine",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Mantine.png"
+  },
+  {
+    "pokedex_number": 227,
+    "name": "Skarmory",
+    "rarity": "common",
+    "image_path": "pokemon/common/Skarmory.png"
+  },
+  {
+    "pokedex_number": 228,
+    "name": "Houndour",
+    "rarity": "common",
+    "image_path": "pokemon/common/Houndour.png"
+  },
+  {
+    "pokedex_number": 229,
+    "name": "Houndoom",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Houndoom.png"
+  },
+  {
+    "pokedex_number": 230,
+    "name": "Kingdra",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Kingdra.png"
+  },
+  {
+    "pokedex_number": 231,
+    "name": "Phanpy",
+    "rarity": "common",
+    "image_path": "pokemon/common/Phanpy.png"
+  },
+  {
+    "pokedex_number": 232,
+    "name": "Donphan",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Donphan.png"
+  },
+  {
+    "pokedex_number": 233,
+    "name": "Porygon2",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Porygon2.png"
+  },
+  {
+    "pokedex_number": 234,
+    "name": "Stantler",
+    "rarity": "common",
+    "image_path": "pokemon/common/Stantler.png"
+  },
+  {
+    "pokedex_number": 235,
+    "name": "Smeargle",
+    "rarity": "common",
+    "image_path": "pokemon/common/Smeargle.png"
+  },
+  {
+    "pokedex_number": 236,
+    "name": "Tyrogue",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tyrogue.png"
+  },
+  {
+    "pokedex_number": 237,
+    "name": "Hitmontop",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Hitmontop.png"
+  },
+  {
+    "pokedex_number": 238,
+    "name": "Smoochum",
+    "rarity": "common",
+    "image_path": "pokemon/common/Smoochum.png"
+  },
+  {
+    "pokedex_number": 239,
+    "name": "Elekid",
+    "rarity": "common",
+    "image_path": "pokemon/common/Elekid.png"
+  },
+  {
+    "pokedex_number": 240,
+    "name": "Magby",
+    "rarity": "common",
+    "image_path": "pokemon/common/Magby.png"
+  },
+  {
+    "pokedex_number": 241,
+    "name": "Miltank",
+    "rarity": "common",
+    "image_path": "pokemon/common/Miltank.png"
+  },
+  {
+    "pokedex_number": 242,
+    "name": "Blissey",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Blissey.png"
+  },
+  {
+    "pokedex_number": 243,
+    "name": "Raikou",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Raikou.png"
+  },
+  {
+    "pokedex_number": 244,
+    "name": "Entei",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Entei.png"
+  },
+  {
+    "pokedex_number": 245,
+    "name": "Suicune",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Suicune.png"
+  },
+  {
+    "pokedex_number": 246,
+    "name": "Larvitar",
+    "rarity": "common",
+    "image_path": "pokemon/common/Larvitar.png"
+  },
+  {
+    "pokedex_number": 247,
+    "name": "Pupitar",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Pupitar.png"
+  },
+  {
+    "pokedex_number": 248,
+    "name": "Tyranitar",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Tyranitar.png"
+  },
+  {
+    "pokedex_number": 249,
+    "name": "Lugia",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Lugia.png"
+  },
+  {
+    "pokedex_number": 250,
+    "name": "Ho-Oh",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Ho-Oh.png"
+  },
+  {
+    "pokedex_number": 251,
+    "name": "Celebi",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Celebi.png"
+  },
+  {
+    "pokedex_number": 252,
+    "name": "Treecko",
+    "rarity": "common",
+    "image_path": "pokemon/common/Treecko.png"
+  },
+  {
+    "pokedex_number": 253,
+    "name": "Grovyle",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Grovyle.png"
+  },
+  {
+    "pokedex_number": 254,
+    "name": "Sceptile",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Sceptile.png"
+  },
+  {
+    "pokedex_number": 255,
+    "name": "Torchic",
+    "rarity": "common",
+    "image_path": "pokemon/common/Torchic.png"
+  },
+  {
+    "pokedex_number": 256,
+    "name": "Combusken",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Combusken.png"
+  },
+  {
+    "pokedex_number": 257,
+    "name": "Blaziken",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Blaziken.png"
+  },
+  {
+    "pokedex_number": 258,
+    "name": "Mudkip",
+    "rarity": "common",
+    "image_path": "pokemon/common/Mudkip.png"
+  },
+  {
+    "pokedex_number": 259,
+    "name": "Marshtomp",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Marshtomp.png"
+  },
+  {
+    "pokedex_number": 260,
+    "name": "Swampert",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Swampert.png"
+  },
+  {
+    "pokedex_number": 261,
+    "name": "Poochyena",
+    "rarity": "common",
+    "image_path": "pokemon/common/Poochyena.png"
+  },
+  {
+    "pokedex_number": 262,
+    "name": "Mightyena",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Mightyena.png"
+  },
+  {
+    "pokedex_number": 263,
+    "name": "Zigzagoon",
+    "rarity": "common",
+    "image_path": "pokemon/common/Zigzagoon.png"
+  },
+  {
+    "pokedex_number": 264,
+    "name": "Linoone",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Linoone.png"
+  },
+  {
+    "pokedex_number": 265,
+    "name": "Wurmple",
+    "rarity": "common",
+    "image_path": "pokemon/common/Wurmple.png"
+  },
+  {
+    "pokedex_number": 266,
+    "name": "Silcoon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Silcoon.png"
+  },
+  {
+    "pokedex_number": 267,
+    "name": "Beautifly",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Beautifly.png"
+  },
+  {
+    "pokedex_number": 268,
+    "name": "Cascoon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Cascoon.png"
+  },
+  {
+    "pokedex_number": 269,
+    "name": "Dustox",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Dustox.png"
+  },
+  {
+    "pokedex_number": 270,
+    "name": "Lotad",
+    "rarity": "common",
+    "image_path": "pokemon/common/Lotad.png"
+  },
+  {
+    "pokedex_number": 271,
+    "name": "Lombre",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Lombre.png"
+  },
+  {
+    "pokedex_number": 272,
+    "name": "Ludicolo",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Ludicolo.png"
+  },
+  {
+    "pokedex_number": 273,
+    "name": "Seedot",
+    "rarity": "common",
+    "image_path": "pokemon/common/Seedot.png"
+  },
+  {
+    "pokedex_number": 274,
+    "name": "Nuzleaf",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Nuzleaf.png"
+  },
+  {
+    "pokedex_number": 275,
+    "name": "Shiftry",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Shiftry.png"
+  },
+  {
+    "pokedex_number": 276,
+    "name": "Taillow",
+    "rarity": "common",
+    "image_path": "pokemon/common/Taillow.png"
+  },
+  {
+    "pokedex_number": 277,
+    "name": "Swellow",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Swellow.png"
+  },
+  {
+    "pokedex_number": 278,
+    "name": "Wingull",
+    "rarity": "common",
+    "image_path": "pokemon/common/Wingull.png"
+  },
+  {
+    "pokedex_number": 279,
+    "name": "Pelipper",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Pelipper.png"
+  },
+  {
+    "pokedex_number": 280,
+    "name": "Ralts",
+    "rarity": "common",
+    "image_path": "pokemon/common/Ralts.png"
+  },
+  {
+    "pokedex_number": 281,
+    "name": "Kirlia",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Kirlia.png"
+  },
+  {
+    "pokedex_number": 282,
+    "name": "Gardevoir",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Gardevoir.png"
+  },
+  {
+    "pokedex_number": 283,
+    "name": "Surskit",
+    "rarity": "common",
+    "image_path": "pokemon/common/Surskit.png"
+  },
+  {
+    "pokedex_number": 284,
+    "name": "Masquerain",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Masquerain.png"
+  },
+  {
+    "pokedex_number": 285,
+    "name": "Shroomish",
+    "rarity": "common",
+    "image_path": "pokemon/common/Shroomish.png"
+  },
+  {
+    "pokedex_number": 286,
+    "name": "Breloom",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Breloom.png"
+  },
+  {
+    "pokedex_number": 287,
+    "name": "Slakoth",
+    "rarity": "common",
+    "image_path": "pokemon/common/Slakoth.png"
+  },
+  {
+    "pokedex_number": 288,
+    "name": "Vigoroth",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Vigoroth.png"
+  },
+  {
+    "pokedex_number": 289,
+    "name": "Slaking",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Slaking.png"
+  },
+  {
+    "pokedex_number": 290,
+    "name": "Nincada",
+    "rarity": "common",
+    "image_path": "pokemon/common/Nincada.png"
+  },
+  {
+    "pokedex_number": 291,
+    "name": "Ninjask",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Ninjask.png"
+  },
+  {
+    "pokedex_number": 292,
+    "name": "Shedinja",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Shedinja.png"
+  },
+  {
+    "pokedex_number": 293,
+    "name": "Whismur",
+    "rarity": "common",
+    "image_path": "pokemon/common/Whismur.png"
+  },
+  {
+    "pokedex_number": 294,
+    "name": "Loudred",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Loudred.png"
+  },
+  {
+    "pokedex_number": 295,
+    "name": "Exploud",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Exploud.png"
+  },
+  {
+    "pokedex_number": 296,
+    "name": "Makuhita",
+    "rarity": "common",
+    "image_path": "pokemon/common/Makuhita.png"
+  },
+  {
+    "pokedex_number": 297,
+    "name": "Hariyama",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Hariyama.png"
+  },
+  {
+    "pokedex_number": 298,
+    "name": "Azurill",
+    "rarity": "common",
+    "image_path": "pokemon/common/Azurill.png"
+  },
+  {
+    "pokedex_number": 299,
+    "name": "Nosepass",
+    "rarity": "common",
+    "image_path": "pokemon/common/Nosepass.png"
+  },
+  {
+    "pokedex_number": 300,
+    "name": "Skitty",
+    "rarity": "common",
+    "image_path": "pokemon/common/Skitty.png"
+  },
+  {
+    "pokedex_number": 301,
+    "name": "Delcatty",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Delcatty.png"
+  },
+  {
+    "pokedex_number": 302,
+    "name": "Sableye",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sableye.png"
+  },
+  {
+    "pokedex_number": 303,
+    "name": "Mawile",
+    "rarity": "common",
+    "image_path": "pokemon/common/Mawile.png"
+  },
+  {
+    "pokedex_number": 304,
+    "name": "Aron",
+    "rarity": "common",
+    "image_path": "pokemon/common/Aron.png"
+  },
+  {
+    "pokedex_number": 305,
+    "name": "Lairon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Lairon.png"
+  },
+  {
+    "pokedex_number": 306,
+    "name": "Aggron",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Aggron.png"
+  },
+  {
+    "pokedex_number": 307,
+    "name": "Meditite",
+    "rarity": "common",
+    "image_path": "pokemon/common/Meditite.png"
+  },
+  {
+    "pokedex_number": 308,
+    "name": "Medicham",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Medicham.png"
+  },
+  {
+    "pokedex_number": 309,
+    "name": "Electrike",
+    "rarity": "common",
+    "image_path": "pokemon/common/Electrike.png"
+  },
+  {
+    "pokedex_number": 310,
+    "name": "Manectric",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Manectric.png"
+  },
+  {
+    "pokedex_number": 311,
+    "name": "Plusle",
+    "rarity": "common",
+    "image_path": "pokemon/common/Plusle.png"
+  },
+  {
+    "pokedex_number": 312,
+    "name": "Minun",
+    "rarity": "common",
+    "image_path": "pokemon/common/Minun.png"
+  },
+  {
+    "pokedex_number": 313,
+    "name": "Volbeat",
+    "rarity": "common",
+    "image_path": "pokemon/common/Volbeat.png"
+  },
+  {
+    "pokedex_number": 314,
+    "name": "Illumise",
+    "rarity": "common",
+    "image_path": "pokemon/common/Illumise.png"
+  },
+  {
+    "pokedex_number": 315,
+    "name": "Roselia",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Roselia.png"
+  },
+  {
+    "pokedex_number": 316,
+    "name": "Gulpin",
+    "rarity": "common",
+    "image_path": "pokemon/common/Gulpin.png"
+  },
+  {
+    "pokedex_number": 317,
+    "name": "Swalot",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Swalot.png"
+  },
+  {
+    "pokedex_number": 318,
+    "name": "Carvanha",
+    "rarity": "common",
+    "image_path": "pokemon/common/Carvanha.png"
+  },
+  {
+    "pokedex_number": 319,
+    "name": "Sharpedo",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Sharpedo.png"
+  },
+  {
+    "pokedex_number": 320,
+    "name": "Wailmer",
+    "rarity": "common",
+    "image_path": "pokemon/common/Wailmer.png"
+  },
+  {
+    "pokedex_number": 321,
+    "name": "Wailord",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Wailord.png"
+  },
+  {
+    "pokedex_number": 322,
+    "name": "Numel",
+    "rarity": "common",
+    "image_path": "pokemon/common/Numel.png"
+  },
+  {
+    "pokedex_number": 323,
+    "name": "Camerupt",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Camerupt.png"
+  },
+  {
+    "pokedex_number": 324,
+    "name": "Torkoal",
+    "rarity": "common",
+    "image_path": "pokemon/common/Torkoal.png"
+  },
+  {
+    "pokedex_number": 325,
+    "name": "Spoink",
+    "rarity": "common",
+    "image_path": "pokemon/common/Spoink.png"
+  },
+  {
+    "pokedex_number": 326,
+    "name": "Grumpig",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Grumpig.png"
+  },
+  {
+    "pokedex_number": 327,
+    "name": "Spinda",
+    "rarity": "common",
+    "image_path": "pokemon/common/Spinda.png"
+  },
+  {
+    "pokedex_number": 328,
+    "name": "Trapinch",
+    "rarity": "common",
+    "image_path": "pokemon/common/Trapinch.png"
+  },
+  {
+    "pokedex_number": 329,
+    "name": "Vibrava",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Vibrava.png"
+  },
+  {
+    "pokedex_number": 330,
+    "name": "Flygon",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Flygon.png"
+  },
+  {
+    "pokedex_number": 331,
+    "name": "Cacnea",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cacnea.png"
+  },
+  {
+    "pokedex_number": 332,
+    "name": "Cacturne",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Cacturne.png"
+  },
+  {
+    "pokedex_number": 333,
+    "name": "Swablu",
+    "rarity": "common",
+    "image_path": "pokemon/common/Swablu.png"
+  },
+  {
+    "pokedex_number": 334,
+    "name": "Altaria",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Altaria.png"
+  },
+  {
+    "pokedex_number": 335,
+    "name": "Zangoose",
+    "rarity": "common",
+    "image_path": "pokemon/common/Zangoose.png"
+  },
+  {
+    "pokedex_number": 336,
+    "name": "Seviper",
+    "rarity": "common",
+    "image_path": "pokemon/common/Seviper.png"
+  },
+  {
+    "pokedex_number": 337,
+    "name": "Lunatone",
+    "rarity": "common",
+    "image_path": "pokemon/common/Lunatone.png"
+  },
+  {
+    "pokedex_number": 338,
+    "name": "Solrock",
+    "rarity": "common",
+    "image_path": "pokemon/common/Solrock.png"
+  },
+  {
+    "pokedex_number": 339,
+    "name": "Barboach",
+    "rarity": "common",
+    "image_path": "pokemon/common/Barboach.png"
+  },
+  {
+    "pokedex_number": 340,
+    "name": "Whiscash",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Whiscash.png"
+  },
+  {
+    "pokedex_number": 341,
+    "name": "Corphish",
+    "rarity": "common",
+    "image_path": "pokemon/common/Corphish.png"
+  },
+  {
+    "pokedex_number": 342,
+    "name": "Crawdaunt",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Crawdaunt.png"
+  },
+  {
+    "pokedex_number": 343,
+    "name": "Baltoy",
+    "rarity": "common",
+    "image_path": "pokemon/common/Baltoy.png"
+  },
+  {
+    "pokedex_number": 344,
+    "name": "Claydol",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Claydol.png"
+  },
+  {
+    "pokedex_number": 345,
+    "name": "Lileep",
+    "rarity": "common",
+    "image_path": "pokemon/common/Lileep.png"
+  },
+  {
+    "pokedex_number": 346,
+    "name": "Cradily",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Cradily.png"
+  },
+  {
+    "pokedex_number": 347,
+    "name": "Anorith",
+    "rarity": "common",
+    "image_path": "pokemon/common/Anorith.png"
+  },
+  {
+    "pokedex_number": 348,
+    "name": "Armaldo",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Armaldo.png"
+  },
+  {
+    "pokedex_number": 349,
+    "name": "Feebas",
+    "rarity": "common",
+    "image_path": "pokemon/common/Feebas.png"
+  },
+  {
+    "pokedex_number": 350,
+    "name": "Milotic",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Milotic.png"
+  },
+  {
+    "pokedex_number": 351,
+    "name": "Castform",
+    "rarity": "common",
+    "image_path": "pokemon/common/Castform.png"
+  },
+  {
+    "pokedex_number": 352,
+    "name": "Kecleon",
+    "rarity": "common",
+    "image_path": "pokemon/common/Kecleon.png"
+  },
+  {
+    "pokedex_number": 353,
+    "name": "Shuppet",
+    "rarity": "common",
+    "image_path": "pokemon/common/Shuppet.png"
+  },
+  {
+    "pokedex_number": 354,
+    "name": "Banette",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Banette.png"
+  },
+  {
+    "pokedex_number": 355,
+    "name": "Duskull",
+    "rarity": "common",
+    "image_path": "pokemon/common/Duskull.png"
+  },
+  {
+    "pokedex_number": 356,
+    "name": "Dusclops",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dusclops.png"
+  },
+  {
+    "pokedex_number": 357,
+    "name": "Tropius",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tropius.png"
+  },
+  {
+    "pokedex_number": 358,
+    "name": "Chimecho",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Chimecho.png"
+  },
+  {
+    "pokedex_number": 359,
+    "name": "Absol",
+    "rarity": "common",
+    "image_path": "pokemon/common/Absol.png"
+  },
+  {
+    "pokedex_number": 360,
+    "name": "Wynaut",
+    "rarity": "common",
+    "image_path": "pokemon/common/Wynaut.png"
+  },
+  {
+    "pokedex_number": 361,
+    "name": "Snorunt",
+    "rarity": "common",
+    "image_path": "pokemon/common/Snorunt.png"
+  },
+  {
+    "pokedex_number": 362,
+    "name": "Glalie",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Glalie.png"
+  },
+  {
+    "pokedex_number": 363,
+    "name": "Spheal",
+    "rarity": "common",
+    "image_path": "pokemon/common/Spheal.png"
+  },
+  {
+    "pokedex_number": 364,
+    "name": "Sealeo",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Sealeo.png"
+  },
+  {
+    "pokedex_number": 365,
+    "name": "Walrein",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Walrein.png"
+  },
+  {
+    "pokedex_number": 366,
+    "name": "Clamperl",
+    "rarity": "common",
+    "image_path": "pokemon/common/Clamperl.png"
+  },
+  {
+    "pokedex_number": 367,
+    "name": "Huntail",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Huntail.png"
+  },
+  {
+    "pokedex_number": 368,
+    "name": "Gorebyss",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Gorebyss.png"
+  },
+  {
+    "pokedex_number": 369,
+    "name": "Relicanth",
+    "rarity": "common",
+    "image_path": "pokemon/common/Relicanth.png"
+  },
+  {
+    "pokedex_number": 370,
+    "name": "Luvdisc",
+    "rarity": "common",
+    "image_path": "pokemon/common/Luvdisc.png"
+  },
+  {
+    "pokedex_number": 371,
+    "name": "Bagon",
+    "rarity": "common",
+    "image_path": "pokemon/common/Bagon.png"
+  },
+  {
+    "pokedex_number": 372,
+    "name": "Shelgon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Shelgon.png"
+  },
+  {
+    "pokedex_number": 373,
+    "name": "Salamence",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Salamence.png"
+  },
+  {
+    "pokedex_number": 374,
+    "name": "Beldum",
+    "rarity": "common",
+    "image_path": "pokemon/common/Beldum.png"
+  },
+  {
+    "pokedex_number": 375,
+    "name": "Metang",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Metang.png"
+  },
+  {
+    "pokedex_number": 376,
+    "name": "Metagross",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Metagross.png"
+  },
+  {
+    "pokedex_number": 377,
+    "name": "Regirock",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Regirock.png"
+  },
+  {
+    "pokedex_number": 378,
+    "name": "Regice",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Regice.png"
+  },
+  {
+    "pokedex_number": 379,
+    "name": "Registeel",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Registeel.png"
+  },
+  {
+    "pokedex_number": 380,
+    "name": "Latias",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Latias.png"
+  },
+  {
+    "pokedex_number": 381,
+    "name": "Latios",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Latios.png"
+  },
+  {
+    "pokedex_number": 382,
+    "name": "Kyogre",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Kyogre.png"
+  },
+  {
+    "pokedex_number": 383,
+    "name": "Groudon",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Groudon.png"
+  },
+  {
+    "pokedex_number": 384,
+    "name": "Rayquaza",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Rayquaza.png"
+  },
+  {
+    "pokedex_number": 385,
+    "name": "Jirachi",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Jirachi.png"
+  },
+  {
+    "pokedex_number": 386,
+    "name": "Deoxys",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Deoxys.png"
+  },
+  {
+    "pokedex_number": 387,
+    "name": "Turtwig",
+    "rarity": "common",
+    "image_path": "pokemon/common/Turtwig.png"
+  },
+  {
+    "pokedex_number": 388,
+    "name": "Grotle",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Grotle.png"
+  },
+  {
+    "pokedex_number": 389,
+    "name": "Torterra",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Torterra.png"
+  },
+  {
+    "pokedex_number": 390,
+    "name": "Chimchar",
+    "rarity": "common",
+    "image_path": "pokemon/common/Chimchar.png"
+  },
+  {
+    "pokedex_number": 391,
+    "name": "Monferno",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Monferno.png"
+  },
+  {
+    "pokedex_number": 392,
+    "name": "Infernape",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Infernape.png"
+  },
+  {
+    "pokedex_number": 393,
+    "name": "Piplup",
+    "rarity": "common",
+    "image_path": "pokemon/common/Piplup.png"
+  },
+  {
+    "pokedex_number": 394,
+    "name": "Prinplup",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Prinplup.png"
+  },
+  {
+    "pokedex_number": 395,
+    "name": "Empoleon",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Empoleon.png"
+  },
+  {
+    "pokedex_number": 396,
+    "name": "Starly",
+    "rarity": "common",
+    "image_path": "pokemon/common/Starly.png"
+  },
+  {
+    "pokedex_number": 397,
+    "name": "Staravia",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Staravia.png"
+  },
+  {
+    "pokedex_number": 398,
+    "name": "Staraptor",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Staraptor.png"
+  },
+  {
+    "pokedex_number": 399,
+    "name": "Bidoof",
+    "rarity": "common",
+    "image_path": "pokemon/common/Bidoof.png"
+  },
+  {
+    "pokedex_number": 400,
+    "name": "Bibarel",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Bibarel.png"
+  },
+  {
+    "pokedex_number": 401,
+    "name": "Kricketot",
+    "rarity": "common",
+    "image_path": "pokemon/common/Kricketot.png"
+  },
+  {
+    "pokedex_number": 402,
+    "name": "Kricketune",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Kricketune.png"
+  },
+  {
+    "pokedex_number": 403,
+    "name": "Shinx",
+    "rarity": "common",
+    "image_path": "pokemon/common/Shinx.png"
+  },
+  {
+    "pokedex_number": 404,
+    "name": "Luxio",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Luxio.png"
+  },
+  {
+    "pokedex_number": 405,
+    "name": "Luxray",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Luxray.png"
+  },
+  {
+    "pokedex_number": 406,
+    "name": "Budew",
+    "rarity": "common",
+    "image_path": "pokemon/common/Budew.png"
+  },
+  {
+    "pokedex_number": 407,
+    "name": "Roserade",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Roserade.png"
+  },
+  {
+    "pokedex_number": 408,
+    "name": "Cranidos",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cranidos.png"
+  },
+  {
+    "pokedex_number": 409,
+    "name": "Rampardos",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Rampardos.png"
+  },
+  {
+    "pokedex_number": 410,
+    "name": "Shieldon",
+    "rarity": "common",
+    "image_path": "pokemon/common/Shieldon.png"
+  },
+  {
+    "pokedex_number": 411,
+    "name": "Bastiodon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Bastiodon.png"
+  },
+  {
+    "pokedex_number": 412,
+    "name": "Burmy",
+    "rarity": "common",
+    "image_path": "pokemon/common/Burmy.png"
+  },
+  {
+    "pokedex_number": 413,
+    "name": "Wormadam",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Wormadam.png"
+  },
+  {
+    "pokedex_number": 414,
+    "name": "Mothim",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Mothim.png"
+  },
+  {
+    "pokedex_number": 415,
+    "name": "Combee",
+    "rarity": "common",
+    "image_path": "pokemon/common/Combee.png"
+  },
+  {
+    "pokedex_number": 416,
+    "name": "Vespiquen",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Vespiquen.png"
+  },
+  {
+    "pokedex_number": 417,
+    "name": "Pachirisu",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pachirisu.png"
+  },
+  {
+    "pokedex_number": 418,
+    "name": "Buizel",
+    "rarity": "common",
+    "image_path": "pokemon/common/Buizel.png"
+  },
+  {
+    "pokedex_number": 419,
+    "name": "Floatzel",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Floatzel.png"
+  },
+  {
+    "pokedex_number": 420,
+    "name": "Cherubi",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cherubi.png"
+  },
+  {
+    "pokedex_number": 421,
+    "name": "Cherrim",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Cherrim.png"
+  },
+  {
+    "pokedex_number": 422,
+    "name": "Shellos",
+    "rarity": "common",
+    "image_path": "pokemon/common/Shellos.png"
+  },
+  {
+    "pokedex_number": 423,
+    "name": "Gastrodon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Gastrodon.png"
+  },
+  {
+    "pokedex_number": 424,
+    "name": "Ambipom",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Ambipom.png"
+  },
+  {
+    "pokedex_number": 425,
+    "name": "Drifloon",
+    "rarity": "common",
+    "image_path": "pokemon/common/Drifloon.png"
+  },
+  {
+    "pokedex_number": 426,
+    "name": "Drifblim",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Drifblim.png"
+  },
+  {
+    "pokedex_number": 427,
+    "name": "Buneary",
+    "rarity": "common",
+    "image_path": "pokemon/common/Buneary.png"
+  },
+  {
+    "pokedex_number": 428,
+    "name": "Lopunny",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Lopunny.png"
+  },
+  {
+    "pokedex_number": 429,
+    "name": "Mismagius",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Mismagius.png"
+  },
+  {
+    "pokedex_number": 430,
+    "name": "Honchkrow",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Honchkrow.png"
+  },
+  {
+    "pokedex_number": 431,
+    "name": "Glameow",
+    "rarity": "common",
+    "image_path": "pokemon/common/Glameow.png"
+  },
+  {
+    "pokedex_number": 432,
+    "name": "Purugly",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Purugly.png"
+  },
+  {
+    "pokedex_number": 433,
+    "name": "Chingling",
+    "rarity": "common",
+    "image_path": "pokemon/common/Chingling.png"
+  },
+  {
+    "pokedex_number": 434,
+    "name": "Stunky",
+    "rarity": "common",
+    "image_path": "pokemon/common/Stunky.png"
+  },
+  {
+    "pokedex_number": 435,
+    "name": "Skuntank",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Skuntank.png"
+  },
+  {
+    "pokedex_number": 436,
+    "name": "Bronzor",
+    "rarity": "common",
+    "image_path": "pokemon/common/Bronzor.png"
+  },
+  {
+    "pokedex_number": 437,
+    "name": "Bronzong",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Bronzong.png"
+  },
+  {
+    "pokedex_number": 438,
+    "name": "Bonsly",
+    "rarity": "common",
+    "image_path": "pokemon/common/Bonsly.png"
+  },
+  {
+    "pokedex_number": 439,
+    "name": "Mime Jr.",
+    "rarity": "common",
+    "image_path": "pokemon/common/MimeJr.png"
+  },
+  {
+    "pokedex_number": 440,
+    "name": "Happiny",
+    "rarity": "common",
+    "image_path": "pokemon/common/Happiny.png"
+  },
+  {
+    "pokedex_number": 441,
+    "name": "Chatot",
+    "rarity": "common",
+    "image_path": "pokemon/common/Chatot.png"
+  },
+  {
+    "pokedex_number": 442,
+    "name": "Spiritomb",
+    "rarity": "common",
+    "image_path": "pokemon/common/Spiritomb.png"
+  },
+  {
+    "pokedex_number": 443,
+    "name": "Gible",
+    "rarity": "common",
+    "image_path": "pokemon/common/Gible.png"
+  },
+  {
+    "pokedex_number": 444,
+    "name": "Gabite",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Gabite.png"
+  },
+  {
+    "pokedex_number": 445,
+    "name": "Garchomp",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Garchomp.png"
+  },
+  {
+    "pokedex_number": 446,
+    "name": "Munchlax",
+    "rarity": "common",
+    "image_path": "pokemon/common/Munchlax.png"
+  },
+  {
+    "pokedex_number": 447,
+    "name": "Riolu",
+    "rarity": "common",
+    "image_path": "pokemon/common/Riolu.png"
+  },
+  {
+    "pokedex_number": 448,
+    "name": "Lucario",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Lucario.png"
+  },
+  {
+    "pokedex_number": 449,
+    "name": "Hippopotas",
+    "rarity": "common",
+    "image_path": "pokemon/common/Hippopotas.png"
+  },
+  {
+    "pokedex_number": 450,
+    "name": "Hippowdon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Hippowdon.png"
+  },
+  {
+    "pokedex_number": 451,
+    "name": "Skorupi",
+    "rarity": "common",
+    "image_path": "pokemon/common/Skorupi.png"
+  },
+  {
+    "pokedex_number": 452,
+    "name": "Drapion",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Drapion.png"
+  },
+  {
+    "pokedex_number": 453,
+    "name": "Croagunk",
+    "rarity": "common",
+    "image_path": "pokemon/common/Croagunk.png"
+  },
+  {
+    "pokedex_number": 454,
+    "name": "Toxicroak",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Toxicroak.png"
+  },
+  {
+    "pokedex_number": 455,
+    "name": "Carnivine",
+    "rarity": "common",
+    "image_path": "pokemon/common/Carnivine.png"
+  },
+  {
+    "pokedex_number": 456,
+    "name": "Finneon",
+    "rarity": "common",
+    "image_path": "pokemon/common/Finneon.png"
+  },
+  {
+    "pokedex_number": 457,
+    "name": "Lumineon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Lumineon.png"
+  },
+  {
+    "pokedex_number": 458,
+    "name": "Mantyke",
+    "rarity": "common",
+    "image_path": "pokemon/common/Mantyke.png"
+  },
+  {
+    "pokedex_number": 459,
+    "name": "Snover",
+    "rarity": "common",
+    "image_path": "pokemon/common/Snover.png"
+  },
+  {
+    "pokedex_number": 460,
+    "name": "Abomasnow",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Abomasnow.png"
+  },
+  {
+    "pokedex_number": 461,
+    "name": "Weavile",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Weavile.png"
+  },
+  {
+    "pokedex_number": 462,
+    "name": "Magnezone",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Magnezone.png"
+  },
+  {
+    "pokedex_number": 463,
+    "name": "Lickilicky",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Lickilicky.png"
+  },
+  {
+    "pokedex_number": 464,
+    "name": "Rhyperior",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Rhyperior.png"
+  },
+  {
+    "pokedex_number": 465,
+    "name": "Tangrowth",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Tangrowth.png"
+  },
+  {
+    "pokedex_number": 466,
+    "name": "Electivire",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Electivire.png"
+  },
+  {
+    "pokedex_number": 467,
+    "name": "Magmortar",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Magmortar.png"
+  },
+  {
+    "pokedex_number": 468,
+    "name": "Togekiss",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Togekiss.png"
+  },
+  {
+    "pokedex_number": 469,
+    "name": "Yanmega",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Yanmega.png"
+  },
+  {
+    "pokedex_number": 470,
+    "name": "Leafeon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Leafeon.png"
+  },
+  {
+    "pokedex_number": 471,
+    "name": "Glaceon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Glaceon.png"
+  },
+  {
+    "pokedex_number": 472,
+    "name": "Gliscor",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Gliscor.png"
+  },
+  {
+    "pokedex_number": 473,
+    "name": "Mamoswine",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Mamoswine.png"
+  },
+  {
+    "pokedex_number": 474,
+    "name": "Porygon-Z",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Porygon-Z.png"
+  },
+  {
+    "pokedex_number": 475,
+    "name": "Gallade",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Gallade.png"
+  },
+  {
+    "pokedex_number": 476,
+    "name": "Probopass",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Probopass.png"
+  },
+  {
+    "pokedex_number": 477,
+    "name": "Dusknoir",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Dusknoir.png"
+  },
+  {
+    "pokedex_number": 478,
+    "name": "Froslass",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Froslass.png"
+  },
+  {
+    "pokedex_number": 479,
+    "name": "Rotom",
+    "rarity": "common",
+    "image_path": "pokemon/common/Rotom.png"
+  },
+  {
+    "pokedex_number": 480,
+    "name": "Uxie",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Uxie.png"
+  },
+  {
+    "pokedex_number": 481,
+    "name": "Mesprit",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Mesprit.png"
+  },
+  {
+    "pokedex_number": 482,
+    "name": "Azelf",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Azelf.png"
+  },
+  {
+    "pokedex_number": 483,
+    "name": "Dialga",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Dialga.png"
+  },
+  {
+    "pokedex_number": 484,
+    "name": "Palkia",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Palkia.png"
+  },
+  {
+    "pokedex_number": 485,
+    "name": "Heatran",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Heatran.png"
+  },
+  {
+    "pokedex_number": 486,
+    "name": "Regigigas",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Regigigas.png"
+  },
+  {
+    "pokedex_number": 487,
+    "name": "Giratina",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Giratina.png"
+  },
+  {
+    "pokedex_number": 488,
+    "name": "Cresselia",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Cresselia.png"
+  },
+  {
+    "pokedex_number": 489,
+    "name": "Phione",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Phione.png"
+  },
+  {
+    "pokedex_number": 490,
+    "name": "Manaphy",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Manaphy.png"
+  },
+  {
+    "pokedex_number": 491,
+    "name": "Darkrai",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Darkrai.png"
+  },
+  {
+    "pokedex_number": 492,
+    "name": "Shaymin",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Shaymin.png"
+  },
+  {
+    "pokedex_number": 493,
+    "name": "Arceus",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Arceus.png"
+  },
+  {
+    "pokedex_number": 494,
+    "name": "Victini",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Victini.png"
+  },
+  {
+    "pokedex_number": 495,
+    "name": "Snivy",
+    "rarity": "common",
+    "image_path": "pokemon/common/Snivy.png"
+  },
+  {
+    "pokedex_number": 496,
+    "name": "Servine",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Servine.png"
+  },
+  {
+    "pokedex_number": 497,
+    "name": "Serperior",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Serperior.png"
+  },
+  {
+    "pokedex_number": 498,
+    "name": "Tepig",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tepig.png"
+  },
+  {
+    "pokedex_number": 499,
+    "name": "Pignite",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Pignite.png"
+  },
+  {
+    "pokedex_number": 500,
+    "name": "Emboar",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Emboar.png"
+  },
+  {
+    "pokedex_number": 501,
+    "name": "Oshawott",
+    "rarity": "common",
+    "image_path": "pokemon/common/Oshawott.png"
+  },
+  {
+    "pokedex_number": 502,
+    "name": "Dewott",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dewott.png"
+  },
+  {
+    "pokedex_number": 503,
+    "name": "Samurott",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Samurott.png"
+  },
+  {
+    "pokedex_number": 504,
+    "name": "Patrat",
+    "rarity": "common",
+    "image_path": "pokemon/common/Patrat.png"
+  },
+  {
+    "pokedex_number": 505,
+    "name": "Watchog",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Watchog.png"
+  },
+  {
+    "pokedex_number": 506,
+    "name": "Lillipup",
+    "rarity": "common",
+    "image_path": "pokemon/common/Lillipup.png"
+  },
+  {
+    "pokedex_number": 507,
+    "name": "Herdier",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Herdier.png"
+  },
+  {
+    "pokedex_number": 508,
+    "name": "Stoutland",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Stoutland.png"
+  },
+  {
+    "pokedex_number": 509,
+    "name": "Purrloin",
+    "rarity": "common",
+    "image_path": "pokemon/common/Purrloin.png"
+  },
+  {
+    "pokedex_number": 510,
+    "name": "Liepard",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Liepard.png"
+  },
+  {
+    "pokedex_number": 511,
+    "name": "Pansage",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pansage.png"
+  },
+  {
+    "pokedex_number": 512,
+    "name": "Simisage",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Simisage.png"
+  },
+  {
+    "pokedex_number": 513,
+    "name": "Pansear",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pansear.png"
+  },
+  {
+    "pokedex_number": 514,
+    "name": "Simisear",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Simisear.png"
+  },
+  {
+    "pokedex_number": 515,
+    "name": "Panpour",
+    "rarity": "common",
+    "image_path": "pokemon/common/Panpour.png"
+  },
+  {
+    "pokedex_number": 516,
+    "name": "Simipour",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Simipour.png"
+  },
+  {
+    "pokedex_number": 517,
+    "name": "Munna",
+    "rarity": "common",
+    "image_path": "pokemon/common/Munna.png"
+  },
+  {
+    "pokedex_number": 518,
+    "name": "Musharna",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Musharna.png"
+  },
+  {
+    "pokedex_number": 519,
+    "name": "Pidove",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pidove.png"
+  },
+  {
+    "pokedex_number": 520,
+    "name": "Tranquill",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Tranquill.png"
+  },
+  {
+    "pokedex_number": 521,
+    "name": "Unfezant",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Unfezant.png"
+  },
+  {
+    "pokedex_number": 522,
+    "name": "Blitzle",
+    "rarity": "common",
+    "image_path": "pokemon/common/Blitzle.png"
+  },
+  {
+    "pokedex_number": 523,
+    "name": "Zebstrika",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Zebstrika.png"
+  },
+  {
+    "pokedex_number": 524,
+    "name": "Roggenrola",
+    "rarity": "common",
+    "image_path": "pokemon/common/Roggenrola.png"
+  },
+  {
+    "pokedex_number": 525,
+    "name": "Boldore",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Boldore.png"
+  },
+  {
+    "pokedex_number": 526,
+    "name": "Gigalith",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Gigalith.png"
+  },
+  {
+    "pokedex_number": 527,
+    "name": "Woobat",
+    "rarity": "common",
+    "image_path": "pokemon/common/Woobat.png"
+  },
+  {
+    "pokedex_number": 528,
+    "name": "Swoobat",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Swoobat.png"
+  },
+  {
+    "pokedex_number": 529,
+    "name": "Drilbur",
+    "rarity": "common",
+    "image_path": "pokemon/common/Drilbur.png"
+  },
+  {
+    "pokedex_number": 530,
+    "name": "Excadrill",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Excadrill.png"
+  },
+  {
+    "pokedex_number": 531,
+    "name": "Audino",
+    "rarity": "common",
+    "image_path": "pokemon/common/Audino.png"
+  },
+  {
+    "pokedex_number": 532,
+    "name": "Timburr",
+    "rarity": "common",
+    "image_path": "pokemon/common/Timburr.png"
+  },
+  {
+    "pokedex_number": 533,
+    "name": "Gurdurr",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Gurdurr.png"
+  },
+  {
+    "pokedex_number": 534,
+    "name": "Conkeldurr",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Conkeldurr.png"
+  },
+  {
+    "pokedex_number": 535,
+    "name": "Tympole",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tympole.png"
+  },
+  {
+    "pokedex_number": 536,
+    "name": "Palpitoad",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Palpitoad.png"
+  },
+  {
+    "pokedex_number": 537,
+    "name": "Seismitoad",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Seismitoad.png"
+  },
+  {
+    "pokedex_number": 538,
+    "name": "Throh",
+    "rarity": "common",
+    "image_path": "pokemon/common/Throh.png"
+  },
+  {
+    "pokedex_number": 539,
+    "name": "Sawk",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sawk.png"
+  },
+  {
+    "pokedex_number": 540,
+    "name": "Sewaddle",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sewaddle.png"
+  },
+  {
+    "pokedex_number": 541,
+    "name": "Swadloon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Swadloon.png"
+  },
+  {
+    "pokedex_number": 542,
+    "name": "Leavanny",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Leavanny.png"
+  },
+  {
+    "pokedex_number": 543,
+    "name": "Venipede",
+    "rarity": "common",
+    "image_path": "pokemon/common/Venipede.png"
+  },
+  {
+    "pokedex_number": 544,
+    "name": "Whirlipede",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Whirlipede.png"
+  },
+  {
+    "pokedex_number": 545,
+    "name": "Scolipede",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Scolipede.png"
+  },
+  {
+    "pokedex_number": 546,
+    "name": "Cottonee",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cottonee.png"
+  },
+  {
+    "pokedex_number": 547,
+    "name": "Whimsicott",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Whimsicott.png"
+  },
+  {
+    "pokedex_number": 548,
+    "name": "Petilil",
+    "rarity": "common",
+    "image_path": "pokemon/common/Petilil.png"
+  },
+  {
+    "pokedex_number": 549,
+    "name": "Lilligant",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Lilligant.png"
+  },
+  {
+    "pokedex_number": 550,
+    "name": "Basculin",
+    "rarity": "common",
+    "image_path": "pokemon/common/Basculin.png"
+  },
+  {
+    "pokedex_number": 551,
+    "name": "Sandile",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sandile.png"
+  },
+  {
+    "pokedex_number": 552,
+    "name": "Krokorok",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Krokorok.png"
+  },
+  {
+    "pokedex_number": 553,
+    "name": "Krookodile",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Krookodile.png"
+  },
+  {
+    "pokedex_number": 554,
+    "name": "Darumaka",
+    "rarity": "common",
+    "image_path": "pokemon/common/Darumaka.png"
+  },
+  {
+    "pokedex_number": 555,
+    "name": "Darmanitan",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Darmanitan.png"
+  },
+  {
+    "pokedex_number": 556,
+    "name": "Maractus",
+    "rarity": "common",
+    "image_path": "pokemon/common/Maractus.png"
+  },
+  {
+    "pokedex_number": 557,
+    "name": "Dwebble",
+    "rarity": "common",
+    "image_path": "pokemon/common/Dwebble.png"
+  },
+  {
+    "pokedex_number": 558,
+    "name": "Crustle",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Crustle.png"
+  },
+  {
+    "pokedex_number": 559,
+    "name": "Scraggy",
+    "rarity": "common",
+    "image_path": "pokemon/common/Scraggy.png"
+  },
+  {
+    "pokedex_number": 560,
+    "name": "Scrafty",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Scrafty.png"
+  },
+  {
+    "pokedex_number": 561,
+    "name": "Sigilyph",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sigilyph.png"
+  },
+  {
+    "pokedex_number": 562,
+    "name": "Yamask",
+    "rarity": "common",
+    "image_path": "pokemon/common/Yamask.png"
+  },
+  {
+    "pokedex_number": 563,
+    "name": "Cofagrigus",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Cofagrigus.png"
+  },
+  {
+    "pokedex_number": 564,
+    "name": "Tirtouga",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tirtouga.png"
+  },
+  {
+    "pokedex_number": 565,
+    "name": "Carracosta",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Carracosta.png"
+  },
+  {
+    "pokedex_number": 566,
+    "name": "Archen",
+    "rarity": "common",
+    "image_path": "pokemon/common/Archen.png"
+  },
+  {
+    "pokedex_number": 567,
+    "name": "Archeops",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Archeops.png"
+  },
+  {
+    "pokedex_number": 568,
+    "name": "Trubbish",
+    "rarity": "common",
+    "image_path": "pokemon/common/Trubbish.png"
+  },
+  {
+    "pokedex_number": 569,
+    "name": "Garbodor",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Garbodor.png"
+  },
+  {
+    "pokedex_number": 570,
+    "name": "Zorua",
+    "rarity": "common",
+    "image_path": "pokemon/common/Zorua.png"
+  },
+  {
+    "pokedex_number": 571,
+    "name": "Zoroark",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Zoroark.png"
+  },
+  {
+    "pokedex_number": 572,
+    "name": "Minccino",
+    "rarity": "common",
+    "image_path": "pokemon/common/Minccino.png"
+  },
+  {
+    "pokedex_number": 573,
+    "name": "Cinccino",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Cinccino.png"
+  },
+  {
+    "pokedex_number": 574,
+    "name": "Gothita",
+    "rarity": "common",
+    "image_path": "pokemon/common/Gothita.png"
+  },
+  {
+    "pokedex_number": 575,
+    "name": "Gothorita",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Gothorita.png"
+  },
+  {
+    "pokedex_number": 576,
+    "name": "Gothitelle",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Gothitelle.png"
+  },
+  {
+    "pokedex_number": 577,
+    "name": "Solosis",
+    "rarity": "common",
+    "image_path": "pokemon/common/Solosis.png"
+  },
+  {
+    "pokedex_number": 578,
+    "name": "Duosion",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Duosion.png"
+  },
+  {
+    "pokedex_number": 579,
+    "name": "Reuniclus",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Reuniclus.png"
+  },
+  {
+    "pokedex_number": 580,
+    "name": "Ducklett",
+    "rarity": "common",
+    "image_path": "pokemon/common/Ducklett.png"
+  },
+  {
+    "pokedex_number": 581,
+    "name": "Swanna",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Swanna.png"
+  },
+  {
+    "pokedex_number": 582,
+    "name": "Vanillite",
+    "rarity": "common",
+    "image_path": "pokemon/common/Vanillite.png"
+  },
+  {
+    "pokedex_number": 583,
+    "name": "Vanillish",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Vanillish.png"
+  },
+  {
+    "pokedex_number": 584,
+    "name": "Vanilluxe",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Vanilluxe.png"
+  },
+  {
+    "pokedex_number": 585,
+    "name": "Deerling",
+    "rarity": "common",
+    "image_path": "pokemon/common/Deerling.png"
+  },
+  {
+    "pokedex_number": 586,
+    "name": "Sawsbuck",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Sawsbuck.png"
+  },
+  {
+    "pokedex_number": 587,
+    "name": "Emolga",
+    "rarity": "common",
+    "image_path": "pokemon/common/Emolga.png"
+  },
+  {
+    "pokedex_number": 588,
+    "name": "Karrablast",
+    "rarity": "common",
+    "image_path": "pokemon/common/Karrablast.png"
+  },
+  {
+    "pokedex_number": 589,
+    "name": "Escavalier",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Escavalier.png"
+  },
+  {
+    "pokedex_number": 590,
+    "name": "Foongus",
+    "rarity": "common",
+    "image_path": "pokemon/common/Foongus.png"
+  },
+  {
+    "pokedex_number": 591,
+    "name": "Amoonguss",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Amoonguss.png"
+  },
+  {
+    "pokedex_number": 592,
+    "name": "Frillish",
+    "rarity": "common",
+    "image_path": "pokemon/common/Frillish.png"
+  },
+  {
+    "pokedex_number": 593,
+    "name": "Jellicent",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Jellicent.png"
+  },
+  {
+    "pokedex_number": 594,
+    "name": "Alomomola",
+    "rarity": "common",
+    "image_path": "pokemon/common/Alomomola.png"
+  },
+  {
+    "pokedex_number": 595,
+    "name": "Joltik",
+    "rarity": "common",
+    "image_path": "pokemon/common/Joltik.png"
+  },
+  {
+    "pokedex_number": 596,
+    "name": "Galvantula",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Galvantula.png"
+  },
+  {
+    "pokedex_number": 597,
+    "name": "Ferroseed",
+    "rarity": "common",
+    "image_path": "pokemon/common/Ferroseed.png"
+  },
+  {
+    "pokedex_number": 598,
+    "name": "Ferrothorn",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Ferrothorn.png"
+  },
+  {
+    "pokedex_number": 599,
+    "name": "Klink",
+    "rarity": "common",
+    "image_path": "pokemon/common/Klink.png"
+  },
+  {
+    "pokedex_number": 600,
+    "name": "Klang",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Klang.png"
+  },
+  {
+    "pokedex_number": 601,
+    "name": "Klinklang",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Klinklang.png"
+  },
+  {
+    "pokedex_number": 602,
+    "name": "Tynamo",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tynamo.png"
+  },
+  {
+    "pokedex_number": 603,
+    "name": "Eelektrik",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Eelektrik.png"
+  },
+  {
+    "pokedex_number": 604,
+    "name": "Eelektross",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Eelektross.png"
+  },
+  {
+    "pokedex_number": 605,
+    "name": "Elgyem",
+    "rarity": "common",
+    "image_path": "pokemon/common/Elgyem.png"
+  },
+  {
+    "pokedex_number": 606,
+    "name": "Beheeyem",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Beheeyem.png"
+  },
+  {
+    "pokedex_number": 607,
+    "name": "Litwick",
+    "rarity": "common",
+    "image_path": "pokemon/common/Litwick.png"
+  },
+  {
+    "pokedex_number": 608,
+    "name": "Lampent",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Lampent.png"
+  },
+  {
+    "pokedex_number": 609,
+    "name": "Chandelure",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Chandelure.png"
+  },
+  {
+    "pokedex_number": 610,
+    "name": "Axew",
+    "rarity": "common",
+    "image_path": "pokemon/common/Axew.png"
+  },
+  {
+    "pokedex_number": 611,
+    "name": "Fraxure",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Fraxure.png"
+  },
+  {
+    "pokedex_number": 612,
+    "name": "Haxorus",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Haxorus.png"
+  },
+  {
+    "pokedex_number": 613,
+    "name": "Cubchoo",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cubchoo.png"
+  },
+  {
+    "pokedex_number": 614,
+    "name": "Beartic",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Beartic.png"
+  },
+  {
+    "pokedex_number": 615,
+    "name": "Cryogonal",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cryogonal.png"
+  },
+  {
+    "pokedex_number": 616,
+    "name": "Shelmet",
+    "rarity": "common",
+    "image_path": "pokemon/common/Shelmet.png"
+  },
+  {
+    "pokedex_number": 617,
+    "name": "Accelgor",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Accelgor.png"
+  },
+  {
+    "pokedex_number": 618,
+    "name": "Stunfisk",
+    "rarity": "common",
+    "image_path": "pokemon/common/Stunfisk.png"
+  },
+  {
+    "pokedex_number": 619,
+    "name": "Mienfoo",
+    "rarity": "common",
+    "image_path": "pokemon/common/Mienfoo.png"
+  },
+  {
+    "pokedex_number": 620,
+    "name": "Mienshao",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Mienshao.png"
+  },
+  {
+    "pokedex_number": 621,
+    "name": "Druddigon",
+    "rarity": "common",
+    "image_path": "pokemon/common/Druddigon.png"
+  },
+  {
+    "pokedex_number": 622,
+    "name": "Golett",
+    "rarity": "common",
+    "image_path": "pokemon/common/Golett.png"
+  },
+  {
+    "pokedex_number": 623,
+    "name": "Golurk",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Golurk.png"
+  },
+  {
+    "pokedex_number": 624,
+    "name": "Pawniard",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pawniard.png"
+  },
+  {
+    "pokedex_number": 625,
+    "name": "Bisharp",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Bisharp.png"
+  },
+  {
+    "pokedex_number": 626,
+    "name": "Bouffalant",
+    "rarity": "common",
+    "image_path": "pokemon/common/Bouffalant.png"
+  },
+  {
+    "pokedex_number": 627,
+    "name": "Rufflet",
+    "rarity": "common",
+    "image_path": "pokemon/common/Rufflet.png"
+  },
+  {
+    "pokedex_number": 628,
+    "name": "Braviary",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Braviary.png"
+  },
+  {
+    "pokedex_number": 629,
+    "name": "Vullaby",
+    "rarity": "common",
+    "image_path": "pokemon/common/Vullaby.png"
+  },
+  {
+    "pokedex_number": 630,
+    "name": "Mandibuzz",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Mandibuzz.png"
+  },
+  {
+    "pokedex_number": 631,
+    "name": "Heatmor",
+    "rarity": "common",
+    "image_path": "pokemon/common/Heatmor.png"
+  },
+  {
+    "pokedex_number": 632,
+    "name": "Durant",
+    "rarity": "common",
+    "image_path": "pokemon/common/Durant.png"
+  },
+  {
+    "pokedex_number": 633,
+    "name": "Deino",
+    "rarity": "common",
+    "image_path": "pokemon/common/Deino.png"
+  },
+  {
+    "pokedex_number": 634,
+    "name": "Zweilous",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Zweilous.png"
+  },
+  {
+    "pokedex_number": 635,
+    "name": "Hydreigon",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Hydreigon.png"
+  },
+  {
+    "pokedex_number": 636,
+    "name": "Larvesta",
+    "rarity": "common",
+    "image_path": "pokemon/common/Larvesta.png"
+  },
+  {
+    "pokedex_number": 637,
+    "name": "Volcarona",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Volcarona.png"
+  },
+  {
+    "pokedex_number": 638,
+    "name": "Cobalion",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Cobalion.png"
+  },
+  {
+    "pokedex_number": 639,
+    "name": "Terrakion",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Terrakion.png"
+  },
+  {
+    "pokedex_number": 640,
+    "name": "Virizion",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Virizion.png"
+  },
+  {
+    "pokedex_number": 641,
+    "name": "Tornadus",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Tornadus.png"
+  },
+  {
+    "pokedex_number": 642,
+    "name": "Thundurus",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Thundurus.png"
+  },
+  {
+    "pokedex_number": 643,
+    "name": "Reshiram",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Reshiram.png"
+  },
+  {
+    "pokedex_number": 644,
+    "name": "Zekrom",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Zekrom.png"
+  },
+  {
+    "pokedex_number": 645,
+    "name": "Landorus",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Landorus.png"
+  },
+  {
+    "pokedex_number": 646,
+    "name": "Kyurem",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Kyurem.png"
+  },
+  {
+    "pokedex_number": 647,
+    "name": "Keldeo",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Keldeo.png"
+  },
+  {
+    "pokedex_number": 648,
+    "name": "Meloetta",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Meloetta.png"
+  },
+  {
+    "pokedex_number": 649,
+    "name": "Genesect",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Genesect.png"
+  },
+  {
+    "pokedex_number": 650,
+    "name": "Chespin",
+    "rarity": "common",
+    "image_path": "pokemon/common/Chespin.png"
+  },
+  {
+    "pokedex_number": 651,
+    "name": "Quilladin",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Quilladin.png"
+  },
+  {
+    "pokedex_number": 652,
+    "name": "Chesnaught",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Chesnaught.png"
+  },
+  {
+    "pokedex_number": 653,
+    "name": "Fennekin",
+    "rarity": "common",
+    "image_path": "pokemon/common/Fennekin.png"
+  },
+  {
+    "pokedex_number": 654,
+    "name": "Braixen",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Braixen.png"
+  },
+  {
+    "pokedex_number": 655,
+    "name": "Delphox",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Delphox.png"
+  },
+  {
+    "pokedex_number": 656,
+    "name": "Froakie",
+    "rarity": "common",
+    "image_path": "pokemon/common/Froakie.png"
+  },
+  {
+    "pokedex_number": 657,
+    "name": "Frogadier",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Frogadier.png"
+  },
+  {
+    "pokedex_number": 658,
+    "name": "Greninja",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Greninja.png"
+  },
+  {
+    "pokedex_number": 659,
+    "name": "Bunnelby",
+    "rarity": "common",
+    "image_path": "pokemon/common/Bunnelby.png"
+  },
+  {
+    "pokedex_number": 660,
+    "name": "Diggersby",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Diggersby.png"
+  },
+  {
+    "pokedex_number": 661,
+    "name": "Fletchling",
+    "rarity": "common",
+    "image_path": "pokemon/common/Fletchling.png"
+  },
+  {
+    "pokedex_number": 662,
+    "name": "Fletchinder",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Fletchinder.png"
+  },
+  {
+    "pokedex_number": 663,
+    "name": "Talonflame",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Talonflame.png"
+  },
+  {
+    "pokedex_number": 664,
+    "name": "Scatterbug",
+    "rarity": "common",
+    "image_path": "pokemon/common/Scatterbug.png"
+  },
+  {
+    "pokedex_number": 665,
+    "name": "Spewpa",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Spewpa.png"
+  },
+  {
+    "pokedex_number": 666,
+    "name": "Vivillon",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Vivillon.png"
+  },
+  {
+    "pokedex_number": 667,
+    "name": "Litleo",
+    "rarity": "common",
+    "image_path": "pokemon/common/Litleo.png"
+  },
+  {
+    "pokedex_number": 668,
+    "name": "Pyroar",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Pyroar.png"
+  },
+  {
+    "pokedex_number": 669,
+    "name": "Flabébé",
+    "rarity": "common",
+    "image_path": "pokemon/common/Flabébé.png"
+  },
+  {
+    "pokedex_number": 670,
+    "name": "Floette",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Floette.png"
+  },
+  {
+    "pokedex_number": 671,
+    "name": "Florges",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Florges.png"
+  },
+  {
+    "pokedex_number": 672,
+    "name": "Skiddo",
+    "rarity": "common",
+    "image_path": "pokemon/common/Skiddo.png"
+  },
+  {
+    "pokedex_number": 673,
+    "name": "Gogoat",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Gogoat.png"
+  },
+  {
+    "pokedex_number": 674,
+    "name": "Pancham",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pancham.png"
+  },
+  {
+    "pokedex_number": 675,
+    "name": "Pangoro",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Pangoro.png"
+  },
+  {
+    "pokedex_number": 676,
+    "name": "Furfrou",
+    "rarity": "common",
+    "image_path": "pokemon/common/Furfrou.png"
+  },
+  {
+    "pokedex_number": 677,
+    "name": "Espurr",
+    "rarity": "common",
+    "image_path": "pokemon/common/Espurr.png"
+  },
+  {
+    "pokedex_number": 678,
+    "name": "Meowstic",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Meowstic.png"
+  },
+  {
+    "pokedex_number": 679,
+    "name": "Honedge",
+    "rarity": "common",
+    "image_path": "pokemon/common/Honedge.png"
+  },
+  {
+    "pokedex_number": 680,
+    "name": "Doublade",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Doublade.png"
+  },
+  {
+    "pokedex_number": 681,
+    "name": "Aegislash",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Aegislash.png"
+  },
+  {
+    "pokedex_number": 682,
+    "name": "Spritzee",
+    "rarity": "common",
+    "image_path": "pokemon/common/Spritzee.png"
+  },
+  {
+    "pokedex_number": 683,
+    "name": "Aromatisse",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Aromatisse.png"
+  },
+  {
+    "pokedex_number": 684,
+    "name": "Swirlix",
+    "rarity": "common",
+    "image_path": "pokemon/common/Swirlix.png"
+  },
+  {
+    "pokedex_number": 685,
+    "name": "Slurpuff",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Slurpuff.png"
+  },
+  {
+    "pokedex_number": 686,
+    "name": "Inkay",
+    "rarity": "common",
+    "image_path": "pokemon/common/Inkay.png"
+  },
+  {
+    "pokedex_number": 687,
+    "name": "Malamar",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Malamar.png"
+  },
+  {
+    "pokedex_number": 688,
+    "name": "Binacle",
+    "rarity": "common",
+    "image_path": "pokemon/common/Binacle.png"
+  },
+  {
+    "pokedex_number": 689,
+    "name": "Barbaracle",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Barbaracle.png"
+  },
+  {
+    "pokedex_number": 690,
+    "name": "Skrelp",
+    "rarity": "common",
+    "image_path": "pokemon/common/Skrelp.png"
+  },
+  {
+    "pokedex_number": 691,
+    "name": "Dragalge",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dragalge.png"
+  },
+  {
+    "pokedex_number": 692,
+    "name": "Clauncher",
+    "rarity": "common",
+    "image_path": "pokemon/common/Clauncher.png"
+  },
+  {
+    "pokedex_number": 693,
+    "name": "Clawitzer",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Clawitzer.png"
+  },
+  {
+    "pokedex_number": 694,
+    "name": "Helioptile",
+    "rarity": "common",
+    "image_path": "pokemon/common/Helioptile.png"
+  },
+  {
+    "pokedex_number": 695,
+    "name": "Heliolisk",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Heliolisk.png"
+  },
+  {
+    "pokedex_number": 696,
+    "name": "Tyrunt",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tyrunt.png"
+  },
+  {
+    "pokedex_number": 697,
+    "name": "Tyrantrum",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Tyrantrum.png"
+  },
+  {
+    "pokedex_number": 698,
+    "name": "Amaura",
+    "rarity": "common",
+    "image_path": "pokemon/common/Amaura.png"
+  },
+  {
+    "pokedex_number": 699,
+    "name": "Aurorus",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Aurorus.png"
+  },
+  {
+    "pokedex_number": 700,
+    "name": "Sylveon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Sylveon.png"
+  },
+  {
+    "pokedex_number": 701,
+    "name": "Hawlucha",
+    "rarity": "common",
+    "image_path": "pokemon/common/Hawlucha.png"
+  },
+  {
+    "pokedex_number": 702,
+    "name": "Dedenne",
+    "rarity": "common",
+    "image_path": "pokemon/common/Dedenne.png"
+  },
+  {
+    "pokedex_number": 703,
+    "name": "Carbink",
+    "rarity": "common",
+    "image_path": "pokemon/common/Carbink.png"
+  },
+  {
+    "pokedex_number": 704,
+    "name": "Goomy",
+    "rarity": "common",
+    "image_path": "pokemon/common/Goomy.png"
+  },
+  {
+    "pokedex_number": 705,
+    "name": "Sliggoo",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Sliggoo.png"
+  },
+  {
+    "pokedex_number": 706,
+    "name": "Goodra",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Goodra.png"
+  },
+  {
+    "pokedex_number": 707,
+    "name": "Klefki",
+    "rarity": "common",
+    "image_path": "pokemon/common/Klefki.png"
+  },
+  {
+    "pokedex_number": 708,
+    "name": "Phantump",
+    "rarity": "common",
+    "image_path": "pokemon/common/Phantump.png"
+  },
+  {
+    "pokedex_number": 709,
+    "name": "Trevenant",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Trevenant.png"
+  },
+  {
+    "pokedex_number": 710,
+    "name": "Pumpkaboo",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pumpkaboo.png"
+  },
+  {
+    "pokedex_number": 711,
+    "name": "Gourgeist",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Gourgeist.png"
+  },
+  {
+    "pokedex_number": 712,
+    "name": "Bergmite",
+    "rarity": "common",
+    "image_path": "pokemon/common/Bergmite.png"
+  },
+  {
+    "pokedex_number": 713,
+    "name": "Avalugg",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Avalugg.png"
+  },
+  {
+    "pokedex_number": 714,
+    "name": "Noibat",
+    "rarity": "common",
+    "image_path": "pokemon/common/Noibat.png"
+  },
+  {
+    "pokedex_number": 715,
+    "name": "Noivern",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Noivern.png"
+  },
+  {
+    "pokedex_number": 716,
+    "name": "Xerneas",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Xerneas.png"
+  },
+  {
+    "pokedex_number": 717,
+    "name": "Yveltal",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Yveltal.png"
+  },
+  {
+    "pokedex_number": 718,
+    "name": "Zygarde",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Zygarde.png"
+  },
+  {
+    "pokedex_number": 719,
+    "name": "Diancie",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Diancie.png"
+  },
+  {
+    "pokedex_number": 720,
+    "name": "Hoopa",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Hoopa.png"
+  },
+  {
+    "pokedex_number": 721,
+    "name": "Volcanion",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Volcanion.png"
+  },
+  {
+    "pokedex_number": 722,
+    "name": "Rowlet",
+    "rarity": "common",
+    "image_path": "pokemon/common/Rowlet.png"
+  },
+  {
+    "pokedex_number": 723,
+    "name": "Dartrix",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dartrix.png"
+  },
+  {
+    "pokedex_number": 724,
+    "name": "Decidueye",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Decidueye.png"
+  },
+  {
+    "pokedex_number": 725,
+    "name": "Litten",
+    "rarity": "common",
+    "image_path": "pokemon/common/Litten.png"
+  },
+  {
+    "pokedex_number": 726,
+    "name": "Torracat",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Torracat.png"
+  },
+  {
+    "pokedex_number": 727,
+    "name": "Incineroar",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Incineroar.png"
+  },
+  {
+    "pokedex_number": 728,
+    "name": "Popplio",
+    "rarity": "common",
+    "image_path": "pokemon/common/Popplio.png"
+  },
+  {
+    "pokedex_number": 729,
+    "name": "Brionne",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Brionne.png"
+  },
+  {
+    "pokedex_number": 730,
+    "name": "Primarina",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Primarina.png"
+  },
+  {
+    "pokedex_number": 731,
+    "name": "Pikipek",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pikipek.png"
+  },
+  {
+    "pokedex_number": 732,
+    "name": "Trumbeak",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Trumbeak.png"
+  },
+  {
+    "pokedex_number": 733,
+    "name": "Toucannon",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Toucannon.png"
+  },
+  {
+    "pokedex_number": 734,
+    "name": "Yungoos",
+    "rarity": "common",
+    "image_path": "pokemon/common/Yungoos.png"
+  },
+  {
+    "pokedex_number": 735,
+    "name": "Gumshoos",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Gumshoos.png"
+  },
+  {
+    "pokedex_number": 736,
+    "name": "Grubbin",
+    "rarity": "common",
+    "image_path": "pokemon/common/Grubbin.png"
+  },
+  {
+    "pokedex_number": 737,
+    "name": "Charjabug",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Charjabug.png"
+  },
+  {
+    "pokedex_number": 738,
+    "name": "Vikavolt",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Vikavolt.png"
+  },
+  {
+    "pokedex_number": 739,
+    "name": "Crabrawler",
+    "rarity": "common",
+    "image_path": "pokemon/common/Crabrawler.png"
+  },
+  {
+    "pokedex_number": 740,
+    "name": "Crabominable",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Crabominable.png"
+  },
+  {
+    "pokedex_number": 741,
+    "name": "Oricorio",
+    "rarity": "common",
+    "image_path": "pokemon/common/Oricorio.png"
+  },
+  {
+    "pokedex_number": 742,
+    "name": "Cutiefly",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cutiefly.png"
+  },
+  {
+    "pokedex_number": 743,
+    "name": "Ribombee",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Ribombee.png"
+  },
+  {
+    "pokedex_number": 744,
+    "name": "Rockruff",
+    "rarity": "common",
+    "image_path": "pokemon/common/Rockruff.png"
+  },
+  {
+    "pokedex_number": 745,
+    "name": "Lycanroc",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Lycanroc.png"
+  },
+  {
+    "pokedex_number": 746,
+    "name": "Wishiwashi",
+    "rarity": "common",
+    "image_path": "pokemon/common/Wishiwashi.png"
+  },
+  {
+    "pokedex_number": 747,
+    "name": "Mareanie",
+    "rarity": "common",
+    "image_path": "pokemon/common/Mareanie.png"
+  },
+  {
+    "pokedex_number": 748,
+    "name": "Toxapex",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Toxapex.png"
+  },
+  {
+    "pokedex_number": 749,
+    "name": "Mudbray",
+    "rarity": "common",
+    "image_path": "pokemon/common/Mudbray.png"
+  },
+  {
+    "pokedex_number": 750,
+    "name": "Mudsdale",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Mudsdale.png"
+  },
+  {
+    "pokedex_number": 751,
+    "name": "Dewpider",
+    "rarity": "common",
+    "image_path": "pokemon/common/Dewpider.png"
+  },
+  {
+    "pokedex_number": 752,
+    "name": "Araquanid",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Araquanid.png"
+  },
+  {
+    "pokedex_number": 753,
+    "name": "Fomantis",
+    "rarity": "common",
+    "image_path": "pokemon/common/Fomantis.png"
+  },
+  {
+    "pokedex_number": 754,
+    "name": "Lurantis",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Lurantis.png"
+  },
+  {
+    "pokedex_number": 755,
+    "name": "Morelull",
+    "rarity": "common",
+    "image_path": "pokemon/common/Morelull.png"
+  },
+  {
+    "pokedex_number": 756,
+    "name": "Shiinotic",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Shiinotic.png"
+  },
+  {
+    "pokedex_number": 757,
+    "name": "Salandit",
+    "rarity": "common",
+    "image_path": "pokemon/common/Salandit.png"
+  },
+  {
+    "pokedex_number": 758,
+    "name": "Salazzle",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Salazzle.png"
+  },
+  {
+    "pokedex_number": 759,
+    "name": "Stufful",
+    "rarity": "common",
+    "image_path": "pokemon/common/Stufful.png"
+  },
+  {
+    "pokedex_number": 760,
+    "name": "Bewear",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Bewear.png"
+  },
+  {
+    "pokedex_number": 761,
+    "name": "Bounsweet",
+    "rarity": "common",
+    "image_path": "pokemon/common/Bounsweet.png"
+  },
+  {
+    "pokedex_number": 762,
+    "name": "Steenee",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Steenee.png"
+  },
+  {
+    "pokedex_number": 763,
+    "name": "Tsareena",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Tsareena.png"
+  },
+  {
+    "pokedex_number": 764,
+    "name": "Comfey",
+    "rarity": "common",
+    "image_path": "pokemon/common/Comfey.png"
+  },
+  {
+    "pokedex_number": 765,
+    "name": "Oranguru",
+    "rarity": "common",
+    "image_path": "pokemon/common/Oranguru.png"
+  },
+  {
+    "pokedex_number": 766,
+    "name": "Passimian",
+    "rarity": "common",
+    "image_path": "pokemon/common/Passimian.png"
+  },
+  {
+    "pokedex_number": 767,
+    "name": "Wimpod",
+    "rarity": "common",
+    "image_path": "pokemon/common/Wimpod.png"
+  },
+  {
+    "pokedex_number": 768,
+    "name": "Golisopod",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Golisopod.png"
+  },
+  {
+    "pokedex_number": 769,
+    "name": "Sandygast",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sandygast.png"
+  },
+  {
+    "pokedex_number": 770,
+    "name": "Palossand",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Palossand.png"
+  },
+  {
+    "pokedex_number": 771,
+    "name": "Pyukumuku",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pyukumuku.png"
+  },
+  {
+    "pokedex_number": 772,
+    "name": "Type: Null",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Type:Null.png"
+  },
+  {
+    "pokedex_number": 773,
+    "name": "Silvally",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Silvally.png"
+  },
+  {
+    "pokedex_number": 774,
+    "name": "Minior",
+    "rarity": "common",
+    "image_path": "pokemon/common/Minior.png"
+  },
+  {
+    "pokedex_number": 775,
+    "name": "Komala",
+    "rarity": "common",
+    "image_path": "pokemon/common/Komala.png"
+  },
+  {
+    "pokedex_number": 776,
+    "name": "Turtonator",
+    "rarity": "common",
+    "image_path": "pokemon/common/Turtonator.png"
+  },
+  {
+    "pokedex_number": 777,
+    "name": "Togedemaru",
+    "rarity": "common",
+    "image_path": "pokemon/common/Togedemaru.png"
+  },
+  {
+    "pokedex_number": 778,
+    "name": "Mimikyu",
+    "rarity": "common",
+    "image_path": "pokemon/common/Mimikyu.png"
+  },
+  {
+    "pokedex_number": 779,
+    "name": "Bruxish",
+    "rarity": "common",
+    "image_path": "pokemon/common/Bruxish.png"
+  },
+  {
+    "pokedex_number": 780,
+    "name": "Drampa",
+    "rarity": "common",
+    "image_path": "pokemon/common/Drampa.png"
+  },
+  {
+    "pokedex_number": 781,
+    "name": "Dhelmise",
+    "rarity": "common",
+    "image_path": "pokemon/common/Dhelmise.png"
+  },
+  {
+    "pokedex_number": 782,
+    "name": "Jangmo-o",
+    "rarity": "common",
+    "image_path": "pokemon/common/Jangmo-o.png"
+  },
+  {
+    "pokedex_number": 783,
+    "name": "Hakamo-o",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Hakamo-o.png"
+  },
+  {
+    "pokedex_number": 784,
+    "name": "Kommo-o",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Kommo-o.png"
+  },
+  {
+    "pokedex_number": 785,
+    "name": "Tapu Koko",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/TapuKoko.png"
+  },
+  {
+    "pokedex_number": 786,
+    "name": "Tapu Lele",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/TapuLele.png"
+  },
+  {
+    "pokedex_number": 787,
+    "name": "Tapu Bulu",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/TapuBulu.png"
+  },
+  {
+    "pokedex_number": 788,
+    "name": "Tapu Fini",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/TapuFini.png"
+  },
+  {
+    "pokedex_number": 789,
+    "name": "Cosmog",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Cosmog.png"
+  },
+  {
+    "pokedex_number": 790,
+    "name": "Cosmoem",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Cosmoem.png"
+  },
+  {
+    "pokedex_number": 791,
+    "name": "Solgaleo",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Solgaleo.png"
+  },
+  {
+    "pokedex_number": 792,
+    "name": "Lunala",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Lunala.png"
+  },
+  {
+    "pokedex_number": 793,
+    "name": "Nihilego",
+    "rarity": "common",
+    "image_path": "pokemon/common/Nihilego.png"
+  },
+  {
+    "pokedex_number": 794,
+    "name": "Buzzwole",
+    "rarity": "common",
+    "image_path": "pokemon/common/Buzzwole.png"
+  },
+  {
+    "pokedex_number": 795,
+    "name": "Pheromosa",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pheromosa.png"
+  },
+  {
+    "pokedex_number": 796,
+    "name": "Xurkitree",
+    "rarity": "common",
+    "image_path": "pokemon/common/Xurkitree.png"
+  },
+  {
+    "pokedex_number": 797,
+    "name": "Celesteela",
+    "rarity": "common",
+    "image_path": "pokemon/common/Celesteela.png"
+  },
+  {
+    "pokedex_number": 798,
+    "name": "Kartana",
+    "rarity": "common",
+    "image_path": "pokemon/common/Kartana.png"
+  },
+  {
+    "pokedex_number": 799,
+    "name": "Guzzlord",
+    "rarity": "common",
+    "image_path": "pokemon/common/Guzzlord.png"
+  },
+  {
+    "pokedex_number": 800,
+    "name": "Necrozma",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Necrozma.png"
+  },
+  {
+    "pokedex_number": 801,
+    "name": "Magearna",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Magearna.png"
+  },
+  {
+    "pokedex_number": 802,
+    "name": "Marshadow",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Marshadow.png"
+  },
+  {
+    "pokedex_number": 803,
+    "name": "Poipole",
+    "rarity": "common",
+    "image_path": "pokemon/common/Poipole.png"
+  },
+  {
+    "pokedex_number": 804,
+    "name": "Naganadel",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Naganadel.png"
+  },
+  {
+    "pokedex_number": 805,
+    "name": "Stakataka",
+    "rarity": "common",
+    "image_path": "pokemon/common/Stakataka.png"
+  },
+  {
+    "pokedex_number": 806,
+    "name": "Blacephalon",
+    "rarity": "common",
+    "image_path": "pokemon/common/Blacephalon.png"
+  },
+  {
+    "pokedex_number": 807,
+    "name": "Zeraora",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Zeraora.png"
+  },
+  {
+    "pokedex_number": 808,
+    "name": "Meltan",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Meltan.png"
+  },
+  {
+    "pokedex_number": 809,
+    "name": "Melmetal",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Melmetal.png"
+  },
+  {
+    "pokedex_number": 810,
+    "name": "Grookey",
+    "rarity": "common",
+    "image_path": "pokemon/common/Grookey.png"
+  },
+  {
+    "pokedex_number": 811,
+    "name": "Thwackey",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Thwackey.png"
+  },
+  {
+    "pokedex_number": 812,
+    "name": "Rillaboom",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Rillaboom.png"
+  },
+  {
+    "pokedex_number": 813,
+    "name": "Scorbunny",
+    "rarity": "common",
+    "image_path": "pokemon/common/Scorbunny.png"
+  },
+  {
+    "pokedex_number": 814,
+    "name": "Raboot",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Raboot.png"
+  },
+  {
+    "pokedex_number": 815,
+    "name": "Cinderace",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Cinderace.png"
+  },
+  {
+    "pokedex_number": 816,
+    "name": "Sobble",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sobble.png"
+  },
+  {
+    "pokedex_number": 817,
+    "name": "Drizzile",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Drizzile.png"
+  },
+  {
+    "pokedex_number": 818,
+    "name": "Inteleon",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Inteleon.png"
+  },
+  {
+    "pokedex_number": 819,
+    "name": "Skwovet",
+    "rarity": "common",
+    "image_path": "pokemon/common/Skwovet.png"
+  },
+  {
+    "pokedex_number": 820,
+    "name": "Greedent",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Greedent.png"
+  },
+  {
+    "pokedex_number": 821,
+    "name": "Rookidee",
+    "rarity": "common",
+    "image_path": "pokemon/common/Rookidee.png"
+  },
+  {
+    "pokedex_number": 822,
+    "name": "Corvisquire",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Corvisquire.png"
+  },
+  {
+    "pokedex_number": 823,
+    "name": "Corviknight",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Corviknight.png"
+  },
+  {
+    "pokedex_number": 824,
+    "name": "Blipbug",
+    "rarity": "common",
+    "image_path": "pokemon/common/Blipbug.png"
+  },
+  {
+    "pokedex_number": 825,
+    "name": "Dottler",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dottler.png"
+  },
+  {
+    "pokedex_number": 826,
+    "name": "Orbeetle",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Orbeetle.png"
+  },
+  {
+    "pokedex_number": 827,
+    "name": "Nickit",
+    "rarity": "common",
+    "image_path": "pokemon/common/Nickit.png"
+  },
+  {
+    "pokedex_number": 828,
+    "name": "Thievul",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Thievul.png"
+  },
+  {
+    "pokedex_number": 829,
+    "name": "Gossifleur",
+    "rarity": "common",
+    "image_path": "pokemon/common/Gossifleur.png"
+  },
+  {
+    "pokedex_number": 830,
+    "name": "Eldegoss",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Eldegoss.png"
+  },
+  {
+    "pokedex_number": 831,
+    "name": "Wooloo",
+    "rarity": "common",
+    "image_path": "pokemon/common/Wooloo.png"
+  },
+  {
+    "pokedex_number": 832,
+    "name": "Dubwool",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dubwool.png"
+  },
+  {
+    "pokedex_number": 833,
+    "name": "Chewtle",
+    "rarity": "common",
+    "image_path": "pokemon/common/Chewtle.png"
+  },
+  {
+    "pokedex_number": 834,
+    "name": "Drednaw",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Drednaw.png"
+  },
+  {
+    "pokedex_number": 835,
+    "name": "Yamper",
+    "rarity": "common",
+    "image_path": "pokemon/common/Yamper.png"
+  },
+  {
+    "pokedex_number": 836,
+    "name": "Boltund",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Boltund.png"
+  },
+  {
+    "pokedex_number": 837,
+    "name": "Rolycoly",
+    "rarity": "common",
+    "image_path": "pokemon/common/Rolycoly.png"
+  },
+  {
+    "pokedex_number": 838,
+    "name": "Carkol",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Carkol.png"
+  },
+  {
+    "pokedex_number": 839,
+    "name": "Coalossal",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Coalossal.png"
+  },
+  {
+    "pokedex_number": 840,
+    "name": "Applin",
+    "rarity": "common",
+    "image_path": "pokemon/common/Applin.png"
+  },
+  {
+    "pokedex_number": 841,
+    "name": "Flapple",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Flapple.png"
+  },
+  {
+    "pokedex_number": 842,
+    "name": "Appletun",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Appletun.png"
+  },
+  {
+    "pokedex_number": 843,
+    "name": "Silicobra",
+    "rarity": "common",
+    "image_path": "pokemon/common/Silicobra.png"
+  },
+  {
+    "pokedex_number": 844,
+    "name": "Sandaconda",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Sandaconda.png"
+  },
+  {
+    "pokedex_number": 845,
+    "name": "Cramorant",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cramorant.png"
+  },
+  {
+    "pokedex_number": 846,
+    "name": "Arrokuda",
+    "rarity": "common",
+    "image_path": "pokemon/common/Arrokuda.png"
+  },
+  {
+    "pokedex_number": 847,
+    "name": "Barraskewda",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Barraskewda.png"
+  },
+  {
+    "pokedex_number": 848,
+    "name": "Toxel",
+    "rarity": "common",
+    "image_path": "pokemon/common/Toxel.png"
+  },
+  {
+    "pokedex_number": 849,
+    "name": "Toxtricity",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Toxtricity.png"
+  },
+  {
+    "pokedex_number": 850,
+    "name": "Sizzlipede",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sizzlipede.png"
+  },
+  {
+    "pokedex_number": 851,
+    "name": "Centiskorch",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Centiskorch.png"
+  },
+  {
+    "pokedex_number": 852,
+    "name": "Clobbopus",
+    "rarity": "common",
+    "image_path": "pokemon/common/Clobbopus.png"
+  },
+  {
+    "pokedex_number": 853,
+    "name": "Grapploct",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Grapploct.png"
+  },
+  {
+    "pokedex_number": 854,
+    "name": "Sinistea",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sinistea.png"
+  },
+  {
+    "pokedex_number": 855,
+    "name": "Polteageist",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Polteageist.png"
+  },
+  {
+    "pokedex_number": 856,
+    "name": "Hatenna",
+    "rarity": "common",
+    "image_path": "pokemon/common/Hatenna.png"
+  },
+  {
+    "pokedex_number": 857,
+    "name": "Hattrem",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Hattrem.png"
+  },
+  {
+    "pokedex_number": 858,
+    "name": "Hatterene",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Hatterene.png"
+  },
+  {
+    "pokedex_number": 859,
+    "name": "Impidimp",
+    "rarity": "common",
+    "image_path": "pokemon/common/Impidimp.png"
+  },
+  {
+    "pokedex_number": 860,
+    "name": "Morgrem",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Morgrem.png"
+  },
+  {
+    "pokedex_number": 861,
+    "name": "Grimmsnarl",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Grimmsnarl.png"
+  },
+  {
+    "pokedex_number": 862,
+    "name": "Obstagoon",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Obstagoon.png"
+  },
+  {
+    "pokedex_number": 863,
+    "name": "Perrserker",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Perrserker.png"
+  },
+  {
+    "pokedex_number": 864,
+    "name": "Cursola",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Cursola.png"
+  },
+  {
+    "pokedex_number": 865,
+    "name": "Sirfetch’d",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Sirfetchd.png"
+  },
+  {
+    "pokedex_number": 866,
+    "name": "Mr. Rime",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/MrRime.png"
+  },
+  {
+    "pokedex_number": 867,
+    "name": "Runerigus",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Runerigus.png"
+  },
+  {
+    "pokedex_number": 868,
+    "name": "Milcery",
+    "rarity": "common",
+    "image_path": "pokemon/common/Milcery.png"
+  },
+  {
+    "pokedex_number": 869,
+    "name": "Alcremie",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Alcremie.png"
+  },
+  {
+    "pokedex_number": 870,
+    "name": "Falinks",
+    "rarity": "common",
+    "image_path": "pokemon/common/Falinks.png"
+  },
+  {
+    "pokedex_number": 871,
+    "name": "Pincurchin",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pincurchin.png"
+  },
+  {
+    "pokedex_number": 872,
+    "name": "Snom",
+    "rarity": "common",
+    "image_path": "pokemon/common/Snom.png"
+  },
+  {
+    "pokedex_number": 873,
+    "name": "Frosmoth",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Frosmoth.png"
+  },
+  {
+    "pokedex_number": 874,
+    "name": "Stonjourner",
+    "rarity": "common",
+    "image_path": "pokemon/common/Stonjourner.png"
+  },
+  {
+    "pokedex_number": 875,
+    "name": "Eiscue",
+    "rarity": "common",
+    "image_path": "pokemon/common/Eiscue.png"
+  },
+  {
+    "pokedex_number": 876,
+    "name": "Indeedee",
+    "rarity": "common",
+    "image_path": "pokemon/common/Indeedee.png"
+  },
+  {
+    "pokedex_number": 877,
+    "name": "Morpeko",
+    "rarity": "common",
+    "image_path": "pokemon/common/Morpeko.png"
+  },
+  {
+    "pokedex_number": 878,
+    "name": "Cufant",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cufant.png"
+  },
+  {
+    "pokedex_number": 879,
+    "name": "Copperajah",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Copperajah.png"
+  },
+  {
+    "pokedex_number": 880,
+    "name": "Dracozolt",
+    "rarity": "common",
+    "image_path": "pokemon/common/Dracozolt.png"
+  },
+  {
+    "pokedex_number": 881,
+    "name": "Arctozolt",
+    "rarity": "common",
+    "image_path": "pokemon/common/Arctozolt.png"
+  },
+  {
+    "pokedex_number": 882,
+    "name": "Dracovish",
+    "rarity": "common",
+    "image_path": "pokemon/common/Dracovish.png"
+  },
+  {
+    "pokedex_number": 883,
+    "name": "Arctovish",
+    "rarity": "common",
+    "image_path": "pokemon/common/Arctovish.png"
+  },
+  {
+    "pokedex_number": 884,
+    "name": "Duraludon",
+    "rarity": "common",
+    "image_path": "pokemon/common/Duraludon.png"
+  },
+  {
+    "pokedex_number": 885,
+    "name": "Dreepy",
+    "rarity": "common",
+    "image_path": "pokemon/common/Dreepy.png"
+  },
+  {
+    "pokedex_number": 886,
+    "name": "Drakloak",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Drakloak.png"
+  },
+  {
+    "pokedex_number": 887,
+    "name": "Dragapult",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Dragapult.png"
+  },
+  {
+    "pokedex_number": 888,
+    "name": "Zacian",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Zacian.png"
+  },
+  {
+    "pokedex_number": 889,
+    "name": "Zamazenta",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Zamazenta.png"
+  },
+  {
+    "pokedex_number": 890,
+    "name": "Eternatus",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Eternatus.png"
+  },
+  {
+    "pokedex_number": 891,
+    "name": "Kubfu",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Kubfu.png"
+  },
+  {
+    "pokedex_number": 892,
+    "name": "Urshifu",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Urshifu.png"
+  },
+  {
+    "pokedex_number": 893,
+    "name": "Zarude",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Zarude.png"
+  },
+  {
+    "pokedex_number": 894,
+    "name": "Regieleki",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Regieleki.png"
+  },
+  {
+    "pokedex_number": 895,
+    "name": "Regidrago",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Regidrago.png"
+  },
+  {
+    "pokedex_number": 896,
+    "name": "Glastrier",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Glastrier.png"
+  },
+  {
+    "pokedex_number": 897,
+    "name": "Spectrier",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Spectrier.png"
+  },
+  {
+    "pokedex_number": 898,
+    "name": "Calyrex",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Calyrex.png"
+  },
+  {
+    "pokedex_number": 899,
+    "name": "Wyrdeer",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Wyrdeer.png"
+  },
+  {
+    "pokedex_number": 900,
+    "name": "Kleavor",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Kleavor.png"
+  },
+  {
+    "pokedex_number": 901,
+    "name": "Ursaluna",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Ursaluna.png"
+  },
+  {
+    "pokedex_number": 902,
+    "name": "Basculegion",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Basculegion.png"
+  },
+  {
+    "pokedex_number": 903,
+    "name": "Sneasler",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Sneasler.png"
+  },
+  {
+    "pokedex_number": 904,
+    "name": "Overqwil",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Overqwil.png"
+  },
+  {
+    "pokedex_number": 905,
+    "name": "Enamorus",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Enamorus.png"
+  },
+  {
+    "pokedex_number": 906,
+    "name": "Sprigatito",
+    "rarity": "common",
+    "image_path": "pokemon/common/Sprigatito.png"
+  },
+  {
+    "pokedex_number": 907,
+    "name": "Floragato",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Floragato.png"
+  },
+  {
+    "pokedex_number": 908,
+    "name": "Meowscarada",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Meowscarada.png"
+  },
+  {
+    "pokedex_number": 909,
+    "name": "Fuecoco",
+    "rarity": "common",
+    "image_path": "pokemon/common/Fuecoco.png"
+  },
+  {
+    "pokedex_number": 910,
+    "name": "Crocalor",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Crocalor.png"
+  },
+  {
+    "pokedex_number": 911,
+    "name": "Skeledirge",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Skeledirge.png"
+  },
+  {
+    "pokedex_number": 912,
+    "name": "Quaxly",
+    "rarity": "common",
+    "image_path": "pokemon/common/Quaxly.png"
+  },
+  {
+    "pokedex_number": 913,
+    "name": "Quaxwell",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Quaxwell.png"
+  },
+  {
+    "pokedex_number": 914,
+    "name": "Quaquaval",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Quaquaval.png"
+  },
+  {
+    "pokedex_number": 915,
+    "name": "Lechonk",
+    "rarity": "common",
+    "image_path": "pokemon/common/Lechonk.png"
+  },
+  {
+    "pokedex_number": 916,
+    "name": "Oinkologne",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Oinkologne.png"
+  },
+  {
+    "pokedex_number": 917,
+    "name": "Tarountula",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tarountula.png"
+  },
+  {
+    "pokedex_number": 918,
+    "name": "Spidops",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Spidops.png"
+  },
+  {
+    "pokedex_number": 919,
+    "name": "Nymble",
+    "rarity": "common",
+    "image_path": "pokemon/common/Nymble.png"
+  },
+  {
+    "pokedex_number": 920,
+    "name": "Lokix",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Lokix.png"
+  },
+  {
+    "pokedex_number": 921,
+    "name": "Pawmi",
+    "rarity": "common",
+    "image_path": "pokemon/common/Pawmi.png"
+  },
+  {
+    "pokedex_number": 922,
+    "name": "Pawmo",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Pawmo.png"
+  },
+  {
+    "pokedex_number": 923,
+    "name": "Pawmot",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Pawmot.png"
+  },
+  {
+    "pokedex_number": 924,
+    "name": "Tandemaus",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tandemaus.png"
+  },
+  {
+    "pokedex_number": 925,
+    "name": "Maushold",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Maushold.png"
+  },
+  {
+    "pokedex_number": 926,
+    "name": "Fidough",
+    "rarity": "common",
+    "image_path": "pokemon/common/Fidough.png"
+  },
+  {
+    "pokedex_number": 927,
+    "name": "Dachsbun",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dachsbun.png"
+  },
+  {
+    "pokedex_number": 928,
+    "name": "Smoliv",
+    "rarity": "common",
+    "image_path": "pokemon/common/Smoliv.png"
+  },
+  {
+    "pokedex_number": 929,
+    "name": "Dolliv",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dolliv.png"
+  },
+  {
+    "pokedex_number": 930,
+    "name": "Arboliva",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Arboliva.png"
+  },
+  {
+    "pokedex_number": 931,
+    "name": "Squawkabilly",
+    "rarity": "common",
+    "image_path": "pokemon/common/Squawkabilly.png"
+  },
+  {
+    "pokedex_number": 932,
+    "name": "Nacli",
+    "rarity": "common",
+    "image_path": "pokemon/common/Nacli.png"
+  },
+  {
+    "pokedex_number": 933,
+    "name": "Naclstack",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Naclstack.png"
+  },
+  {
+    "pokedex_number": 934,
+    "name": "Garganacl",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Garganacl.png"
+  },
+  {
+    "pokedex_number": 935,
+    "name": "Charcadet",
+    "rarity": "common",
+    "image_path": "pokemon/common/Charcadet.png"
+  },
+  {
+    "pokedex_number": 936,
+    "name": "Armarouge",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Armarouge.png"
+  },
+  {
+    "pokedex_number": 937,
+    "name": "Ceruledge",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Ceruledge.png"
+  },
+  {
+    "pokedex_number": 938,
+    "name": "Tadbulb",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tadbulb.png"
+  },
+  {
+    "pokedex_number": 939,
+    "name": "Bellibolt",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Bellibolt.png"
+  },
+  {
+    "pokedex_number": 940,
+    "name": "Wattrel",
+    "rarity": "common",
+    "image_path": "pokemon/common/Wattrel.png"
+  },
+  {
+    "pokedex_number": 941,
+    "name": "Kilowattrel",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Kilowattrel.png"
+  },
+  {
+    "pokedex_number": 942,
+    "name": "Maschiff",
+    "rarity": "common",
+    "image_path": "pokemon/common/Maschiff.png"
+  },
+  {
+    "pokedex_number": 943,
+    "name": "Mabosstiff",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Mabosstiff.png"
+  },
+  {
+    "pokedex_number": 944,
+    "name": "Shroodle",
+    "rarity": "common",
+    "image_path": "pokemon/common/Shroodle.png"
+  },
+  {
+    "pokedex_number": 945,
+    "name": "Grafaiai",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Grafaiai.png"
+  },
+  {
+    "pokedex_number": 946,
+    "name": "Bramblin",
+    "rarity": "common",
+    "image_path": "pokemon/common/Bramblin.png"
+  },
+  {
+    "pokedex_number": 947,
+    "name": "Brambleghast",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Brambleghast.png"
+  },
+  {
+    "pokedex_number": 948,
+    "name": "Toedscool",
+    "rarity": "common",
+    "image_path": "pokemon/common/Toedscool.png"
+  },
+  {
+    "pokedex_number": 949,
+    "name": "Toedscruel",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Toedscruel.png"
+  },
+  {
+    "pokedex_number": 950,
+    "name": "Klawf",
+    "rarity": "common",
+    "image_path": "pokemon/common/Klawf.png"
+  },
+  {
+    "pokedex_number": 951,
+    "name": "Capsakid",
+    "rarity": "common",
+    "image_path": "pokemon/common/Capsakid.png"
+  },
+  {
+    "pokedex_number": 952,
+    "name": "Scovillain",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Scovillain.png"
+  },
+  {
+    "pokedex_number": 953,
+    "name": "Rellor",
+    "rarity": "common",
+    "image_path": "pokemon/common/Rellor.png"
+  },
+  {
+    "pokedex_number": 954,
+    "name": "Rabsca",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Rabsca.png"
+  },
+  {
+    "pokedex_number": 955,
+    "name": "Flittle",
+    "rarity": "common",
+    "image_path": "pokemon/common/Flittle.png"
+  },
+  {
+    "pokedex_number": 956,
+    "name": "Espathra",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Espathra.png"
+  },
+  {
+    "pokedex_number": 957,
+    "name": "Tinkatink",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tinkatink.png"
+  },
+  {
+    "pokedex_number": 958,
+    "name": "Tinkatuff",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Tinkatuff.png"
+  },
+  {
+    "pokedex_number": 959,
+    "name": "Tinkaton",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Tinkaton.png"
+  },
+  {
+    "pokedex_number": 960,
+    "name": "Wiglett",
+    "rarity": "common",
+    "image_path": "pokemon/common/Wiglett.png"
+  },
+  {
+    "pokedex_number": 961,
+    "name": "Wugtrio",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Wugtrio.png"
+  },
+  {
+    "pokedex_number": 962,
+    "name": "Bombirdier",
+    "rarity": "common",
+    "image_path": "pokemon/common/Bombirdier.png"
+  },
+  {
+    "pokedex_number": 963,
+    "name": "Finizen",
+    "rarity": "common",
+    "image_path": "pokemon/common/Finizen.png"
+  },
+  {
+    "pokedex_number": 964,
+    "name": "Palafin",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Palafin.png"
+  },
+  {
+    "pokedex_number": 965,
+    "name": "Varoom",
+    "rarity": "common",
+    "image_path": "pokemon/common/Varoom.png"
+  },
+  {
+    "pokedex_number": 966,
+    "name": "Revavroom",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Revavroom.png"
+  },
+  {
+    "pokedex_number": 967,
+    "name": "Cyclizar",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cyclizar.png"
+  },
+  {
+    "pokedex_number": 968,
+    "name": "Orthworm",
+    "rarity": "common",
+    "image_path": "pokemon/common/Orthworm.png"
+  },
+  {
+    "pokedex_number": 969,
+    "name": "Glimmet",
+    "rarity": "common",
+    "image_path": "pokemon/common/Glimmet.png"
+  },
+  {
+    "pokedex_number": 970,
+    "name": "Glimmora",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Glimmora.png"
+  },
+  {
+    "pokedex_number": 971,
+    "name": "Greavard",
+    "rarity": "common",
+    "image_path": "pokemon/common/Greavard.png"
+  },
+  {
+    "pokedex_number": 972,
+    "name": "Houndstone",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Houndstone.png"
+  },
+  {
+    "pokedex_number": 973,
+    "name": "Flamigo",
+    "rarity": "common",
+    "image_path": "pokemon/common/Flamigo.png"
+  },
+  {
+    "pokedex_number": 974,
+    "name": "Cetoddle",
+    "rarity": "common",
+    "image_path": "pokemon/common/Cetoddle.png"
+  },
+  {
+    "pokedex_number": 975,
+    "name": "Cetitan",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Cetitan.png"
+  },
+  {
+    "pokedex_number": 976,
+    "name": "Veluza",
+    "rarity": "common",
+    "image_path": "pokemon/common/Veluza.png"
+  },
+  {
+    "pokedex_number": 977,
+    "name": "Dondozo",
+    "rarity": "common",
+    "image_path": "pokemon/common/Dondozo.png"
+  },
+  {
+    "pokedex_number": 978,
+    "name": "Tatsugiri",
+    "rarity": "common",
+    "image_path": "pokemon/common/Tatsugiri.png"
+  },
+  {
+    "pokedex_number": 979,
+    "name": "Annihilape",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Annihilape.png"
+  },
+  {
+    "pokedex_number": 980,
+    "name": "Clodsire",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Clodsire.png"
+  },
+  {
+    "pokedex_number": 981,
+    "name": "Farigiraf",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Farigiraf.png"
+  },
+  {
+    "pokedex_number": 982,
+    "name": "Dudunsparce",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dudunsparce.png"
+  },
+  {
+    "pokedex_number": 983,
+    "name": "Kingambit",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Kingambit.png"
+  },
+  {
+    "pokedex_number": 984,
+    "name": "Great Tusk",
+    "rarity": "common",
+    "image_path": "pokemon/common/GreatTusk.png"
+  },
+  {
+    "pokedex_number": 985,
+    "name": "Scream Tail",
+    "rarity": "common",
+    "image_path": "pokemon/common/ScreamTail.png"
+  },
+  {
+    "pokedex_number": 986,
+    "name": "Brute Bonnet",
+    "rarity": "common",
+    "image_path": "pokemon/common/BruteBonnet.png"
+  },
+  {
+    "pokedex_number": 987,
+    "name": "Flutter Mane",
+    "rarity": "common",
+    "image_path": "pokemon/common/FlutterMane.png"
+  },
+  {
+    "pokedex_number": 988,
+    "name": "Slither Wing",
+    "rarity": "common",
+    "image_path": "pokemon/common/SlitherWing.png"
+  },
+  {
+    "pokedex_number": 989,
+    "name": "Sandy Shocks",
+    "rarity": "common",
+    "image_path": "pokemon/common/SandyShocks.png"
+  },
+  {
+    "pokedex_number": 990,
+    "name": "Iron Treads",
+    "rarity": "common",
+    "image_path": "pokemon/common/IronTreads.png"
+  },
+  {
+    "pokedex_number": 991,
+    "name": "Iron Bundle",
+    "rarity": "common",
+    "image_path": "pokemon/common/IronBundle.png"
+  },
+  {
+    "pokedex_number": 992,
+    "name": "Iron Hands",
+    "rarity": "common",
+    "image_path": "pokemon/common/IronHands.png"
+  },
+  {
+    "pokedex_number": 993,
+    "name": "Iron Jugulis",
+    "rarity": "common",
+    "image_path": "pokemon/common/IronJugulis.png"
+  },
+  {
+    "pokedex_number": 994,
+    "name": "Iron Moth",
+    "rarity": "common",
+    "image_path": "pokemon/common/IronMoth.png"
+  },
+  {
+    "pokedex_number": 995,
+    "name": "Iron Thorns",
+    "rarity": "common",
+    "image_path": "pokemon/common/IronThorns.png"
+  },
+  {
+    "pokedex_number": 996,
+    "name": "Frigibax",
+    "rarity": "common",
+    "image_path": "pokemon/common/Frigibax.png"
+  },
+  {
+    "pokedex_number": 997,
+    "name": "Arctibax",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Arctibax.png"
+  },
+  {
+    "pokedex_number": 998,
+    "name": "Baxcalibur",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Baxcalibur.png"
+  },
+  {
+    "pokedex_number": 999,
+    "name": "Gimmighoul",
+    "rarity": "common",
+    "image_path": "pokemon/common/Gimmighoul.png"
+  },
+  {
+    "pokedex_number": 1000,
+    "name": "Gholdengo",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Gholdengo.png"
+  },
+  {
+    "pokedex_number": 1001,
+    "name": "Wo-Chien",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Wo-Chien.png"
+  },
+  {
+    "pokedex_number": 1002,
+    "name": "Chien-Pao",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Chien-Pao.png"
+  },
+  {
+    "pokedex_number": 1003,
+    "name": "Ting-Lu",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Ting-Lu.png"
+  },
+  {
+    "pokedex_number": 1004,
+    "name": "Chi-Yu",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Chi-Yu.png"
+  },
+  {
+    "pokedex_number": 1005,
+    "name": "Roaring Moon",
+    "rarity": "common",
+    "image_path": "pokemon/common/RoaringMoon.png"
+  },
+  {
+    "pokedex_number": 1006,
+    "name": "Iron Valiant",
+    "rarity": "common",
+    "image_path": "pokemon/common/IronValiant.png"
+  },
+  {
+    "pokedex_number": 1007,
+    "name": "Koraidon",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Koraidon.png"
+  },
+  {
+    "pokedex_number": 1008,
+    "name": "Miraidon",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Miraidon.png"
+  },
+  {
+    "pokedex_number": 1009,
+    "name": "Walking Wake",
+    "rarity": "common",
+    "image_path": "pokemon/common/WalkingWake.png"
+  },
+  {
+    "pokedex_number": 1010,
+    "name": "Iron Leaves",
+    "rarity": "common",
+    "image_path": "pokemon/common/IronLeaves.png"
+  },
+  {
+    "pokedex_number": 1011,
+    "name": "Dipplin",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Dipplin.png"
+  },
+  {
+    "pokedex_number": 1012,
+    "name": "Poltchageist",
+    "rarity": "common",
+    "image_path": "pokemon/common/Poltchageist.png"
+  },
+  {
+    "pokedex_number": 1013,
+    "name": "Sinistcha",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Sinistcha.png"
+  },
+  {
+    "pokedex_number": 1014,
+    "name": "Okidogi",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Okidogi.png"
+  },
+  {
+    "pokedex_number": 1015,
+    "name": "Munkidori",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Munkidori.png"
+  },
+  {
+    "pokedex_number": 1016,
+    "name": "Fezandipiti",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Fezandipiti.png"
+  },
+  {
+    "pokedex_number": 1017,
+    "name": "Ogerpon",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Ogerpon.png"
+  },
+  {
+    "pokedex_number": 1018,
+    "name": "Archaludon",
+    "rarity": "uncommon",
+    "image_path": "pokemon/uncommon/Archaludon.png"
+  },
+  {
+    "pokedex_number": 1019,
+    "name": "Hydrapple",
+    "rarity": "rare",
+    "image_path": "pokemon/rare/Hydrapple.png"
+  },
+  {
+    "pokedex_number": 1020,
+    "name": "Gouging Fire",
+    "rarity": "common",
+    "image_path": "pokemon/common/GougingFire.png"
+  },
+  {
+    "pokedex_number": 1021,
+    "name": "Raging Bolt",
+    "rarity": "common",
+    "image_path": "pokemon/common/RagingBolt.png"
+  },
+  {
+    "pokedex_number": 1022,
+    "name": "Iron Boulder",
+    "rarity": "common",
+    "image_path": "pokemon/common/IronBoulder.png"
+  },
+  {
+    "pokedex_number": 1023,
+    "name": "Iron Crown",
+    "rarity": "common",
+    "image_path": "pokemon/common/IronCrown.png"
+  },
+  {
+    "pokedex_number": 1024,
+    "name": "Terapagos",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Terapagos.png"
+  },
+  {
+    "pokedex_number": 1025,
+    "name": "Pecharunt",
+    "rarity": "legendary",
+    "image_path": "pokemon/legendary/Pecharunt.png"
+  }
+]
