@@ -101,6 +101,7 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
   const toggleAssistMode = useGameStore((s) => s.toggleAssistMode);
   const resetPuzzle = useGameStore((s) => s.resetPuzzle);
   const undoLastPlacement = useGameStore((s) => s.undoLastPlacement);
+  const canUndo = useGameStore((s) => s.actionHistory.length > 0);
   const nextLevel = useGameStore((s) => s.nextLevel);
   const levelIndex = useGameStore((s) => s.levelIndex);
   const solved = useGameStore((s) => s.solved);
@@ -111,6 +112,33 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
   const viewMode = useGameStore((s) => s.viewMode);
   const toggleViewMode = useGameStore((s) => s.toggleViewMode);
   const elapsed = useElapsedMs(!solved && !paused, startedAt);
+
+  // The HUD (three stacked panels, one of them wrapping across 2-3 rows
+  // depending on device width/font metrics) needs the board positioned
+  // below wherever it actually ends - a fixed guessed pixel value kept
+  // being wrong for some device/orientation (a real browser's address bar
+  // in non-fullscreen mode leaves noticeably less height than fullscreen
+  // does, on top of the HUD's own row count varying by screen width), so
+  // this measures the HUD's real rendered bottom edge and exposes it as a
+  // CSS variable Board2D's own layout reads, instead of a static number
+  // that only happened to match one specific device/state it was tuned on.
+  const hudRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const el = hudRef.current;
+    if (!el) return;
+    const measure = () => {
+      const bottom = el.getBoundingClientRect().bottom;
+      document.documentElement.style.setProperty('--board-top-gap', `${Math.ceil(bottom) + 12}px`);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    window.addEventListener('resize', measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
 
   const handleGoHome = () => {
     pauseGame();
@@ -137,7 +165,6 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
   const isDeadlocked = useGameStore((s) => s.isDeadlocked);
   const deadlockedRegion = useGameStore((s) => s.deadlockedRegion);
   const resolveDeadlock = useGameStore((s) => s.resolveDeadlock);
-  const score = computeScore(mistakes, hintsUsed, solved ? solvedAtMs ?? 0 : elapsed);
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) document.documentElement.requestFullscreen();
@@ -212,6 +239,7 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
   const totalCells = puzzle.size * puzzle.size;
   const remainingCells = totalCells - placedCount;
   const openCells = remainingCells - eliminatedCount;
+  const score = computeScore(mistakes, hintsUsed, solved ? solvedAtMs ?? 0 : elapsed, puzzle.size, levelIndex + 1);
 
   // A teaching-style hint (see findForcedHint in rules.ts): prefers pointing
   // at the next *eliminable* cells - "mark these X, because that region has
@@ -250,7 +278,7 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
     <div className="app-shell">
       {viewMode === '3d' ? <Scene /> : <Board2D />}
 
-      <div className="hud">
+      <div className="hud" ref={hudRef}>
         <div className="hud-panel">
           <span>שלב {levelIndex + 1}</span>
           <span>{formatMs(solved ? solvedAtMs ?? elapsed : elapsed)}</span>
@@ -273,7 +301,7 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
             💡 רמז {hintsUsed > 0 ? `(${hintsUsed})` : ''}
           </button>
           <button onClick={() => setShowGlobalRanking(true)}>🏆 דירוג כללי</button>
-          <button onClick={undoLastPlacement} disabled={placedCount === 0 || isDeadlocked}>
+          <button onClick={undoLastPlacement} disabled={!canUndo || isDeadlocked}>
             ↩️ בטל
           </button>
           <button onClick={resetPuzzle}>איפוס</button>

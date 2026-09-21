@@ -1,6 +1,7 @@
 import Database from 'better-sqlite3';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { computeLevelScore, levelNumberFromId, sizeForLevel } from '@3doku/shared';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 // Separate file in dev so iterating locally (schema resets, test accounts) never
@@ -205,41 +206,72 @@ export interface GlobalRankingRow {
   pokemon_count: number;
 }
 
+interface BestScoreRow {
+  user_id: number;
+  puzzle_id: string;
+  time_ms: number;
+  used_assist: number;
+}
+
 /**
- * Cross-level ranking: each user's best submission per level (same ordering as
- * topScores - no assist beats any assisted run, then fastest time) is converted
- * to a server-computed score and summed. Scored server-side from time_ms/used_assist
- * only (never a client-supplied number) so it can't be gamed by a client claiming
- * zero mistakes - the same trust boundary the solution-validity check already draws.
- * Best-per-level (not every submission) so replaying a level for more points doesn't
- * inflate the total.
+ * Each user's best submission per level (no assist beats any assisted run,
+ * then fastest time), scored via @3doku/shared's computeLevelScore - which
+ * needs the puzzle's board size and level number, so this is done in JS
+ * rather than as a SQL expression (SQL has no access to sizeForLevel's
+ * ramp, and duplicating that formula in raw SQL would drift from the real
+ * one over time). Scored purely from time_ms/used_assist - never a
+ * client-supplied number - so it can't be gamed by a client claiming zero
+ * mistakes, the same trust boundary the solution-validity check already
+ * draws. Best-per-level (not every submission) so replaying a level for
+ * more points doesn't inflate the total. Shared by globalRanking and
+ * myGlobalRank so both use the exact same per-user totals.
  */
-export function globalRanking(limit = 50): GlobalRankingRow[] {
-  return db
+function bestScoreTotalsByUser(): Map<number, { total: number; levels: number }> {
+  const rows = db
     .prepare(
-      `WITH best AS (
-         SELECT user_id, puzzle_id, time_ms, used_assist,
-                ROW_NUMBER() OVER (PARTITION BY user_id, puzzle_id ORDER BY used_assist ASC, time_ms ASC) AS rn
-         FROM scores
-       ),
-       scored AS (
-         SELECT user_id,
-                MAX(1000 - (time_ms / 1000) * 2 - used_assist * 200, 0) AS score
-         FROM best
-         WHERE rn = 1
-       )
-       SELECT users.id AS user_id,
-              users.display_name AS player_name,
-              SUM(scored.score) AS total_score,
-              COUNT(*) AS levels_completed,
-              COALESCE((SELECT COUNT(*) FROM pokemon_collection pc WHERE pc.user_id = users.id), 0) AS pokemon_count
-       FROM scored
-       JOIN users ON users.id = scored.user_id
-       GROUP BY users.id
-       ORDER BY total_score DESC
-       LIMIT ?`
+      `SELECT user_id, puzzle_id, time_ms, used_assist,
+              ROW_NUMBER() OVER (PARTITION BY user_id, puzzle_id ORDER BY used_assist ASC, time_ms ASC) AS rn
+       FROM scores`
     )
-    .all(limit) as GlobalRankingRow[];
+    .all() as (BestScoreRow & { rn: number })[];
+
+  const totals = new Map<number, { total: number; levels: number }>();
+  for (const row of rows) {
+    if (row.rn !== 1) continue;
+    const level = levelNumberFromId(row.puzzle_id);
+    if (level === null) continue;
+    const score = computeLevelScore(sizeForLevel(level), level, row.time_ms, Boolean(row.used_assist));
+    const entry = totals.get(row.user_id) ?? { total: 0, levels: 0 };
+    entry.total += score;
+    entry.levels += 1;
+    totals.set(row.user_id, entry);
+  }
+  return totals;
+}
+
+export function globalRanking(limit = 50): GlobalRankingRow[] {
+  const totals = bestScoreTotalsByUser();
+  const users = db.prepare(`SELECT id, display_name FROM users`).all() as { id: number; display_name: string }[];
+  const pokemonCounts = new Map<number, number>(
+    (db.prepare(`SELECT user_id, COUNT(*) AS c FROM pokemon_collection GROUP BY user_id`).all() as { user_id: number; c: number }[]).map(
+      (r) => [r.user_id, r.c]
+    )
+  );
+
+  const rows: GlobalRankingRow[] = [];
+  for (const user of users) {
+    const entry = totals.get(user.id);
+    if (!entry) continue;
+    rows.push({
+      user_id: user.id,
+      player_name: user.display_name,
+      total_score: entry.total,
+      levels_completed: entry.levels,
+      pokemon_count: pokemonCounts.get(user.id) ?? 0,
+    });
+  }
+  rows.sort((a, b) => b.total_score - a.total_score);
+  return rows.slice(0, limit);
 }
 
 export interface MyGlobalRankRow {
@@ -253,34 +285,14 @@ export interface MyGlobalRankRow {
  * scored user (not just the top `limit` globalRanking returns) - so the live
  * in-game HUD can show "your rank" even when that's well outside the top 50
  * the home screen's leaderboard actually displays. Same scoring as
- * globalRanking; RANK() (not ROW_NUMBER()) so tied totals share a place.
+ * globalRanking; ties share a rank, matching SQL RANK() semantics.
  */
 export function myGlobalRank(userId: number): MyGlobalRankRow | undefined {
-  return db
-    .prepare(
-      `WITH best AS (
-         SELECT user_id, puzzle_id, time_ms, used_assist,
-                ROW_NUMBER() OVER (PARTITION BY user_id, puzzle_id ORDER BY used_assist ASC, time_ms ASC) AS rn
-         FROM scores
-       ),
-       scored AS (
-         SELECT user_id,
-                MAX(1000 - (time_ms / 1000) * 2 - used_assist * 200, 0) AS score
-         FROM best
-         WHERE rn = 1
-       ),
-       totals AS (
-         SELECT user_id, SUM(score) AS total_score, COUNT(*) AS levels_completed
-         FROM scored
-         GROUP BY user_id
-       ),
-       ranked AS (
-         SELECT user_id, total_score, levels_completed, RANK() OVER (ORDER BY total_score DESC) AS rank
-         FROM totals
-       )
-       SELECT rank, total_score, levels_completed FROM ranked WHERE user_id = ?`
-    )
-    .get(userId) as MyGlobalRankRow | undefined;
+  const totals = bestScoreTotalsByUser();
+  const entry = totals.get(userId);
+  if (!entry) return undefined;
+  const rank = 1 + [...totals.values()].filter((t) => t.total > entry.total).length;
+  return { rank, total_score: entry.total, levels_completed: entry.levels };
 }
 
 /**

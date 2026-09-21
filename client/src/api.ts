@@ -123,6 +123,9 @@ export async function submitScore(
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
+    // Same reasoning as saveProgress's keepalive - this also fires right on
+    // solve, and a refresh in that same window shouldn't be able to drop it.
+    keepalive: true,
   });
   if (!res.ok) throw new Error(await parseErrorBody(res));
   const data = await res.json();
@@ -197,6 +200,17 @@ export async function saveProgress(levelIndex: number): Promise<void> {
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ levelIndex }),
+    // This fires right when a level is solved, fire-and-forget (the caller
+    // doesn't await it) - a refresh in the brief window before it reaches
+    // the server (e.g. right after solving, exactly when a player is most
+    // likely to refresh/navigate) left the server still pointing at the
+    // just-solved level. Reloading that level then found no saved board
+    // (its local save is cleared the instant it's solved, by design) and
+    // started it fresh and empty - which read as "the level reset itself"
+    // even though the puzzle really had been solved correctly. `keepalive`
+    // tells the browser to let this specific request finish even if the
+    // page that sent it is being unloaded, instead of dropping it.
+    keepalive: true,
   });
 }
 

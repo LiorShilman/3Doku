@@ -21,7 +21,21 @@ export function Piece({ position, conflict, spriteUrl }: PieceProps) {
 
   return (
     <Billboard position={position}>
-      <mesh position={[0, 0, 0]} castShadow>
+      <mesh
+        position={[0, 0, 0]}
+        castShadow
+        // A placed piece is locked - Board.tsx's own cell handler already
+        // refuses to act on a cell that has one - but Three.js raycasting
+        // tests a mesh's full rectangular geometry, not the sprite's actual
+        // (mostly transparent) pixels. Without this, a tap landing on this
+        // tall billboard's transparent margin - which can visually extend
+        // over a neighboring cell from certain camera angles - fell through
+        // to whatever cell was actually behind it, sometimes registering as
+        // an accidental new placement there. Absorbing the event here makes
+        // the whole sprite a dead zone for clicks, matching what "locked"
+        // is supposed to mean.
+        onPointerDown={(e) => e.stopPropagation()}
+      >
         <planeGeometry args={[width, height]} />
         {/* Unlit on purpose: this is a 2D sprite icon, not a lit 3D surface -
             a billboard always faces the camera, so its "normal" for lighting

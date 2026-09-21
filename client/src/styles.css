@@ -100,6 +100,24 @@ button:disabled:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* The HUD's real height varies a lot - it wraps across a different number
+     of rows depending on screen width/font metrics, AND a real browser's
+     own address bar (non-fullscreen mode) leaves noticeably less usable
+     height than fullscreen does on the same device. Two fixed-pixel guesses
+     here (first 114px, then 148px) each looked right on whatever one
+     device/state they were tuned against and wrong on the next. App.tsx
+     measures the HUD's actual live rendered height with a ResizeObserver
+     and sets --board-top-gap to match - this is the one thing here that
+     isn't a guess. The 148px fallback only applies before that JS runs
+     (a single early frame) or if it somehow doesn't (very old browsers).
+     Bottom padding is separately reserved for the "new Pokemon caught"
+     banner (~84px tall) - the board sizes itself to fill whatever space
+     this wrap leaves it, so a mere 12px of bottom clearance meant a tall
+     board's own bottom rows sat right where that banner renders, silently
+     swallowing clicks meant for those cells (including, worst case, the
+     winning placement itself - which then read as the level "not
+     advancing" for no visible reason). */
+  padding: var(--board-top-gap, 148px) 8px 110px;
 }
 
 /* Sized off the actual free rectangle below the HUD (100vh minus its real
@@ -117,7 +135,18 @@ button:disabled:hover {
      the RTL text/UI around it. */
   direction: ltr;
   gap: 7px;
-  width: min(calc(100vw - 32px), calc(100vh - 114px), 820px);
+  width: min(calc(100vw - 32px), calc(100vh - var(--board-top-gap, 148px) - 110px), 820px);
+  /* 100vh on iOS Safari is the height with the address bar collapsed - with
+     the bar actually showing (the common case), the real visible height is
+     shorter, so this sized the board bigger than the space its own wrap
+     (which does use 100dvh - see .app-shell) actually had for it, pushing
+     it up past the wrap's own top padding and under the menu. 100dvh tracks
+     the real, current viewport; unsupported browsers just ignore this line
+     and keep the 100vh version above. --board-top-gap is the same live
+     HUD-height measurement the wrap's own padding-top uses (see
+     .board-2d-wrap) - kept in sync with it on purpose, since this is
+     sizing the board to fit the exact space that padding leaves free. */
+  width: min(calc(100vw - 32px), calc(100dvh - var(--board-top-gap, 148px) - 110px), 820px);
   aspect-ratio: 1 / 1;
   padding: 14px;
   border-radius: 22px;
@@ -297,12 +326,9 @@ button:disabled:hover {
 }
 
 @media (max-width: 700px) {
-  .board-2d-wrap {
-    padding: 148px 8px 12px;
-  }
-
   .board-2d {
-    width: min(calc(100vw - 16px), calc(100vh - 160px), 820px);
+    width: min(calc(100vw - 16px), calc(100vh - var(--board-top-gap, 148px) - 110px), 820px);
+    width: min(calc(100vw - 16px), calc(100dvh - var(--board-top-gap, 148px) - 110px), 820px);
     gap: 4px;
     padding: 10px;
     border-radius: 16px;
@@ -319,6 +345,7 @@ button:disabled:hover {
   left: 20px;
   right: 20px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
   pointer-events: none;
@@ -348,8 +375,21 @@ button:disabled:hover {
   padding: 10px 16px;
   font-size: 14px;
   display: flex;
+  flex-wrap: wrap;
   gap: 14px;
   align-items: center;
+  /* Without a wrap allowance, three of these panels side by side (the third
+     one alone holds 8 items - name, hint, ranking, undo, reset, fullscreen,
+     view toggle, home, logout) could genuinely overflow past the edge of
+     the screen at some viewport widths (previously this only wrapped below
+     700px) - real, off-screen overflow, not just a visual clipping. Combined
+     with the page's RTL direction, that overflow could shift how the whole
+     page's coordinates resolved, misaligning clicks meant for one button or
+     board cell onto a neighboring one instead - reset sits right next to
+     undo in this same row, so a misaligned click could land on it by
+     accident. Wrapping unconditionally removes that failure mode at any
+     width instead of only fixing it below one specific breakpoint. */
+  max-width: calc(100vw - 40px);
 }
 
 .assist-toggle {

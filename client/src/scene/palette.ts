@@ -22,7 +22,17 @@ export const REGION_COLORS = [
   '#34c759', // green    (~135°)
   '#00c7b1', // teal     (~173°)
   '#0a84ff', // blue     (~210°)
-  '#5e5ce6', // indigo   (~241°)
+  // Was "indigo" (#5e5ce6, ~241°) - only 31° from blue in hue, and a strong
+  // blue-violet like this one reads as "purple" to most people at a glance,
+  // not as a distinct third color from blue - this was the actual pair
+  // getting confused, not blue vs. #bf5af2 (a much more magenta-leaning
+  // color further away in hue, restored below). A genuinely neutral,
+  // low-saturation warm gray can't be confused with ANY hue-based region,
+  // including its neighbors here - being a different *kind* of color (muted
+  // vs. vivid) is a stronger distinction than shifting hue angle again would
+  // be, and the saturation filter barely affects it either way (there's
+  // little saturation to boost).
+  '#9c8f7c', // warm gray (neutral)
   '#bf5af2', // purple   (~280°)
   '#ff2d82', // pink     (~336°)
 ];

@@ -4,8 +4,9 @@ import { colorForRegion } from '../scene/palette';
 import { getPokedexEntry, pokemonImageUrl } from '../pokemon/pokedex';
 
 // Same gesture rules as the 3D board (Board.tsx) - kept identical on purpose
-// so switching view modes never changes how the game feels to play.
-const DOUBLE_TAP_MS = 280;
+// so switching view modes never changes how the game feels to play. See
+// Board.tsx's DOUBLE_TAP_MS comment for why this was widened from 280.
+const DOUBLE_TAP_MS = 400;
 const DRAG_COMMIT_PX = 14;
 
 export function Board2D() {
@@ -26,6 +27,7 @@ export function Board2D() {
   const lastTapRef = useRef<{ key: string; time: number } | null>(null);
   const dragStartScreenRef = useRef<{ x: number; y: number } | null>(null);
   const dragCommittedRef = useRef(false);
+  const boardRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const endDrag = () => {
@@ -37,6 +39,31 @@ export function Board2D() {
     window.addEventListener('pointerup', endDrag);
     return () => window.removeEventListener('pointerup', endDrag);
   }, [setMarkDragging]);
+
+  // Same purpose as Scene.tsx's camera-projection version of this for 3D -
+  // the "new Pokemon caught" banner needs the board's actual current bottom
+  // edge to anchor below it, not a fixed distance from the screen edge. In
+  // 2D the board is a real DOM element, so this is a direct measurement
+  // instead of a 3D projection. Without it, a tall board (large size, or a
+  // tall/narrow viewport) could have its own bottom rows sit right where the
+  // fixed-position banner renders, silently swallowing clicks meant for
+  // those cells - including, worst case, the winning placement itself,
+  // which then read as the level "not advancing" for no visible reason.
+  useEffect(() => {
+    const el = boardRef.current;
+    if (!el) return;
+    const measure = () => useGameStore.getState().setBoardBottomScreenY(el.getBoundingClientRect().bottom);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    window.addEventListener('resize', measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [puzzle?.id, puzzle?.size]);
+
+  useEffect(() => () => useGameStore.getState().setBoardBottomScreenY(null), []);
 
   if (!puzzle) return null;
 
@@ -59,6 +86,7 @@ export function Board2D() {
   return (
     <div className="board-2d-wrap">
       <div
+        ref={boardRef}
         className="board-2d"
         style={{ gridTemplateColumns: `repeat(${size}, 1fr)`, gridTemplateRows: `repeat(${size}, 1fr)` }}
       >

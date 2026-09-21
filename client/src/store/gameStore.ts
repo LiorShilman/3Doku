@@ -7,6 +7,7 @@ import {
   findFullyEliminatedRegion,
   isDeadlocked,
   solveFrom,
+  scoreMultiplier,
   type Hint,
   type Position,
   type PuzzleDefinition,
@@ -103,6 +104,16 @@ function clearAllLocalBoardStates() {
   }
 }
 
+/**
+ * One user-reversible step, in the order taken - lets Undo reverse whatever
+ * actually happened most recently (a mark toggle or a placement), instead of
+ * always jumping straight to the last placement regardless of how many mark
+ * changes came after it.
+ */
+type UndoAction =
+  | { kind: 'place'; pos: Position; hadMark: boolean }
+  | { kind: 'mark'; pos: Position; wasMarked: boolean };
+
 interface GameState {
   levelIndex: number;
   puzzle: PuzzleDefinition | null;
@@ -138,6 +149,8 @@ interface GameState {
    * visually anchor to the board (the new-Pokemon banner) has to get this
    * from the scene's camera projection rather than CSS. Null in 2D view. */
   boardBottomScreenY: number | null;
+  /** Chronological undo stack - see UndoAction and undoLastPlacement. */
+  actionHistory: UndoAction[];
   setMarkDragging: (dragging: boolean) => void;
   setBoardBottomScreenY: (y: number | null) => void;
   toggleAssistMode: () => void;
@@ -164,10 +177,23 @@ const HINT_PENALTY = 50;
 const TIME_PENALTY_PER_SEC = 2;
 const BASE_SCORE = 1000;
 
-/** Score drops with every wrong placement, every hint used, and with time spent, floored at 0. */
-export function computeScore(mistakes: number, hintsUsed: number, elapsedMs: number): number {
+/**
+ * This is a local preview only (shown right after solving) - the leaderboard's
+ * actual score is computed server-side from time+assist alone (see
+ * @3doku/shared's computeLevelScore), since the server never trusts a
+ * client-reported mistake count. Scaled by the same size/level multiplier so
+ * this preview isn't misleadingly different from what the leaderboard will
+ * show - a flat base score used to make a perfect run on a big, late-game
+ * board score the same (near-zero, once its naturally longer solve time ate
+ * into a fixed budget) as a badly-played early one.
+ */
+export function computeScore(mistakes: number, hintsUsed: number, elapsedMs: number, boardSize: number, level: number): number {
+  const multiplier = scoreMultiplier(boardSize, level);
   const timePenalty = Math.floor(elapsedMs / 1000) * TIME_PENALTY_PER_SEC;
-  return Math.max(0, BASE_SCORE - mistakes * MISTAKE_PENALTY - hintsUsed * HINT_PENALTY - timePenalty);
+  return Math.max(
+    0,
+    Math.round(BASE_SCORE * multiplier - mistakes * MISTAKE_PENALTY * multiplier - hintsUsed * HINT_PENALTY * multiplier - timePenalty)
+  );
 }
 
 let flashTimeout: ReturnType<typeof setTimeout> | undefined;
@@ -203,6 +229,7 @@ function freshBoardState(puzzle: PuzzleDefinition) {
     deadlockedRegion: null,
     paused: false,
     pausedAt: null,
+    actionHistory: [] as UndoAction[],
   };
 }
 
@@ -274,6 +301,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   viewMode: loadViewMode(),
   isMarkDragging: false,
   boardBottomScreenY: null,
+  actionHistory: [],
 
   setMarkDragging: (dragging) => set({ isMarkDragging: dragging }),
   setBoardBottomScreenY: (y) => set({ boardBottomScreenY: y }),
@@ -292,7 +320,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   // applies that same mode to each - idempotent per cell so re-entering one twice
   // in a drag doesn't flicker it back and forth. Never places a piece.
   setMark: (pos, marked) => {
-    const { placements, solved, assistMode, eliminated, manualMarks } = get();
+    const { placements, solved, assistMode, eliminated, manualMarks, actionHistory } = get();
     if (solved) return;
     const k = key(pos);
 
@@ -303,12 +331,15 @@ export const useGameStore = create<GameState>((set, get) => ({
     const next = new Set(manualMarks);
     if (marked) next.add(k);
     else next.delete(k);
-    set({ manualMarks: next });
+    // Each individual mark/unmark - even ones painted in the same drag
+    // gesture - is its own undoable step (see undoLastPlacement), so Undo
+    // reverses whatever the player actually did most recently.
+    set({ manualMarks: next, actionHistory: [...actionHistory, { kind: 'mark', pos, wasMarked: !marked }] });
   },
 
   // double click: the only gesture that places (or fails to place) a piece
   attemptPlace: (pos) => {
-    const { puzzle, placements, solved, assistMode, eliminated, manualMarks } = get();
+    const { puzzle, placements, solved, assistMode, eliminated, manualMarks, actionHistory } = get();
     if (solved || !puzzle) return;
     const k = key(pos);
 
@@ -330,6 +361,10 @@ export const useGameStore = create<GameState>((set, get) => ({
 
     const next = [...placements, pos];
     const nowSolved = isSolved(puzzle, next);
+    // A cell double-tapped to place it may have carried a manual mark from
+    // the tap that started the double-tap (see Board.tsx) - recorded here so
+    // undoing this placement can restore it, not just clear the cell.
+    const hadMark = manualMarks.has(k);
     const remainingMarks = new Set([...manualMarks].filter((m) => m !== k));
 
     // Which Pokemon shows up is purely cosmetic (a collectible, not a game
@@ -358,18 +393,35 @@ export const useGameStore = create<GameState>((set, get) => ({
       solved: nowSolved,
       solvedAtMs: nowSolved ? Date.now() - get().startedAt : null,
       hint: null,
+      actionHistory: [...actionHistory, { kind: 'place', pos, hadMark }],
       ...(nowSolved ? { isDeadlocked: false, deadlockedRegion: null } : deadlockStatus(puzzle, next)),
     });
   },
 
-  // clicking a placed piece removes it
+  // Only called from undoLastPlacement below (tapping a placed piece directly
+  // no longer removes it - pieces are locked, see Board.tsx/Board2D.tsx).
   removePiece: (pos: Position) => {
     const { puzzle, placements, placementSprites } = get();
     if (!puzzle) return;
+    const k = key(pos);
     const next = placements.filter((p) => !(p.row === pos.row && p.col === pos.col));
     if (next.length === placements.length) return;
     const nextSprites = { ...placementSprites };
-    delete nextSprites[key(pos)];
+    delete nextSprites[k];
+
+    // Undoing a placement should undo its catch too - this was already done
+    // for resolveDeadlock's own removal below, but this path (the regular
+    // Undo button) never got the same treatment, so a catch made just
+    // before undoing it stuck around in the collection permanently -
+    // repeat place+undo at the same cell was a free, unlimited way to
+    // "catch" it into the collection with no way to remove it again.
+    const revokedPokedexNumber = placementSprites[k];
+    if (revokedPokedexNumber !== undefined) {
+      reportPokemonUncatch(revokedPokedexNumber)
+        .then(() => get().loadOwnedPokedex())
+        .catch(() => {});
+    }
+
     set({
       placements: next,
       placementSprites: nextSprites,
@@ -379,14 +431,33 @@ export const useGameStore = create<GameState>((set, get) => ({
     });
   },
 
-  // A dedicated Undo button, distinct from resolveDeadlock below - this is a
-  // free, no-penalty step back (same result as clicking the last-placed piece
-  // to remove it, just without needing to find and click that exact cell),
-  // not a "that placement was a mistake" correction.
+  // A dedicated Undo button, distinct from resolveDeadlock below - a free,
+  // no-penalty step back through whatever the player actually did most
+  // recently, one step at a time: an X mark toggle if that's what came last,
+  // or the placement itself once every mark change after it has been undone
+  // first. Used to always jump straight to the last *placement* regardless
+  // of how many marks were set/cleared since - so marking a few cells after
+  // placing a piece, then hitting Undo, skipped right past those marks to
+  // remove the piece instead of undoing the most recent mark first.
   undoLastPlacement: () => {
-    const { placements } = get();
-    if (placements.length === 0) return;
-    get().removePiece(placements[placements.length - 1]);
+    const { actionHistory, manualMarks } = get();
+    if (actionHistory.length === 0) return;
+    const action = actionHistory[actionHistory.length - 1];
+    const rest = actionHistory.slice(0, -1);
+
+    if (action.kind === 'mark') {
+      const next = new Set(manualMarks);
+      if (action.wasMarked) next.add(key(action.pos));
+      else next.delete(key(action.pos));
+      set({ manualMarks: next, actionHistory: rest });
+      return;
+    }
+
+    set({ actionHistory: rest });
+    get().removePiece(action.pos);
+    if (action.hadMark) {
+      set((s) => ({ manualMarks: new Set(s.manualMarks).add(key(action.pos)) }));
+    }
   },
 
   // the quickest way out of a deadlock: the blocking piece was a real mistake, even
@@ -394,11 +465,16 @@ export const useGameStore = create<GameState>((set, get) => ({
   // the score same as an invalid placement) and leave an X behind instead of an empty cell,
   // so the player doesn't try the same wrong spot again.
   resolveDeadlock: () => {
-    const { puzzle, placements, manualMarks, placementSprites } = get();
+    const { puzzle, placements, manualMarks, placementSprites, actionHistory } = get();
     if (!puzzle || placements.length === 0) return;
     const last = placements[placements.length - 1];
     const k = key(last);
     const next = placements.slice(0, -1);
+    // Drops this placement's own undo entry too (it's always the top one -
+    // Undo is disabled for the whole time the board is deadlocked, so
+    // nothing else could have been recorded since) - otherwise a later
+    // Undo click would find a stale entry for a piece already gone.
+    const nextHistory = actionHistory[actionHistory.length - 1]?.kind === 'place' ? actionHistory.slice(0, -1) : actionHistory;
     const nextMarks = new Set(manualMarks);
     nextMarks.add(k);
     const nextSprites = { ...placementSprites };
@@ -422,6 +498,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       eliminated: new Set(getBoardEliminatedCells(puzzle, next).map(key)),
       mistakes: s.mistakes + 1,
       hint: null,
+      actionHistory: nextHistory,
       ...deadlockStatus(puzzle, next),
     }));
   },
@@ -449,11 +526,23 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   clearHint: () => set({ hint: null }),
 
-  resetPuzzle: () =>
-    set((s) => {
-      if (!s.puzzle) return s;
-      return freshBoardState(s.puzzle);
-    }),
+  // "איפוס"/"שחק שוב" - restarts the current level from scratch, discarding
+  // every placement made so far. Same bug class as removePiece: any catch
+  // from this now-discarded attempt needs to be revoked, or restarting a
+  // level after catching a few Pokemon was a free, repeatable way to keep
+  // them in the collection forever while still getting a clean board back.
+  // One uncatch call per placement (not per distinct species) - each
+  // placement incremented times_caught separately server-side, regardless
+  // of whether two cells happened to land on the same species.
+  resetPuzzle: () => {
+    const { puzzle, placementSprites } = get();
+    if (!puzzle) return;
+    const pokedexNumbers = Object.values(placementSprites);
+    if (pokedexNumbers.length > 0) {
+      Promise.all(pokedexNumbers.map((n) => reportPokemonUncatch(n).catch(() => {}))).then(() => get().loadOwnedPokedex());
+    }
+    set(freshBoardState(puzzle));
+  },
 
   nextLevel: async () => {
     await get().loadLevel(get().levelIndex + 1);

@@ -25,8 +25,14 @@ export const CELL_SPACING = 1.2;
 // A real, deliberate double-click/tap - not the browser's own dblclick timing,
 // which runs ~500ms on desktop and is inconsistent (and often more lenient) on
 // touch devices, so two separate deliberate taps kept reading as one and
-// placing a piece nobody asked for.
-const DOUBLE_TAP_MS = 280;
+// placing a piece nobody asked for. 280 (tried first) overcorrected the other
+// way: a deliberate double-tap made right after reading a hint's on-screen
+// message - a natural pause for attention, not a rapid reflex click - often
+// landed outside that window, so each tap registered as its own independent
+// single tap (toggling an X mark on, then off) and the intended placement
+// never happened at all. Widened - still well under the browser's own
+// ~500ms, but forgiving enough for an intentional-but-unhurried double-tap.
+const DOUBLE_TAP_MS = 400;
 // A tap's natural finger/mouse wobble shouldn't spill a mark onto a neighboring
 // cell - only commit to painting further cells once the pointer has actually
 // moved this many screen pixels from where the drag started. Touch jitter is
