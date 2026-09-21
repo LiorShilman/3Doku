@@ -83,6 +83,13 @@ button:disabled:hover {
   position: relative;
   width: 100vw;
   height: 100vh;
+  /* 100vh on iOS Safari is the height with the address bar collapsed - the
+     actually visible area when it's showing (the common case) is shorter,
+     so anything positioned near the bottom of a 100vh container (like the
+     new-Pokemon banner, `bottom: 30px` within this element) sits below what
+     the user can actually see. 100dvh tracks the real, current viewport;
+     unsupported browsers just ignore this line and keep the 100vh above. */
+  height: 100dvh;
 }
 
 /* ---- 2D board (alternative to the 3D scene, same game state/interactions) ---- */
@@ -119,6 +126,13 @@ button:disabled:hover {
     0 24px 60px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
     inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+  /* The 3D scene's "vivid TV mode" saturation/contrast boost (Scene.tsx's
+     HueSaturation/BrightnessContrast) is a post-process step over the whole
+     rendered frame - there's no equivalent single step in a 2D DOM grid of
+     colored divs, so a CSS filter on this shared container is the direct
+     equivalent: it applies over every cell/piece/mark painted inside it at
+     once, the same way the 3D post-processing applies over the whole canvas. */
+  filter: saturate(1.45) contrast(1.12);
 }
 
 .board-2d-cell {
@@ -544,6 +558,13 @@ button:disabled:hover {
   width: 40px;
   flex-shrink: 0;
   text-align: right;
+  /* Unlike .name, this had no white-space rule - a fixed-width box with no
+     protection against wrapping. iOS renders some emoji (🏁/🎒 here)
+     noticeably wider than Android does in the same font-size, so content
+     that fit fine on one platform could overflow this box's width on the
+     other; without this, the browser's default wrapping broke the emoji
+     and number onto two lines right in the middle of the row. */
+  white-space: nowrap;
 }
 
 .global-ranking-list li .score {
@@ -552,6 +573,7 @@ button:disabled:hover {
   width: 64px;
   flex-shrink: 0;
   text-align: right;
+  white-space: nowrap;
 }
 
 .win-banner {
@@ -641,6 +663,7 @@ button:disabled:hover {
 .auth-shell {
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -669,6 +692,7 @@ button:disabled:hover {
 .home-shell {
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1016,6 +1040,7 @@ button.danger {
 .collection-shell {
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   overflow-y: auto;
   background: radial-gradient(circle at 50% 0%, #16162a 0%, #0a0a12 60%);
   padding: 28px 32px 60px;

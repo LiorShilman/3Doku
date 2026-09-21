@@ -19,6 +19,7 @@ export function Cell({ position, region, onPointerDownCell, onPointerEnterCell }
       args={[0.94, 0.22, 0.94]}
       radius={0.06}
       position={position}
+      receiveShadow
       onPointerDown={(e) => {
         e.stopPropagation();
         onPointerDownCell(e);
@@ -33,19 +34,20 @@ export function Cell({ position, region, onPointerDownCell, onPointerEnterCell }
       <meshStandardMaterial
         color={color}
         emissive={color}
-        // 0.55/0.85 (tried first) pushed bright channels toward white -
-        // Bloom picks up on that overexposure and glows the whole board pale
-        // instead of making the color read as more saturated. This is a
-        // smaller bump from the original 0.22/0.5 - enough to stop ambient/
-        // directional lighting from muting the color without blowing it out.
-        emissiveIntensity={hovered ? 0.55 : 0.3}
+        // Emissive light is flat by nature - it isn't affected by the
+        // surface normal or the light's angle, so it adds the same
+        // brightness to every pixel of the cell's top face regardless of
+        // shading. At 0.3 (bumped up from 0.22 in an earlier round to fight
+        // muted colors) it was strong enough to wash out the real diffuse
+        // shading from the directional light - which is exactly what read
+        // as both "too bright" AND "flat" at once: the actual shading that
+        // would show depth was being drowned out by this flat glow. Pulled
+        // back down so the board's real per-face lighting (which does vary
+        // with angle, and now actually matters since shadows/exposure were
+        // fixed elsewhere) carries the depth instead of a uniform glow.
+        emissiveIntensity={hovered ? 0.38 : 0.2}
         roughness={0.4}
         metalness={0.08}
-        // Skips the renderer's tone-mapping curve for this material specifically,
-        // so its displayed color is a direct, deterministic function of `color` -
-        // not run through a tone-mapping implementation whose exact numerical
-        // behavior isn't guaranteed identical across every GPU/driver.
-        toneMapped={false}
       />
     </RoundedBox>
   );

@@ -132,7 +132,14 @@ interface GameState {
   isDeadlocked: boolean;
   paused: boolean;
   pausedAt: number | null;
+  /** Pixel Y (from the viewport top) where the 3D board's front edge currently
+   * projects to on screen - the 3D scene is a full-screen canvas with no DOM
+   * layout box of its own, so anything in the surrounding HUD that needs to
+   * visually anchor to the board (the new-Pokemon banner) has to get this
+   * from the scene's camera projection rather than CSS. Null in 2D view. */
+  boardBottomScreenY: number | null;
   setMarkDragging: (dragging: boolean) => void;
+  setBoardBottomScreenY: (y: number | null) => void;
   toggleAssistMode: () => void;
   toggleViewMode: () => void;
   setMark: (pos: Position, marked: boolean) => void;
@@ -266,8 +273,10 @@ export const useGameStore = create<GameState>((set, get) => ({
   assistMode: true,
   viewMode: loadViewMode(),
   isMarkDragging: false,
+  boardBottomScreenY: null,
 
   setMarkDragging: (dragging) => set({ isMarkDragging: dragging }),
+  setBoardBottomScreenY: (y) => set({ boardBottomScreenY: y }),
 
   toggleAssistMode: () => set((s) => ({ assistMode: !s.assistMode })),
 

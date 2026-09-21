@@ -5,7 +5,6 @@ import type { Mesh } from 'three';
 
 interface PieceProps {
   position: [number, number, number];
-  color: string;
   conflict: boolean;
   /** Which image to render for this placed piece - a specific Pokemon in single-player levels (see the collection feature), or omitted for the plain default in race mode. */
   spriteUrl?: string;
@@ -13,7 +12,7 @@ interface PieceProps {
 
 const ASPECT = 492 / 700; // piece.png width / height
 
-export function Piece({ position, color, conflict, spriteUrl }: PieceProps) {
+export function Piece({ position, conflict, spriteUrl }: PieceProps) {
   // BASE_URL (not a hardcoded leading slash) so this still resolves once IIS
   // serves the production build under /3Doku/ instead of the domain root.
   const texture = useTexture(spriteUrl ?? `${import.meta.env.BASE_URL}piece.png`);
@@ -22,20 +21,18 @@ export function Piece({ position, color, conflict, spriteUrl }: PieceProps) {
 
   return (
     <Billboard position={position}>
-      {/* soft color-coded glow disc under the character, ties it to its region */}
-      <mesh position={[0, -height / 2 + 0.06, -0.01]}>
-        <circleGeometry args={[width * 0.55, 32]} />
-        <meshBasicMaterial color={conflict ? '#ff3b5c' : color} transparent opacity={0.35} />
-      </mesh>
-      <mesh position={[0, 0, 0]}>
+      <mesh position={[0, 0, 0]} castShadow>
         <planeGeometry args={[width, height]} />
-        <meshStandardMaterial
-          map={texture}
-          transparent
-          alphaTest={0.15}
-          emissive={conflict ? '#ff3b5c' : '#000000'}
-          emissiveIntensity={conflict ? 0.8 : 0}
-        />
+        {/* Unlit on purpose: this is a 2D sprite icon, not a lit 3D surface -
+            a billboard always faces the camera, so its "normal" for lighting
+            purposes is whatever direction the camera happens to be, and the
+            scene's directional light (positioned to shade the board, not the
+            billboard) desaturated/grayed out the Pokemon artwork depending on
+            view angle. meshBasicMaterial shows the texture's true colors
+            regardless of scene lighting or shadows, which is what a sprite
+            should do. The conflict tint is now a color multiply instead of
+            an emissive add, since meshBasicMaterial has no emissive channel. */}
+        <meshBasicMaterial map={texture} transparent alphaTest={0.15} color={conflict ? '#ff8a99' : '#ffffff'} />
       </mesh>
     </Billboard>
   );
@@ -47,28 +44,29 @@ interface EliminatedMarkProps {
 }
 
 export function EliminatedMark({ position, invalid }: EliminatedMarkProps) {
-  const color = invalid ? '#ff3b5c' : '#5a5a72';
   const size = invalid ? 0.62 : 0.5;
-  const opacity = invalid ? 0.95 : 0.55;
+  // The regular X was a mid-gray (#5a5a72) at only 55% opacity, lit like any
+  // other surface - the region's own (now more saturated, post the vivid-mode
+  // boost) color underneath showed through both the transparency and the
+  // scene's ambient/environment lighting, which is exactly why it read as
+  // "disappearing into the color" instead of a clear mark. Unlit and nearly
+  // opaque so it renders as a true dark mark regardless of the cell color or
+  // scene lighting underneath it.
   return (
     <group position={position}>
       <RoundedBox args={[size, 0.06, 0.09]} rotation={[-Math.PI / 2, 0, Math.PI / 4]} radius={0.02}>
-        <meshStandardMaterial
-          color={color}
-          emissive={color}
-          emissiveIntensity={invalid ? 0.9 : 0}
-          transparent
-          opacity={opacity}
-        />
+        {invalid ? (
+          <meshStandardMaterial color="#ff3b5c" emissive="#ff3b5c" emissiveIntensity={0.9} transparent opacity={0.95} />
+        ) : (
+          <meshBasicMaterial color="#050508" transparent opacity={0.92} />
+        )}
       </RoundedBox>
       <RoundedBox args={[size, 0.06, 0.09]} rotation={[-Math.PI / 2, 0, -Math.PI / 4]} radius={0.02}>
-        <meshStandardMaterial
-          color={color}
-          emissive={color}
-          emissiveIntensity={invalid ? 0.9 : 0}
-          transparent
-          opacity={opacity}
-        />
+        {invalid ? (
+          <meshStandardMaterial color="#ff3b5c" emissive="#ff3b5c" emissiveIntensity={0.9} transparent opacity={0.95} />
+        ) : (
+          <meshBasicMaterial color="#050508" transparent opacity={0.92} />
+        )}
       </RoundedBox>
     </group>
   );

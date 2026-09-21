@@ -94,6 +94,7 @@ interface GameProps {
 function Game({ user, onLogout, onGoHome }: GameProps) {
   const newPokemonCaught = useGameStore((s) => s.newPokemonCaught);
   const clearNewPokemonBanner = useGameStore((s) => s.clearNewPokemonBanner);
+  const boardBottomScreenY = useGameStore((s) => s.boardBottomScreenY);
   const loadError = useGameStore((s) => s.loadError);
   const loadLevel = useGameStore((s) => s.loadLevel);
   const assistMode = useGameStore((s) => s.assistMode);
@@ -272,7 +273,7 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
             💡 רמז {hintsUsed > 0 ? `(${hintsUsed})` : ''}
           </button>
           <button onClick={() => setShowGlobalRanking(true)}>🏆 דירוג כללי</button>
-          <button onClick={undoLastPlacement} disabled={placedCount === 0}>
+          <button onClick={undoLastPlacement} disabled={placedCount === 0 || isDeadlocked}>
             ↩️ בטל
           </button>
           <button onClick={resetPuzzle}>איפוס</button>
@@ -290,7 +291,25 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
       {hintText && <div className="hint-banner">💡 {hintText}</div>}
 
       {newPokemonCaught && (
-        <div className="new-pokemon-banner" onClick={clearNewPokemonBanner}>
+        <div
+          className="new-pokemon-banner"
+          // In 3D, anchor just below the board's actual current screen
+          // position (from Scene.tsx's camera projection) instead of the
+          // CSS default of a fixed distance from the screen's bottom edge -
+          // that read as floating disconnected from the board whenever the
+          // gap between the board and the screen edge wasn't small (which
+          // varies by board size, screen aspect ratio, and camera angle).
+          // In 2D (null) the plain CSS `bottom: 30px` position is used.
+          style={
+            boardBottomScreenY !== null
+              ? // Clamped so a steep manual camera tilt (OrbitControls lets the
+                // player rotate freely) can't push the board's projected edge -
+                // and so this banner - below the visible viewport.
+                { bottom: 'auto', top: Math.min(boardBottomScreenY + 16, window.innerHeight - 100) }
+              : undefined
+          }
+          onClick={clearNewPokemonBanner}
+        >
           <img src={pokemonImageUrl(newPokemonCaught)} alt={newPokemonCaught.name} className="new-pokemon-banner-img" />
           <div className="new-pokemon-banner-text">
             <span className="new-pokemon-banner-title">✨ פוקימון חדש באוסף! ✨</span>

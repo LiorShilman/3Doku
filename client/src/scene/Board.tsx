@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import { RoundedBox } from '@react-three/drei';
 import { useGameStore } from '../store/gameStore';
 import { Cell } from './Cell';
@@ -11,11 +11,17 @@ import {
   HintEliminateGlow,
   DeadlockGlow,
 } from './Piece';
-import { colorForRegion } from './palette';
 import { orbitControlsHandle } from './orbitControlsHandle';
 import { getPokedexEntry, pokemonImageUrl } from '../pokemon/pokedex';
 
-const CELL_SPACING = 1.08;
+// Cell footprint (Cell.tsx's RoundedBox) is 0.94 wide - at the old 1.08
+// spacing the gap between adjacent cells was only 0.14 units, thin enough
+// that the dark grid lines separating cells nearly disappeared depending on
+// viewing angle/distance, reading as one solid slab instead of a grid of
+// separate tiles. Widened for a clearly visible gap; Scene.tsx's camera
+// distance is compensated for this via SPACING_SCALE so framing doesn't
+// shift because of it.
+export const CELL_SPACING = 1.2;
 // A real, deliberate double-click/tap - not the browser's own dblclick timing,
 // which runs ~500ms on desktop and is inconsistent (and often more lenient) on
 // touch devices, so two separate deliberate taps kept reading as one and
@@ -79,7 +85,7 @@ export function Board() {
   return (
     <group>
       {/* diorama base */}
-      <RoundedBox args={[platformSize, 0.3, platformSize]} radius={0.08} position={[0, -0.28, 0]}>
+      <RoundedBox args={[platformSize, 0.3, platformSize]} radius={0.08} position={[0, -0.28, 0]} receiveShadow>
         <meshStandardMaterial color="#15151f" roughness={0.85} metalness={0.05} />
       </RoundedBox>
 
@@ -198,13 +204,22 @@ export function Board() {
         const pokedexNumber = placementSprites[`${p.row},${p.col}`];
         const entry = pokedexNumber !== undefined ? getPokedexEntry(pokedexNumber) : undefined;
         return (
-          <Piece
-            key={`${p.row},${p.col}`}
-            position={[pos[0], 0.635, pos[2]]}
-            color={colorForRegion(puzzle.regions[p.row][p.col])}
-            conflict={conflictFlash.has(`${p.row},${p.col}`)}
-            spriteUrl={entry ? pokemonImageUrl(entry) : undefined}
-          />
+          // Suspense per-piece, not once around the whole board: useTexture
+          // suspends while a sprite it hasn't loaded yet is fetching. With no
+          // Suspense boundary anywhere, that bubbled all the way up and took
+          // the ENTIRE Canvas down to a blank frame and back on every single
+          // newly-seen Pokemon sprite - exactly the "black screen, board
+          // redraws" symptom. Scoped here, only this one piece's mesh blips
+          // out momentarily while its own image loads; the rest of the board
+          // (and the piece's own glow-disc-free plane once loaded) is
+          // unaffected.
+          <Suspense key={`${p.row},${p.col}`} fallback={null}>
+            <Piece
+              position={[pos[0], 0.635, pos[2]]}
+              conflict={conflictFlash.has(`${p.row},${p.col}`)}
+              spriteUrl={entry ? pokemonImageUrl(entry) : undefined}
+            />
+          </Suspense>
         );
       })}
     </group>
