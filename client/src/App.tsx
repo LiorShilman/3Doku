@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Scene } from './scene/Scene';
 import { Board2D } from './scene2d/Board2D';
 import { useGameStore, computeScore } from './store/gameStore';
@@ -112,6 +112,7 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
   const viewMode = useGameStore((s) => s.viewMode);
   const toggleViewMode = useGameStore((s) => s.toggleViewMode);
   const elapsed = useElapsedMs(!solved && !paused, startedAt);
+  const puzzle = useGameStore((s) => s.puzzle);
 
   // The HUD (three stacked panels, one of them wrapping across 2-3 rows
   // depending on device width/font metrics) needs the board positioned
@@ -122,6 +123,14 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
   // this measures the HUD's real rendered bottom edge and exposes it as a
   // CSS variable Board2D's own layout reads, instead of a static number
   // that only happened to match one specific device/state it was tuned on.
+  // Re-attaches on every puzzle change (not just once on mount): between
+  // levels this component briefly renders the "טוען שלב..." loading screen
+  // below, which has no .hud at all - the real HUD div is unmounted and a
+  // completely new one takes its place once the next level loads. An
+  // effect that only ran once kept observing that first, now-detached HUD
+  // node forever, so the measurement went stale after the very first level
+  // transition (a page refresh "fixed" it only because it re-ran this
+  // effect against whatever HUD was live at that moment).
   const hudRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     const el = hudRef.current;
@@ -138,14 +147,13 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
       observer.disconnect();
       window.removeEventListener('resize', measure);
     };
-  }, []);
+  }, [puzzle?.id]);
 
   const handleGoHome = () => {
     pauseGame();
     onGoHome();
   };
 
-  const puzzle = useGameStore((s) => s.puzzle);
   const placements = useGameStore((s) => s.placements);
   const placedCount = placements.length;
 

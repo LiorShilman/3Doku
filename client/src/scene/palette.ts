@@ -19,7 +19,13 @@ export const REGION_COLORS = [
   '#ff3b30', // red      (~3°)
   '#ff9500', // orange   (~35°)
   '#a3e635', // lime     (~83°)
-  '#34c759', // green    (~135°)
+  // Was green (#34c759, ~135°) - only 52° from lime, and once both get
+  // pushed toward their most saturated version by the vivid-mode filter,
+  // a yellow-green and a pure green read as close enough to pass for the
+  // same hue at a glance. Same fix as the blue/indigo pair above: a
+  // genuinely different *kind* of color (a pale, low-saturation cream)
+  // can't be confused with any vivid hue neighbor, lime included.
+  '#f5e8c8', // cream white (neutral)
   '#00c7b1', // teal     (~173°)
   '#0a84ff', // blue     (~210°)
   // Was "indigo" (#5e5ce6, ~241°) - only 31° from blue in hue, and a strong
