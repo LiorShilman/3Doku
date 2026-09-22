@@ -7,7 +7,7 @@ import {
   type PuzzleDefinition,
 } from '@3doku/shared';
 import { colorForRegion } from '../scene/palette';
-import { getRaceSocket } from './socket';
+import { getSocket } from './socket';
 import { clearRaceSession, loadRaceSession, saveRaceSession } from './raceSession';
 import { fetchRaceLeaderboard, type AuthUser, type RaceRankingRow } from '../api';
 
@@ -94,7 +94,7 @@ export function RaceScreen({ user, onExit }: RaceScreenProps) {
   useEffect(() => {
     const saved = loadRaceSession();
     if (!saved) return;
-    const socket = getRaceSocket();
+    const socket = getSocket();
     socket.emit(
       'race:resync',
       { code: saved.code },
@@ -140,7 +140,7 @@ export function RaceScreen({ user, onExit }: RaceScreenProps) {
   };
 
   useEffect(() => {
-    const socket = getRaceSocket();
+    const socket = getSocket();
 
     const onRoster = (data: { players: RacePlayerInfo[]; hostUserId: number }) => {
       setPlayers(data.players);
@@ -224,7 +224,7 @@ export function RaceScreen({ user, onExit }: RaceScreenProps) {
 
   const handleCreate = () => {
     setError(null);
-    const socket = getRaceSocket();
+    const socket = getSocket();
     socket.emit('race:create', { size: createSize }, (res: { code: string } | { error: string }) => {
       if ('error' in res) return setError(res.error);
       setCode(res.code);
@@ -238,7 +238,7 @@ export function RaceScreen({ user, onExit }: RaceScreenProps) {
     setError(null);
     const trimmed = joinInput.trim().toUpperCase();
     if (!trimmed) return;
-    const socket = getRaceSocket();
+    const socket = getSocket();
     socket.emit('race:join', { code: trimmed }, (res: { ok: true } | { error: string }) => {
       if ('error' in res) return setError(res.error);
       setCode(trimmed);
@@ -248,14 +248,14 @@ export function RaceScreen({ user, onExit }: RaceScreenProps) {
 
   const handleBegin = () => {
     setError(null);
-    const socket = getRaceSocket();
+    const socket = getSocket();
     socket.emit('race:begin', { code }, (res: { ok: true } | { error: string }) => {
       if ('error' in res) setError(res.error);
     });
   };
 
   const handleExit = () => {
-    const socket = getRaceSocket();
+    const socket = getSocket();
     if (code) socket.emit('race:leave', { code });
     clearRaceSession();
     onExit();
@@ -270,7 +270,7 @@ export function RaceScreen({ user, onExit }: RaceScreenProps) {
 
   const handleRematch = () => {
     setError(null);
-    const socket = getRaceSocket();
+    const socket = getSocket();
     socket.emit('race:rematch', { code }, (res: { ok: true } | { error: string }) => {
       if ('error' in res) setError(res.error);
     });
@@ -307,7 +307,7 @@ export function RaceScreen({ user, onExit }: RaceScreenProps) {
       return nextMarks;
     });
 
-    const socket = getRaceSocket();
+    const socket = getSocket();
     socket.emit('race:progress', { code, placedCount: next.length });
 
     if (isSolved(puzzle, next)) {

@@ -24,6 +24,10 @@ import { RaceScreen } from './race/RaceScreen';
 import { abandonActiveRace } from './race/raceSession';
 import { CollectionScreen } from './pokemon/CollectionScreen';
 import { loadPokedex, pokemonImageUrl } from './pokemon/pokedex';
+import { usePresenceStore } from './presence/presenceStore';
+import { rankDisplay } from './rankIcons';
+import { OnlineUsersModal } from './presence/OnlineUsersModal';
+import { NotificationToast } from './presence/NotificationToast';
 
 interface GlobalRankingModalProps {
   currentUserId: number;
@@ -42,23 +46,28 @@ function GlobalRankingModal({ currentUserId, onClose }: GlobalRankingModalProps)
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-card ranking-modal-card" onClick={(e) => e.stopPropagation()}>
         <h2>🏆 דירוג כללי</h2>
         {error && <p className="leaderboard-error">לא ניתן לטעון את הדירוג כרגע</p>}
         {!error && !ranking && <p>טוען...</p>}
         {ranking && ranking.length === 0 && <p>עדיין אין נתונים - היה הראשון לפתור שלב!</p>}
         {ranking && ranking.length > 0 && (
-          <ol className="global-ranking-list">
-            {ranking.map((row, i) => (
-              <li key={row.user_id} className={row.user_id === currentUserId ? 'me' : ''}>
-                <span className="rank">{i + 1}</span>
-                <span className="name">{row.player_name}</span>
-                <span className="levels">🏁 {row.levels_completed}</span>
-                <span className="levels">🎒 {row.pokemon_count}</span>
-                <span className="score">{row.total_score} נק'</span>
-              </li>
-            ))}
-          </ol>
+          // The header/footer above and below stay fixed in place - only
+          // this list itself scrolls, so a long ranking never pushes the
+          // close button off screen or scrolls the title away with it.
+          <div className="ranking-list-viewport">
+            <ol className="global-ranking-list">
+              {ranking.map((row, i) => (
+                <li key={row.user_id} className={row.user_id === currentUserId ? 'me' : ''}>
+                  <span className={i < 3 ? 'rank medal' : 'rank'}>{rankDisplay(i)}</span>
+                  <span className="name">{row.player_name}</span>
+                  <span className="levels">🏁 {row.levels_completed}</span>
+                  <span className="levels">🎒 {row.pokemon_count}</span>
+                  <span className="score">{row.total_score} נק'</span>
+                </li>
+              ))}
+            </ol>
+          </div>
         )}
         <button onClick={onClose} className="primary">
           סגור
@@ -185,6 +194,24 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
   const [showGlobalRanking, setShowGlobalRanking] = useState(false);
   const [myRank, setMyRank] = useState<MyGlobalRank | null>(null);
 
+  // The winning double-tap's *second* tap is what completes the puzzle -
+  // the instant it does, this win screen replaces the board at that exact
+  // spot. Mobile browsers can fire a delayed synthetic "ghost click" a few
+  // hundred ms after a real touch, at the same screen coordinates, aimed at
+  // whatever element is there *now* - if "שלב הבא" happens to render right
+  // where the winning cell was tapped, that ghost click could press it
+  // immediately, with the player never actually seeing this screen at all
+  // (reads exactly like "instead of the win menu, it just moved on/reset").
+  // A brief window where this screen's own buttons ignore clicks (a real
+  // person reacting to what they see can't click faster than this) blocks
+  // that without needing to touch the tap-handling code itself.
+  const winShownAt = useRef<number | null>(null);
+  const GHOST_CLICK_GUARD_MS = 500;
+  const guardGhostClick = (fn: () => void) => {
+    if (winShownAt.current !== null && Date.now() - winShownAt.current < GHOST_CLICK_GUARD_MS) return;
+    fn();
+  };
+
   // Shown continuously in the HUD (not just when the player happens to be
   // near the top of the visible leaderboard) - fetched once on entering the
   // game and refreshed after every new submission, since that's the only
@@ -199,6 +226,7 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
     if (!solved || solvedAtMs === null || !puzzle) return;
     if (submittedForLevel.current === puzzle.id) return;
     submittedForLevel.current = puzzle.id;
+    winShownAt.current = Date.now();
 
     // Advances the *saved* progress the moment the level is won, not only
     // when the player clicks "next level" - otherwise closing the tab (or
@@ -376,8 +404,8 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
             <p>זמן: {formatMs(solvedAtMs ?? 0)} · טעויות: {mistakes} · רמזים: {hintsUsed}</p>
             <p className="win-score">ניקוד: {score}</p>
             <div className="win-actions">
-              <button onClick={resetPuzzle}>שחק שוב</button>
-              <button onClick={nextLevel} className="primary">
+              <button onClick={() => guardGhostClick(resetPuzzle)}>שחק שוב</button>
+              <button onClick={() => guardGhostClick(nextLevel)} className="primary">
                 ← שלב הבא
               </button>
             </div>
@@ -412,6 +440,7 @@ export default function App() {
   const [user, setUser] = useState<AuthUser | null | undefined>(undefined); // undefined = still checking
   const [progressReady, setProgressReady] = useState(false);
   const [view, setView] = useState<'home' | 'game' | 'race' | 'collection' | 'settings'>('home');
+  const [showOnlineUsers, setShowOnlineUsers] = useState(false);
   const loadLevel = useGameStore((s) => s.loadLevel);
   const startNewGame = useGameStore((s) => s.startNewGame);
   const resumeGame = useGameStore((s) => s.resumeGame);
@@ -428,6 +457,14 @@ export default function App() {
   useEffect(() => {
     if (user) loadOwnedPokedex();
   }, [user?.id, loadOwnedPokedex]);
+
+  // Connects as soon as there's a logged-in user, not lazily when opening
+  // the online-users panel - otherwise a player would only ever show up as
+  // "online" to others while that specific panel happened to be open on
+  // their own screen, instead of for their whole session.
+  useEffect(() => {
+    if (user) usePresenceStore.getState().connect(user.id);
+  }, [user?.id]);
 
   useEffect(() => {
     if (!user) return;
@@ -467,8 +504,10 @@ export default function App() {
   if (user === undefined) return <div className="app-shell auth-loading" />;
   if (user === null) return <AuthPanel onAuthenticated={handleAuthenticated} />;
   if (!progressReady) return <div className="app-shell auth-loading" />;
+
+  let content: JSX.Element;
   if (view === 'home') {
-    return (
+    content = (
       <HomeScreen
         user={user}
         levelIndex={levelIndex}
@@ -476,20 +515,28 @@ export default function App() {
         onRace={() => setView('race')}
         onCollection={() => setView('collection')}
         onSettings={() => setView('settings')}
+        onOnlineUsers={() => setShowOnlineUsers(true)}
         onLogout={handleLogout}
       />
     );
+  } else if (view === 'race') {
+    content = <RaceScreen user={user} onExit={() => setView('home')} />;
+  } else if (view === 'collection') {
+    content = <CollectionScreen onExit={() => setView('home')} />;
+  } else if (view === 'settings') {
+    content = <SettingsScreen user={user} onUserUpdated={setUser} onNewGame={handleNewGame} onExit={() => setView('home')} />;
+  } else {
+    content = <Game user={user} onLogout={handleLogout} onGoHome={() => setView('home')} />;
   }
-  if (view === 'race') {
-    return <RaceScreen user={user} onExit={() => setView('home')} />;
-  }
-  if (view === 'collection') {
-    return <CollectionScreen onExit={() => setView('home')} />;
-  }
-  if (view === 'settings') {
-    return (
-      <SettingsScreen user={user} onUserUpdated={setUser} onNewGame={handleNewGame} onExit={() => setView('home')} />
-    );
-  }
-  return <Game user={user} onLogout={handleLogout} onGoHome={() => setView('home')} />;
+
+  // Rendered once here (not duplicated per view branch above) so an
+  // incoming notification or the online-users panel can appear no matter
+  // which screen the player is actually looking at.
+  return (
+    <>
+      {content}
+      <NotificationToast />
+      {showOnlineUsers && <OnlineUsersModal onClose={() => setShowOnlineUsers(false)} />}
+    </>
+  );
 }

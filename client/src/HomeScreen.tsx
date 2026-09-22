@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchGlobalRanking, type AuthUser, type GlobalRankingRow } from './api';
+import { usePresenceStore } from './presence/presenceStore';
+import { rankDisplay } from './rankIcons';
 
 interface HomeScreenProps {
   user: AuthUser;
@@ -8,10 +10,21 @@ interface HomeScreenProps {
   onRace: () => void;
   onCollection: () => void;
   onSettings: () => void;
+  onOnlineUsers: () => void;
   onLogout: () => void;
 }
 
-export function HomeScreen({ user, levelIndex, onContinue, onRace, onCollection, onSettings, onLogout }: HomeScreenProps) {
+export function HomeScreen({
+  user,
+  levelIndex,
+  onContinue,
+  onRace,
+  onCollection,
+  onSettings,
+  onOnlineUsers,
+  onLogout,
+}: HomeScreenProps) {
+  const onlineCount = usePresenceStore((s) => s.onlineUsers.length);
   const [ranking, setRanking] = useState<GlobalRankingRow[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,6 +46,9 @@ export function HomeScreen({ user, levelIndex, onContinue, onRace, onCollection,
           </button>
           <button onClick={onRace}>🏁 מרוץ נגד חבר</button>
           <button onClick={onCollection}>🎒 אוסף הפוקימונים שלי</button>
+          <button onClick={onOnlineUsers} className="online-users-button">
+            🟢 מחוברים כעת{onlineCount > 0 ? ` (${onlineCount})` : ''}
+          </button>
           <button onClick={onSettings}>⚙️ הגדרות</button>
           <button onClick={onLogout}>התנתק</button>
         </div>
@@ -43,10 +59,12 @@ export function HomeScreen({ user, levelIndex, onContinue, onRace, onCollection,
           {!error && !ranking && <p>טוען...</p>}
           {ranking && ranking.length === 0 && <p>עדיין אין נתונים - היה הראשון לפתור שלב!</p>}
           {ranking && ranking.length > 0 && (
-            <ol className="global-ranking-list">
-              {ranking.map((row, i) => (
+            // Just the podium here - the full list (with scroll) lives in the
+            // dedicated ranking modal, opened via the button below.
+            <ol className="global-ranking-list podium-list">
+              {ranking.slice(0, 3).map((row, i) => (
                 <li key={row.user_id} className={row.user_id === user.id ? 'me' : ''}>
-                  <span className="rank">{i + 1}</span>
+                  <span className="rank medal">{rankDisplay(i)}</span>
                   <span className="name">{row.player_name}</span>
                   <span className="levels">🏁 {row.levels_completed}</span>
                   <span className="levels">🎒 {row.pokemon_count}</span>

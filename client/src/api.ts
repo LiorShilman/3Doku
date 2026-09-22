@@ -114,6 +114,21 @@ export async function reportPokemonUncatch(pokedexNumber: number): Promise<void>
   });
 }
 
+// Temporary diagnostic trail for the "level resets instead of showing the
+// win menu" report - see gameStore.ts's call sites and db.ts's
+// client_events table doc. Deliberately silent/best-effort: this must never
+// throw or block the action it's describing, and there's no reason to
+// retry a lost diagnostic breadcrumb.
+export function logEvent(event: string, data: unknown): void {
+  fetch(`${API_BASE}/api/debug/event`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ event, data }),
+    keepalive: true,
+  }).catch(() => {});
+}
+
 export async function submitScore(
   puzzleId: string,
   payload: { timeMs: number; usedAssist: boolean; positions: Position[] }

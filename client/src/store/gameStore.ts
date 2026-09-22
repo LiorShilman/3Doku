@@ -12,7 +12,7 @@ import {
   type Position,
   type PuzzleDefinition,
 } from '@3doku/shared';
-import { fetchLevel, fetchPokemonCollection, reportPokemonCatch, reportPokemonUncatch } from '../api';
+import { fetchLevel, fetchPokemonCollection, logEvent, reportPokemonCatch, reportPokemonUncatch } from '../api';
 import { pickPokemonForCell, type PokedexEntry } from '../pokemon/pokedex';
 
 function key(p: Position) {
@@ -242,7 +242,10 @@ function freshBoardState(puzzle: PuzzleDefinition) {
  */
 function initialBoardState(puzzle: PuzzleDefinition) {
   const saved = loadLocalBoardState(puzzle.id);
-  if (!saved) return freshBoardState(puzzle);
+  if (!saved) {
+    logEvent('initialBoardState_fresh', { puzzleId: puzzle.id });
+    return freshBoardState(puzzle);
+  }
 
   // A solved board's saved entry is cleared the moment it's solved (see the
   // subscribe call below) - this recomputes it anyway rather than trusting
@@ -258,6 +261,16 @@ function initialBoardState(puzzle: PuzzleDefinition) {
   // the same way resumeGame does.
   const inactiveGap = saved.lastActiveAt ? Math.max(0, Date.now() - saved.lastActiveAt) : 0;
   const startedAt = saved.startedAt + inactiveGap;
+
+  logEvent('initialBoardState_restored', {
+    puzzleId: puzzle.id,
+    savedPlacementsCount: saved.placements.length,
+    savedStartedAt: saved.startedAt,
+    savedLastActiveAt: saved.lastActiveAt,
+    inactiveGapMs: inactiveGap,
+    resultingStartedAt: startedAt,
+    nowSolved,
+  });
 
   const fresh = freshBoardState(puzzle);
   return {
@@ -383,6 +396,16 @@ export const useGameStore = create<GameState>((set, get) => ({
       clearTimeout(newPokemonBannerTimeout);
       newPokemonBannerTimeout = setTimeout(() => set({ newPokemonCaught: null }), 4000);
       set({ ownedPokedex: nextOwned, newPokemonCaught: caught });
+    }
+
+    if (nowSolved) {
+      logEvent('puzzle_solved', {
+        puzzleId: puzzle.id,
+        levelIndex: get().levelIndex,
+        placementsCount: next.length,
+        startedAt: get().startedAt,
+        solvedAtMs: Date.now() - get().startedAt,
+      });
     }
 
     set({
@@ -535,8 +558,9 @@ export const useGameStore = create<GameState>((set, get) => ({
   // placement incremented times_caught separately server-side, regardless
   // of whether two cells happened to land on the same species.
   resetPuzzle: () => {
-    const { puzzle, placementSprites } = get();
+    const { puzzle, placementSprites, placements, levelIndex } = get();
     if (!puzzle) return;
+    logEvent('resetPuzzle', { puzzleId: puzzle.id, levelIndex, placementsCountBefore: placements.length });
     const pokedexNumbers = Object.values(placementSprites);
     if (pokedexNumbers.length > 0) {
       Promise.all(pokedexNumbers.map((n) => reportPokemonUncatch(n).catch(() => {}))).then(() => get().loadOwnedPokedex());
@@ -545,6 +569,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 
   nextLevel: async () => {
+    logEvent('nextLevel_clicked', { currentLevelIndex: get().levelIndex, currentSolved: get().solved });
     await get().loadLevel(get().levelIndex + 1);
   },
 
@@ -552,14 +577,31 @@ export const useGameStore = create<GameState>((set, get) => ({
   // the client always fetches, never generates locally, so every player is guaranteed
   // the exact same board for a given level and it can never drift from an algorithm change.
   loadLevel: async (levelIndex) => {
+    const before = get();
+    logEvent('loadLevel_start', {
+      requestedLevelIndex: levelIndex,
+      currentLevelIndex: before.levelIndex,
+      currentPuzzleId: before.puzzle?.id ?? null,
+      currentSolved: before.solved,
+      currentPlacementsCount: before.placements.length,
+    });
     set({ loading: true, loadError: null, puzzle: null });
     try {
       const puzzle = await fetchLevel(levelIndex + 1);
-      set({ levelIndex, loadError: null, ...initialBoardState(puzzle) });
+      const nextState = initialBoardState(puzzle);
+      logEvent('loadLevel_done', {
+        requestedLevelIndex: levelIndex,
+        newPuzzleId: puzzle.id,
+        newPlacementsCount: (nextState.placements ?? []).length,
+        newStartedAt: nextState.startedAt,
+        newSolved: nextState.solved,
+      });
+      set({ levelIndex, loadError: null, ...nextState });
     } catch (err) {
       // Otherwise a failed fetch (network blip, server hiccup, an expired
       // session the server rejects) left the player staring at "loading
       // level..." forever, with no error and no way to retry.
+      logEvent('loadLevel_error', { requestedLevelIndex: levelIndex, error: err instanceof Error ? err.message : String(err) });
       set({ loading: false, loadError: err instanceof Error ? err.message : 'שגיאה בטעינת השלב' });
     }
   },
@@ -606,8 +648,26 @@ export const useGameStore = create<GameState>((set, get) => ({
 // side. Fires on every store change; cheap enough for a small per-level JSON
 // blob and simpler than threading a save call through every action that
 // touches placements/marks/mistakes/hints.
+// Only logs (see logEvent calls elsewhere in this file) when the puzzle/
+// placement-count/solved tuple actually changes - this subscriber fires on
+// every store change, including ones irrelevant to the diagnostic (drag
+// state, hover, etc.), and logging all of them would flood client_events
+// for no benefit.
+let lastLoggedSaveState: { puzzleId: string; count: number; solved: boolean } | null = null;
+
 useGameStore.subscribe((state) => {
   if (!state.puzzle) return;
+  const tuple = { puzzleId: state.puzzle.id, count: state.placements.length, solved: state.solved };
+  const changed =
+    !lastLoggedSaveState ||
+    lastLoggedSaveState.puzzleId !== tuple.puzzleId ||
+    lastLoggedSaveState.count !== tuple.count ||
+    lastLoggedSaveState.solved !== tuple.solved;
+  if (changed) {
+    lastLoggedSaveState = tuple;
+    logEvent('subscribe_fired', { ...tuple, startedAt: state.startedAt });
+  }
+
   if (state.solved) {
     clearLocalBoardState(state.puzzle.id);
     return;

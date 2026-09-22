@@ -11,7 +11,9 @@ import { authRouter } from './routes/auth.js';
 import { progressRouter } from './routes/progress.js';
 import { levelsRouter } from './routes/levels.js';
 import { pokemonRouter } from './routes/pokemon.js';
+import { debugRouter } from './routes/debug.js';
 import { registerRaceHandlers } from './race.js';
+import { registerPresenceHandlers } from './presence.js';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -41,6 +43,7 @@ app.use('/api/progress', progressRouter);
 app.use('/api/levels', levelsRouter);
 app.use('/api/leaderboard', leaderboardRouter);
 app.use('/api/pokemon', pokemonRouter);
+app.use('/api/debug', debugRouter);
 
 const port = Number(process.env.PORT) || 4000;
 const certPath = path.join(dirname, '..', 'certs', 'cert.pem');
@@ -59,6 +62,7 @@ const httpServer = hasCert
 const io = new SocketServer(httpServer, { cors: { origin: allowedOrigins, credentials: true } });
 
 registerRaceHandlers(io);
+registerPresenceHandlers(io);
 
 httpServer.listen(port, () => {
   console.log(`3Doku server listening on ${hasCert ? 'https' : 'http'}://localhost:${port}`);

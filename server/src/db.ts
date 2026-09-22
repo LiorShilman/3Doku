@@ -65,6 +65,20 @@ db.exec(`
     first_caught_at TEXT NOT NULL DEFAULT (datetime('now')),
     PRIMARY KEY (user_id, pokedex_number)
   );
+
+  -- Temporary diagnostic trail for the "level resets instead of showing the
+  -- win menu" report (see gameStore.ts's logClientEvent calls) - lets the
+  -- actual sequence of store transitions be inspected after the fact
+  -- instead of guessing at the mechanism. Not meant to be permanent -
+  -- worth removing once that bug is understood and fixed.
+  CREATE TABLE IF NOT EXISTS client_events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL REFERENCES users(id),
+    event TEXT NOT NULL,
+    data_json TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+  CREATE INDEX IF NOT EXISTS idx_client_events_user ON client_events (user_id, created_at);
 `);
 
 export interface UserRow {
@@ -383,4 +397,26 @@ export function getPokemonCollection(userId: number): PokemonCollectionRow[] {
 // design, the player explicitly asked for the collection to be wiped too.
 export function deletePokemonCollection(userId: number): void {
   db.prepare(`DELETE FROM pokemon_collection WHERE user_id = ?`).run(userId);
+}
+
+export function logClientEvent(userId: number, event: string, data: unknown): void {
+  db.prepare(`INSERT INTO client_events (user_id, event, data_json) VALUES (?, ?, ?)`).run(
+    userId,
+    event,
+    JSON.stringify(data)
+  );
+}
+
+export interface ClientEventRow {
+  id: number;
+  user_id: number;
+  event: string;
+  data_json: string;
+  created_at: string;
+}
+
+export function recentClientEvents(userId: number, limit = 200): ClientEventRow[] {
+  return db
+    .prepare(`SELECT * FROM client_events WHERE user_id = ? ORDER BY id DESC LIMIT ?`)
+    .all(userId, limit) as ClientEventRow[];
 }

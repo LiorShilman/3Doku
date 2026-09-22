@@ -6,8 +6,8 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL ?? '';
 
 let socket: Socket | null = null;
 
-/** One shared connection, created lazily on first use and kept alive across race screens (lobby -> countdown -> play -> results) rather than reconnecting for each. */
-export function getRaceSocket(): Socket {
+/** One shared connection, created lazily on first use and kept alive across race screens (lobby -> countdown -> play -> results) and the global online-presence/notification feature, rather than reconnecting for each. */
+export function getSocket(): Socket {
   if (!socket) {
     socket = io(API_BASE || undefined, { withCredentials: true });
   }

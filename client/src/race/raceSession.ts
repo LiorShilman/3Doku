@@ -1,5 +1,5 @@
 import type { Position, PuzzleDefinition } from '@3doku/shared';
-import { getRaceSocket } from './socket';
+import { getSocket } from './socket';
 
 interface StoredPlayer {
   userId: number;
@@ -59,6 +59,6 @@ export function clearRaceSession(): void {
 export function abandonActiveRace(): void {
   const saved = loadRaceSession();
   if (!saved) return;
-  getRaceSocket().emit('race:leave', { code: saved.code });
+  getSocket().emit('race:leave', { code: saved.code });
   clearRaceSession();
 }

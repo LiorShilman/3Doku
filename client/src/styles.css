@@ -557,6 +557,240 @@ button:disabled:hover {
   margin-top: 16px;
 }
 
+/* ---- Online users / notifications ---- */
+
+.online-users-button {
+  position: relative;
+}
+
+@keyframes online-dot-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(52, 211, 153, 0);
+  }
+}
+
+.online-users-modal {
+  width: 380px;
+}
+
+.online-users-empty {
+  color: #a0a0c0;
+  margin: 8px 0 4px;
+}
+
+.online-users-sent {
+  color: #34d399;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.online-users-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 44vh;
+  overflow-y: auto;
+  text-align: right;
+}
+
+.online-users-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(140, 140, 200, 0.15);
+}
+
+.online-users-dot {
+  width: 9px;
+  height: 9px;
+  min-width: 9px;
+  border-radius: 50%;
+  background: #34d399;
+  animation: online-dot-pulse 2s ease-in-out infinite;
+}
+
+.online-users-name {
+  flex: 1;
+  color: #e8e8f0;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.online-users-notify-btn {
+  background: rgba(108, 92, 231, 0.18);
+  border: 1px solid rgba(139, 124, 255, 0.4);
+  color: #cfc9ff;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.online-users-notify-btn:hover {
+  background: rgba(108, 92, 231, 0.32);
+}
+
+.online-users-compose {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.online-users-compose-to {
+  margin: 0;
+  color: #a0a0c0;
+}
+
+.online-users-compose-to strong {
+  color: #e8e8f0;
+}
+
+.online-users-compose textarea {
+  width: 100%;
+  resize: none;
+  border-radius: 10px;
+  border: 1px solid rgba(140, 140, 200, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e8e8f0;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 12px;
+  box-sizing: border-box;
+}
+
+.online-users-compose textarea:focus {
+  outline: none;
+  border-color: #8b7cff;
+}
+
+.online-users-error {
+  color: #ff8b9c;
+  margin: 0;
+  font-size: 13px;
+}
+
+.online-users-compose-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.online-users-compose-actions button {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(140, 140, 200, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e8e8f0;
+  cursor: pointer;
+}
+
+.online-users-compose-actions button.primary {
+  margin-top: 0;
+}
+
+.online-users-compose-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.online-users-close {
+  width: 100%;
+}
+
+@keyframes notify-toast-in {
+  0% {
+    transform: translateX(-50%) translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes notify-toast-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 18px rgba(80, 200, 255, 0.45), 0 0 0 rgba(80, 200, 255, 0);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(80, 200, 255, 0.75), 0 0 10px rgba(80, 200, 255, 0.35);
+  }
+}
+
+.notify-toast {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, rgba(15, 35, 55, 0.96), rgba(20, 20, 45, 0.96));
+  border: 2px solid #4fc3f7;
+  border-radius: 16px;
+  padding: 12px 22px 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: min(90vw, 380px);
+  z-index: 25;
+  cursor: pointer;
+  animation: notify-toast-in 0.35s ease-out, notify-toast-glow 2.2s ease-in-out infinite;
+}
+
+.notify-toast-icon {
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.notify-toast-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  text-align: right;
+}
+
+.notify-toast-from {
+  color: #4fc3f7;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.notify-toast-message {
+  color: #fff;
+  font-size: 14px;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 700px) {
+  .online-users-modal {
+    width: 92vw;
+  }
+
+  .notify-toast {
+    bottom: 16px;
+    max-width: 92vw;
+    padding: 10px 16px 10px 12px;
+  }
+
+  .notify-toast-message {
+    font-size: 13px;
+  }
+}
+
 .global-ranking-list {
   list-style: none;
   margin: 0;
@@ -582,6 +816,23 @@ button:disabled:hover {
   width: 24px;
   color: #8b7cff;
   text-align: center;
+}
+
+.global-ranking-list li .rank.medal {
+  font-size: 18px;
+}
+
+.ranking-modal-card {
+  width: 420px;
+}
+
+/* Only the rows scroll - the modal's own title and close button (outside
+   this wrapper) stay put regardless of how long the ranking list gets. */
+.ranking-list-viewport {
+  max-height: 50vh;
+  overflow-y: auto;
+  margin: 0 -8px;
+  padding: 0 8px;
 }
 
 .global-ranking-list li .name {
