@@ -59,10 +59,55 @@ function getCtx(): AudioContext | null {
   return audioCtx;
 }
 
+// A short, algorithmically-generated impulse response (exponentially-decaying
+// filtered noise) rather than a recorded one - same "no asset files" approach
+// as everything else here. Built once per AudioContext and shared by every
+// note, so a whole run of an arpeggio blends into one coherent room instead
+// of each note getting its own separate, more expensive convolution.
+function createReverbImpulse(ctx: AudioContext): AudioBuffer {
+  const duration = 1.1;
+  const decay = 2.8;
+  const length = Math.floor(ctx.sampleRate * duration);
+  const impulse = ctx.createBuffer(2, length, ctx.sampleRate);
+  for (let channel = 0; channel < impulse.numberOfChannels; channel++) {
+    const data = impulse.getChannelData(channel);
+    for (let i = 0; i < length; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, decay);
+    }
+  }
+  return impulse;
+}
+
+let reverbSend: ConvolverNode | null = null;
+
+// The shared "wet" bus every note feeds into alongside its own direct (dry)
+// output - a little reverb is what turns a bare oscillator blip into
+// something that sounds like it's actually in a space, instead of pasted
+// flat on top of the game. Lazy + cached per context, same reasoning as
+// getCtx() itself.
+function ensureReverbSend(ctx: AudioContext): ConvolverNode {
+  if (!reverbSend) {
+    reverbSend = ctx.createConvolver();
+    reverbSend.buffer = createReverbImpulse(ctx);
+    const wetGain = ctx.createGain();
+    wetGain.gain.value = 0.16; // subtle - adds air, not a cave echo
+    reverbSend.connect(wetGain).connect(ctx.destination);
+  }
+  return reverbSend;
+}
+
 // One note: frequency in Hz, when it starts (seconds from now), how long it
 // rings, its peak volume, and its waveform. The quick linear attack avoids a
 // click at the very start; the exponential decay is what makes it sound like
 // a plucked/percussive blip instead of a dull organ tone cutting off.
+//
+// Two oscillators a few cents apart (not one) drive each note - the slight
+// beating between them is what a chorus/unison effect is built from, and is
+// most of the difference between a "thin" single sine and a "full"-sounding
+// tone. Both pass through a gentle lowpass before the envelope, rounding off
+// the harsh upper harmonics (especially on the sawtooth/square waves) into
+// something warmer, and both the dry signal and a reverb send go to the
+// output so short blips still have a touch of natural-sounding space.
 function note(
   ctx: AudioContext,
   freq: number,
@@ -71,17 +116,32 @@ function note(
   peak: number,
   type: OscillatorType
 ): void {
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  osc.type = type;
-  osc.frequency.value = freq;
   const t0 = ctx.currentTime + startOffset;
+  const stopAt = t0 + duration + 0.02;
+
+  const filter = ctx.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.value = Math.min(9000, freq * 5 + 900);
+  filter.Q.value = 0.6;
+
+  const gain = ctx.createGain();
   gain.gain.setValueAtTime(0, t0);
   gain.gain.linearRampToValueAtTime(peak, t0 + 0.01);
   gain.gain.exponentialRampToValueAtTime(0.0001, t0 + duration);
-  osc.connect(gain).connect(ctx.destination);
-  osc.start(t0);
-  osc.stop(t0 + duration + 0.02);
+
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+  gain.connect(ensureReverbSend(ctx));
+
+  for (const cents of [-6, 6]) {
+    const osc = ctx.createOscillator();
+    osc.type = type;
+    osc.frequency.value = freq;
+    osc.detune.value = cents;
+    osc.connect(filter);
+    osc.start(t0);
+    osc.stop(stopAt);
+  }
 }
 
 // C5, E5, G5, C6, E6 - handy note names for the arpeggios below.
