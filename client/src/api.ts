@@ -90,16 +90,20 @@ export async function fetchPokemonCollection(): Promise<PokemonCollectionRow[]> 
   return data.collection;
 }
 
-// Fire-and-forget from gameStore.ts at the moment of a new placement - a
-// failed report just means that one catch doesn't make it into the
-// collection screen's tally, not a broken game, so callers don't await this.
-export async function reportPokemonCatch(pokedexNumber: number): Promise<void> {
-  await fetch(`${API_BASE}/api/pokemon/catch`, {
+// The SERVER decides which Pokemon a (level, region) combo yields, not the
+// client - see server/src/routes/pokemon.ts's /catch. This is why the
+// caller (gameStore.ts's attemptPlace) can't just decide a sprite locally
+// and fire this off unread: it has to wait for the actual assigned
+// pokedexNumber to come back before it knows what to display.
+export async function reportPokemonCatch(levelIndex: number, region: number): Promise<{ pokedexNumber: number }> {
+  const res = await fetch(`${API_BASE}/api/pokemon/catch`, {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ pokedexNumber }),
+    body: JSON.stringify({ levelIndex, region }),
   });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
+  return res.json();
 }
 
 // Reverts one reportPokemonCatch call - only used when a placement is struck
@@ -112,6 +116,51 @@ export async function reportPokemonUncatch(pokedexNumber: number): Promise<void>
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ pokedexNumber }),
   });
+}
+
+export interface TradeItem {
+  pokedexNumber: number;
+  qty: number;
+}
+
+export interface TradeDeal {
+  id: number;
+  seller_user_id: number;
+  seller_name: string;
+  offer: TradeItem[];
+  request: TradeItem[];
+  status: 'open' | 'completed' | 'cancelled';
+  created_at: string;
+}
+
+// The open marketplace - every player's open listing, not filtered to
+// online users or a specific counterpart. See TradeMarketScreen.tsx.
+export async function fetchTradeDeals(): Promise<TradeDeal[]> {
+  const res = await fetch(`${API_BASE}/api/trades`, { credentials: 'include' });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
+  const data = await res.json();
+  return data.deals;
+}
+
+export async function createTradeDeal(offer: TradeItem[], request: TradeItem[]): Promise<{ id: number }> {
+  const res = await fetch(`${API_BASE}/api/trades`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ offer, request }),
+  });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
+  return res.json();
+}
+
+export async function acceptTradeDeal(id: number): Promise<void> {
+  const res = await fetch(`${API_BASE}/api/trades/${id}/accept`, { method: 'POST', credentials: 'include' });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
+}
+
+export async function cancelTradeDeal(id: number): Promise<void> {
+  const res = await fetch(`${API_BASE}/api/trades/${id}/cancel`, { method: 'POST', credentials: 'include' });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
 }
 
 // Temporary diagnostic trail for the "level resets instead of showing the

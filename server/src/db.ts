@@ -79,6 +79,38 @@ db.exec(`
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
   CREATE INDEX IF NOT EXISTS idx_client_events_user ON client_events (user_id, created_at);
+
+  -- An open marketplace listing, not a targeted offer to one specific
+  -- player - anyone can browse open deals and be the first to fulfil one.
+  -- Kept as permanent history (status flips to 'completed'/'cancelled'
+  -- rather than the row being deleted) so a completed deal doesn't just
+  -- vanish without a trace.
+  CREATE TABLE IF NOT EXISTS trade_deals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    seller_user_id INTEGER NOT NULL REFERENCES users(id),
+    offer_json TEXT NOT NULL,
+    request_json TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'open',
+    buyer_user_id INTEGER REFERENCES users(id),
+    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    completed_at TEXT
+  );
+  CREATE INDEX IF NOT EXISTS idx_trade_deals_status ON trade_deals (status);
+
+  -- Which Pokemon a (user, level, region) combination yields - rolled once,
+  -- server-side (see pokemonRarity.ts and routes/pokemon.ts's /catch), the
+  -- first time that region gets a placement in that level. Persisted here
+  -- rather than in client localStorage so it can't be edited by the player,
+  -- and stays stable across resetting the SAME level (only rolling fresh
+  -- for a level_index this user has never rolled before) - resetting no
+  -- longer offers a way to keep re-rolling for a better species.
+  CREATE TABLE IF NOT EXISTS pokemon_rolls (
+    user_id INTEGER NOT NULL REFERENCES users(id),
+    level_index INTEGER NOT NULL,
+    region INTEGER NOT NULL,
+    pokedex_number INTEGER NOT NULL,
+    PRIMARY KEY (user_id, level_index, region)
+  );
 `);
 
 export interface UserRow {
@@ -397,6 +429,156 @@ export function getPokemonCollection(userId: number): PokemonCollectionRow[] {
 // design, the player explicitly asked for the collection to be wiped too.
 export function deletePokemonCollection(userId: number): void {
   db.prepare(`DELETE FROM pokemon_collection WHERE user_id = ?`).run(userId);
+}
+
+export function getPokemonRoll(userId: number, levelIndex: number, region: number): number | undefined {
+  const row = db
+    .prepare(`SELECT pokedex_number FROM pokemon_rolls WHERE user_id = ? AND level_index = ? AND region = ?`)
+    .get(userId, levelIndex, region) as { pokedex_number: number } | undefined;
+  return row?.pokedex_number;
+}
+
+// ON CONFLICT DO NOTHING, not an upsert - two near-simultaneous requests for
+// the same never-before-rolled region (a genuine race, not just a repeat
+// visit) must both end up agreeing on ONE winner, not each keep whatever
+// they individually rolled. See routes/pokemon.ts's /catch, which always
+// re-reads via getPokemonRoll right after this to find out which one won.
+export function savePokemonRoll(userId: number, levelIndex: number, region: number, pokedexNumber: number): void {
+  db.prepare(
+    `INSERT INTO pokemon_rolls (user_id, level_index, region, pokedex_number) VALUES (?, ?, ?, ?)
+     ON CONFLICT(user_id, level_index, region) DO NOTHING`
+  ).run(userId, levelIndex, region, pokedexNumber);
+}
+
+// Part of a full reset (see routes/progress.ts's /reset) - without this, a
+// "new game" would still silently hand back the exact same rolls the player
+// got the first time through, once they reach the same level again.
+export function deletePokemonRolls(userId: number): void {
+  db.prepare(`DELETE FROM pokemon_rolls WHERE user_id = ?`).run(userId);
+}
+
+export function getPokemonQty(userId: number, pokedexNumber: number): number {
+  const row = db
+    .prepare(`SELECT times_caught FROM pokemon_collection WHERE user_id = ? AND pokedex_number = ?`)
+    .get(userId, pokedexNumber) as { times_caught: number } | undefined;
+  return row?.times_caught ?? 0;
+}
+
+export interface TradeItem {
+  pokedexNumber: number;
+  qty: number;
+}
+
+function movePokemon(fromUserId: number, toUserId: number, pokedexNumber: number, qty: number): void {
+  db.prepare(
+    `UPDATE pokemon_collection SET times_caught = times_caught - ? WHERE user_id = ? AND pokedex_number = ?`
+  ).run(qty, fromUserId, pokedexNumber);
+  db.prepare(`DELETE FROM pokemon_collection WHERE user_id = ? AND pokedex_number = ? AND times_caught <= 0`).run(
+    fromUserId,
+    pokedexNumber
+  );
+  db.prepare(
+    `INSERT INTO pokemon_collection (user_id, pokedex_number, times_caught) VALUES (?, ?, ?)
+     ON CONFLICT(user_id, pokedex_number) DO UPDATE SET times_caught = pokemon_collection.times_caught + ?`
+  ).run(toUserId, pokedexNumber, qty, qty);
+}
+
+// Moves both sides of an accepted trade in one atomic transaction (see
+// routes/trades.ts's /:id/accept handler) - better-sqlite3 runs this
+// synchronously, so nothing else can interleave between the caller's own
+// getPokemonQty affordability check and this call in the same request.
+export const transferPokemon = db.transaction(
+  (fromUserId: number, toUserId: number, offer: TradeItem[], request: TradeItem[]): void => {
+    for (const { pokedexNumber, qty } of offer) movePokemon(fromUserId, toUserId, pokedexNumber, qty);
+    for (const { pokedexNumber, qty } of request) movePokemon(toUserId, fromUserId, pokedexNumber, qty);
+  }
+);
+
+export type TradeDealStatus = 'open' | 'completed' | 'cancelled';
+
+export interface TradeDealRow {
+  id: number;
+  seller_user_id: number;
+  seller_name: string;
+  offer: TradeItem[];
+  request: TradeItem[];
+  status: TradeDealStatus;
+  buyer_user_id: number | null;
+  created_at: string;
+  completed_at: string | null;
+}
+
+interface RawTradeDealRow {
+  id: number;
+  seller_user_id: number;
+  seller_name: string;
+  offer_json: string;
+  request_json: string;
+  status: TradeDealStatus;
+  buyer_user_id: number | null;
+  created_at: string;
+  completed_at: string | null;
+}
+
+function parseTradeDealRow(row: RawTradeDealRow): TradeDealRow {
+  return {
+    id: row.id,
+    seller_user_id: row.seller_user_id,
+    seller_name: row.seller_name,
+    offer: JSON.parse(row.offer_json),
+    request: JSON.parse(row.request_json),
+    status: row.status,
+    buyer_user_id: row.buyer_user_id,
+    created_at: row.created_at,
+    completed_at: row.completed_at,
+  };
+}
+
+export function createTradeDeal(sellerUserId: number, offer: TradeItem[], request: TradeItem[]): number {
+  const info = db
+    .prepare(`INSERT INTO trade_deals (seller_user_id, offer_json, request_json) VALUES (?, ?, ?)`)
+    .run(sellerUserId, JSON.stringify(offer), JSON.stringify(request));
+  return info.lastInsertRowid as number;
+}
+
+// Every open listing from every player, not just the caller's own - this is
+// a public marketplace, not a private inbox.
+export function listOpenTradeDeals(): TradeDealRow[] {
+  const rows = db
+    .prepare(
+      `SELECT trade_deals.*, users.display_name AS seller_name
+       FROM trade_deals JOIN users ON users.id = trade_deals.seller_user_id
+       WHERE trade_deals.status = 'open'
+       ORDER BY trade_deals.created_at DESC`
+    )
+    .all() as RawTradeDealRow[];
+  return rows.map(parseTradeDealRow);
+}
+
+export function getTradeDeal(id: number): TradeDealRow | undefined {
+  const row = db
+    .prepare(
+      `SELECT trade_deals.*, users.display_name AS seller_name
+       FROM trade_deals JOIN users ON users.id = trade_deals.seller_user_id
+       WHERE trade_deals.id = ?`
+    )
+    .get(id) as RawTradeDealRow | undefined;
+  return row ? parseTradeDealRow(row) : undefined;
+}
+
+// Whoever calls this first wins the deal - see routes/trades.ts's
+// /:id/accept, which re-checks status === 'open' (via getTradeDeal) in the
+// same synchronous request as this update, so nothing else can slip in
+// between the check and the claim.
+export function completeTradeDeal(id: number, buyerUserId: number): void {
+  db.prepare(`UPDATE trade_deals SET status = 'completed', buyer_user_id = ?, completed_at = datetime('now') WHERE id = ?`).run(
+    buyerUserId,
+    id
+  );
+}
+
+export function cancelTradeDeal(id: number): void {
+  db.prepare(`UPDATE trade_deals SET status = 'cancelled' WHERE id = ?`).run(id);
 }
 
 export function logClientEvent(userId: number, event: string, data: unknown): void {

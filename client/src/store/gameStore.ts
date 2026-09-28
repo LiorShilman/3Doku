@@ -13,7 +13,8 @@ import {
   type PuzzleDefinition,
 } from '@3doku/shared';
 import { fetchLevel, fetchPokemonCollection, logEvent, reportPokemonCatch, reportPokemonUncatch } from '../api';
-import { pickPokemonForCell, type PokedexEntry } from '../pokemon/pokedex';
+import { getPokedexEntry, type PokedexEntry } from '../pokemon/pokedex';
+import { playSound } from '../sound/soundManager';
 
 function key(p: Position) {
   return `${p.row},${p.col}`;
@@ -46,7 +47,7 @@ interface PersistedBoardState {
   startedAt: number;
   /** Wall-clock time of the last actual interaction (see the subscribe call below) - lets a restore tell "closed the app" apart from "still here", see initialBoardState. */
   lastActiveAt: number;
-  /** cellKey -> pokedex_number, the Pokemon randomly assigned to each placed piece (see attemptPlace) - restored as-is, never re-rolled. */
+  /** cellKey -> pokedex_number, the Pokemon the SERVER assigned to each placed piece (see attemptPlace/api.ts's reportPokemonCatch) - restored as-is, never re-rolled. */
   placementSprites: Record<string, number>;
 }
 
@@ -124,12 +125,14 @@ interface GameState {
   eliminated: Set<string>;
   manualMarks: Set<string>;
   conflictFlash: Set<string>;
-  /** cellKey -> pokedex_number for each placed piece - see attemptPlace and the Pokemon collection feature. */
+  /** cellKey -> pokedex_number for each placed piece, assigned by the server (see attemptPlace and api.ts's reportPokemonCatch) - the Pokemon collection feature. */
   placementSprites: Record<string, number>;
   /** Every pokedex_number the player has ever caught (loaded once at app start) - lets attemptPlace tell a genuinely new species apart from a duplicate. */
   ownedPokedex: Set<number>;
   /** Set for a few seconds right after catching a species for the first time ever - see the celebration banner in App.tsx. */
   newPokemonCaught: PokedexEntry | null;
+  /** pokedex_numbers that were a genuinely new species at the moment THIS level's placement caught them - snapshot at catch time, since ownedPokedex itself keeps growing and can't answer "was this new" after the fact. Reset per level; read by the win screen's recap (see App.tsx). */
+  newSpeciesThisLevel: Set<number>;
   assistMode: boolean;
   viewMode: ViewMode;
   solved: boolean;
@@ -219,6 +222,7 @@ function freshBoardState(puzzle: PuzzleDefinition) {
     manualMarks: new Set<string>(),
     conflictFlash: new Set<string>(),
     placementSprites: {} as Record<string, number>,
+    newSpeciesThisLevel: new Set<number>(),
     solved: false,
     startedAt: Date.now(),
     solvedAtMs: null,
@@ -300,6 +304,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   placementSprites: {},
   ownedPokedex: new Set<number>(),
   newPokemonCaught: null,
+  newSpeciesThisLevel: new Set<number>(),
   solved: false,
   startedAt: Date.now(),
   solvedAtMs: null,
@@ -341,6 +346,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     if (assistMode && eliminated.has(k)) return; // pre-eliminated cell, ignore
     if (manualMarks.has(k) === marked) return; // already in that state
 
+    playSound('mark');
     const next = new Set(manualMarks);
     if (marked) next.add(k);
     else next.delete(k);
@@ -361,6 +367,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
     const { valid, conflicts } = validatePlacement(puzzle, placements, pos);
     if (!valid) {
+      playSound('invalid');
       const flashed = new Set([k, ...conflicts.map((c) => key(c.with))]);
       set((s) => ({
         conflictFlash: flashed,
@@ -380,25 +387,62 @@ export const useGameStore = create<GameState>((set, get) => ({
     const hadMark = manualMarks.has(k);
     const remainingMarks = new Set([...manualMarks].filter((m) => m !== k));
 
-    // Which Pokemon shows up is purely cosmetic (a collectible, not a game
-    // mechanic) - deterministic per (puzzle, cell), not re-rolled per
-    // placement, so undoing and re-placing at the same cell always shows the
-    // same creature instead of fishing for a new random one each time.
-    const caught = pickPokemonForCell(puzzle.id, pos.row, pos.col);
-    const nextSprites = { ...get().placementSprites, [k]: caught.pokedex_number };
-    reportPokemonCatch(caught.pokedex_number).catch(() => {});
+    // Deadlock status has to be known BEFORE deciding whether to award a
+    // catch, not after - a placement that's locally valid (no direct
+    // conflict) but makes the board unsolvable is still a mistake, even
+    // though validatePlacement alone can't see that. Catching a Pokemon for
+    // it and then revoking it once the player clicks "mark as mistake" (see
+    // resolveDeadlock) read as a creature flashing in and immediately
+    // vanishing - skipping the catch entirely for a doomed placement avoids
+    // granting something just to take it back a moment later.
+    const deadlockResult = nowSolved ? { isDeadlocked: false, deadlockedRegion: null } : deadlockStatus(puzzle, next);
 
-    const ownedPokedex = get().ownedPokedex;
-    const isNewSpecies = !ownedPokedex.has(caught.pokedex_number);
-    if (isNewSpecies) {
-      const nextOwned = new Set(ownedPokedex);
-      nextOwned.add(caught.pokedex_number);
-      clearTimeout(newPokemonBannerTimeout);
-      newPokemonBannerTimeout = setTimeout(() => set({ newPokemonCaught: null }), 4000);
-      set({ ownedPokedex: nextOwned, newPokemonCaught: caught });
+    if (!deadlockResult.isDeadlocked) {
+      // Which Pokemon a region yields is decided by the SERVER now, not
+      // rolled locally - see api.ts's reportPokemonCatch and
+      // server/src/routes/pokemon.ts's /catch. That means this placement
+      // goes on the board immediately with no sprite yet (the default
+      // piece.png, same as any piece mid-flight), and the actual creature
+      // pops in a moment later once the response arrives. This is what
+      // makes the roll tamper-proof (a player editing their own
+      // localStorage/store state can't influence it) and stable across
+      // resetting the same level (the server remembers a level+region's
+      // roll by user, not the client).
+      const region = puzzle.regions[pos.row][pos.col];
+      reportPokemonCatch(get().levelIndex + 1, region) // server's levelIndex is 1-based, same as fetchLevel
+        .then(({ pokedexNumber }) => {
+          // The player may have already undone this exact placement (or
+          // even placed something new at the same cell) by the time this
+          // resolves - only apply it if the cell is still actually holding
+          // this same placement, so a late response can't resurrect a
+          // sprite onto a cell that moved on without it.
+          if (!get().placements.some((p) => p.row === pos.row && p.col === pos.col)) return;
+
+          set((s) => ({ placementSprites: { ...s.placementSprites, [k]: pokedexNumber } }));
+
+          const ownedPokedex = get().ownedPokedex;
+          if (!ownedPokedex.has(pokedexNumber)) {
+            const nextOwned = new Set(ownedPokedex);
+            nextOwned.add(pokedexNumber);
+            clearTimeout(newPokemonBannerTimeout);
+            newPokemonBannerTimeout = setTimeout(() => set({ newPokemonCaught: null }), 4000);
+            // Snapshotted here (not derived later from ownedPokedex) because
+            // ownedPokedex keeps growing as the level is played - by the
+            // time the win screen's recap reads this, every catch from this
+            // level would already show as "owned" regardless of whether it
+            // was actually new.
+            const nextNewThisLevel = new Set(get().newSpeciesThisLevel);
+            nextNewThisLevel.add(pokedexNumber);
+            const entry = getPokedexEntry(pokedexNumber) ?? null;
+            set({ ownedPokedex: nextOwned, newPokemonCaught: entry, newSpeciesThisLevel: nextNewThisLevel });
+            if (entry) playSound(`catch-${entry.rarity}`);
+          }
+        })
+        .catch(() => {});
     }
 
     if (nowSolved) {
+      playSound('solve'); // timed to land alongside App.tsx's fireworks overlay
       logEvent('puzzle_solved', {
         puzzleId: puzzle.id,
         levelIndex: get().levelIndex,
@@ -406,18 +450,21 @@ export const useGameStore = create<GameState>((set, get) => ({
         startedAt: get().startedAt,
         solvedAtMs: Date.now() - get().startedAt,
       });
+    } else if (deadlockResult.isDeadlocked) {
+      playSound('invalid'); // locally valid but dooms the board - still worth an audible heads-up
+    } else {
+      playSound('place');
     }
 
     set({
       placements: next,
       manualMarks: remainingMarks,
-      placementSprites: nextSprites,
       eliminated: new Set(getBoardEliminatedCells(puzzle, next).map(key)),
       solved: nowSolved,
       solvedAtMs: nowSolved ? Date.now() - get().startedAt : null,
       hint: null,
       actionHistory: [...actionHistory, { kind: 'place', pos, hadMark }],
-      ...(nowSolved ? { isDeadlocked: false, deadlockedRegion: null } : deadlockStatus(puzzle, next)),
+      ...deadlockResult,
     });
   },
 
@@ -438,6 +485,12 @@ export const useGameStore = create<GameState>((set, get) => ({
     // before undoing it stuck around in the collection permanently -
     // repeat place+undo at the same cell was a free, unlimited way to
     // "catch" it into the collection with no way to remove it again.
+    // Narrow known gap: if Undo is hit before attemptPlace's async catch
+    // response has come back yet (see there), placementSprites[k] is still
+    // undefined here, so this misses revoking it - the server-side catch
+    // still lands a moment later with nothing to cancel it. Rare enough
+    // (a real round-trip has to lose a race against a human click) not to
+    // be worth a pending-request-cancellation mechanism for.
     const revokedPokedexNumber = placementSprites[k];
     if (revokedPokedexNumber !== undefined) {
       reportPokemonUncatch(revokedPokedexNumber)

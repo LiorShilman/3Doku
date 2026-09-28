@@ -367,6 +367,24 @@ button:disabled:hover {
   color: #e8e8f0;
 }
 
+.view-solved-board-back {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(108, 92, 231, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid #8b7cff;
+  border-radius: 24px;
+  padding: 12px 22px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 0 0 24px rgba(120, 120, 255, 0.4);
+}
+
 .hud-panel {
   background: rgba(18, 18, 30, 0.72);
   backdrop-filter: blur(8px);
@@ -775,9 +793,444 @@ button:disabled:hover {
   overflow-wrap: break-word;
 }
 
+.notify-toast-dismiss {
+  background: none;
+  border: none;
+  color: #a0c8e0;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.notify-toast-dismiss:hover {
+  color: #fff;
+}
+
+/* Reply mode swaps the compact row layout for a small compose form -
+   still the same toast identity (position, border, glow), just wider and
+   stacked vertically to fit a textarea and actions. */
+.notify-toast-reply {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  width: min(90vw, 340px);
+  cursor: default;
+  text-align: right;
+}
+
+.notify-toast-reply-to {
+  margin: 0;
+  color: #a0c8e0;
+  font-size: 13px;
+}
+
+.notify-toast-reply-to strong {
+  color: #fff;
+}
+
+.notify-toast-reply textarea {
+  width: 100%;
+  resize: none;
+  border-radius: 10px;
+  border: 1px solid rgba(79, 195, 247, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e8e8f0;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+}
+
+.notify-toast-reply textarea:focus {
+  outline: none;
+  border-color: #4fc3f7;
+}
+
+.notify-toast-reply-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.notify-toast-reply-actions button {
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(140, 140, 200, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e8e8f0;
+  cursor: pointer;
+}
+
+.notify-toast-reply-actions button.primary {
+  background: #4fc3f7;
+  border: 1px solid #7bd3ff;
+  color: #06202e;
+  font-weight: 700;
+}
+
+.notify-toast-reply-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.notify-toast-sent {
+  margin: 0;
+  color: #4fc3f7;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ---- Pokemon trading: building a deal right on the collection screen ---- */
+
+.trade-build-bar {
+  max-width: 1100px;
+  margin: 0 auto 20px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(108, 92, 231, 0.08);
+  border: 1px solid rgba(139, 124, 255, 0.35);
+  text-align: right;
+}
+
+.trade-build-hint {
+  margin: 0 0 10px;
+  font-size: 12px;
+  color: #a0a0c0;
+}
+
+.trade-build-columns {
+  margin-bottom: 4px;
+}
+
+.trade-build-chip {
+  padding: 0;
+  border: 1px solid rgba(140, 140, 200, 0.2);
+  cursor: pointer;
+}
+
+.trade-build-chip:hover {
+  border-color: rgba(255, 139, 156, 0.7);
+  filter: none;
+  transform: none;
+}
+
+.trade-side-empty {
+  color: #a0a0c0;
+  font-size: 12px;
+}
+
+.collection-card.trade-selectable {
+  cursor: pointer;
+}
+
+.collection-card.trade-offer-selected {
+  border-color: rgba(108, 92, 231, 0.85);
+  background: rgba(108, 92, 231, 0.16);
+}
+
+.collection-card.trade-request-selected {
+  border-color: rgba(79, 195, 247, 0.85);
+  background: rgba(79, 195, 247, 0.14);
+}
+
+.trade-select-badge {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 6px;
+  color: #fff;
+}
+
+.trade-select-badge.offer {
+  background: #6c5ce7;
+}
+
+.trade-select-badge.request {
+  background: #4fc3f7;
+  color: #06202e;
+}
+
+/* ---- Trade market (open, un-targeted deal listings) ---- */
+
+.trade-market-shell {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  background: radial-gradient(circle at 50% 0%, #241a3a 0%, #0a0a12 62%);
+  padding: 32px 16px 60px;
+  box-sizing: border-box;
+}
+
+.trade-market-header {
+  max-width: 960px;
+  margin: 0 auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.trade-market-header-text {
+  min-width: 200px;
+}
+
+.trade-market-header h1 {
+  margin: 0;
+  font-size: 30px;
+  color: #ffd479;
+  text-shadow: 0 0 22px rgba(255, 212, 121, 0.5);
+  letter-spacing: 0.5px;
+}
+
+.trade-market-subtitle {
+  margin: 4px 0 0;
+  color: #a0c8e0;
+  font-size: 14px;
+}
+
+.trade-market-back {
+  flex-shrink: 0;
+}
+
+.trade-market-toolbar {
+  max-width: 960px;
+  margin: 0 auto 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.trade-market-toolbar button.primary,
+.trade-deal-actions button.primary {
+  background: linear-gradient(160deg, #7c6cf0, #6c5ce7);
+  border: 1px solid #8b7cff;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(108, 92, 231, 0.4);
+}
+
+.trade-market-empty {
+  color: #a0a0c0;
+  text-align: center;
+  margin-top: 60px;
+  font-size: 15px;
+}
+
+.trade-deal-list {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 18px;
+}
+
+.trade-deal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 22px;
+  border-radius: 20px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(140, 140, 200, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.trade-deal-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+}
+
+.trade-deal-card.mine {
+  border-color: rgba(255, 212, 121, 0.5);
+  background: linear-gradient(160deg, rgba(255, 212, 121, 0.1), rgba(255, 212, 121, 0.02));
+}
+
+@keyframes trade-standout-pulse {
+  0%,
+  100% {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 rgba(139, 124, 255, 0);
+  }
+  50% {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 24px rgba(139, 124, 255, 0.55);
+  }
+}
+
+.trade-deal-card.standout {
+  border-color: rgba(139, 124, 255, 0.6);
+  animation: trade-standout-pulse 2.6s ease-in-out infinite;
+}
+
+.trade-deal-seller {
+  margin: 0;
+  font-size: 14px;
+  color: #a0c8e0;
+  font-weight: 600;
+}
+
+.trade-deal-seller strong {
+  color: #fff;
+}
+
+.trade-deal-columns {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.trade-deal-columns > div {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trade-deal-arrow {
+  font-size: 26px;
+  color: #4fc3f7;
+  text-shadow: 0 0 14px rgba(79, 195, 247, 0.7);
+  flex-shrink: 0;
+}
+
+.trade-deal-label {
+  font-size: 12px;
+  color: #a0a0c0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.trade-deal-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Big enough to actually recognize the creature at a glance, per rarity - a
+   soft radial glow behind the image (bigger + brighter for the rarer tiers)
+   instead of just a plain border, so a legendary in a listing visually pops
+   the way it's supposed to. */
+.trade-deal-item {
+  position: relative;
+  width: 84px;
+  height: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  border: 1px solid rgba(140, 140, 200, 0.25);
+  padding: 6px 4px 4px;
+  box-sizing: border-box;
+}
+
+.trade-deal-item-glow {
+  position: absolute;
+  inset: 6px 6px 22px;
+  border-radius: 50%;
+  filter: blur(10px);
+  z-index: 0;
+}
+
+.trade-deal-item.rarity-common .trade-deal-item-glow {
+  background: rgba(200, 200, 220, 0.18);
+}
+
+.trade-deal-item.rarity-uncommon {
+  border-color: rgba(111, 214, 255, 0.45);
+}
+.trade-deal-item.rarity-uncommon .trade-deal-item-glow {
+  background: rgba(111, 214, 255, 0.35);
+}
+
+.trade-deal-item.rarity-rare {
+  border-color: rgba(139, 124, 255, 0.55);
+}
+.trade-deal-item.rarity-rare .trade-deal-item-glow {
+  background: rgba(139, 124, 255, 0.45);
+}
+
+.trade-deal-item.rarity-legendary {
+  border-color: rgba(255, 212, 121, 0.7);
+}
+.trade-deal-item.rarity-legendary .trade-deal-item-glow {
+  background: rgba(255, 212, 121, 0.55);
+}
+
+.trade-deal-item img {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.trade-deal-item-name {
+  position: relative;
+  z-index: 1;
+  font-size: 10px;
+  color: #cfcfe0;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.trade-deal-item-qty {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  z-index: 2;
+  background: #6c5ce7;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.trade-deal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  align-items: center;
+}
+
+.trade-deal-cant-afford {
+  font-size: 12px;
+  color: #ffb86c;
+}
+
+@media (max-width: 500px) {
+  .trade-deal-item {
+    width: 68px;
+    height: 82px;
+  }
+
+  .trade-deal-item img {
+    width: 44px;
+    height: 44px;
+  }
+}
+
 @media (max-width: 700px) {
   .online-users-modal {
     width: 92vw;
+  }
+
+  .trade-deal-columns {
+    flex-direction: column;
   }
 
   .notify-toast {
@@ -877,6 +1330,42 @@ button:disabled:hover {
   z-index: 20;
 }
 
+/* ---- Fireworks (shown during the pause between solving and the win menu) ---- */
+
+.fireworks-overlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.firework-burst {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.firework-particle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  opacity: 0;
+  animation: firework-particle-burst 0.9s ease-out forwards;
+}
+
+@keyframes firework-particle-burst {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0.3);
+    opacity: 0;
+  }
+}
+
 .win-card {
   background: rgba(18, 18, 30, 0.92);
   border: 1px solid rgba(160, 160, 255, 0.35);
@@ -890,6 +1379,78 @@ button:disabled:hover {
   margin: 0 0 8px;
   font-size: 28px;
   color: #b9b6ff;
+}
+
+.win-caught-recap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 4px 0 16px;
+  max-width: 340px;
+}
+
+.win-caught-item {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(140, 140, 200, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.win-caught-item img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+@keyframes win-caught-new-pop {
+  0% {
+    transform: scale(0.4) rotate(-8deg);
+    opacity: 0;
+  }
+  55% {
+    transform: scale(1.15) rotate(4deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes win-caught-new-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(255, 212, 121, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(255, 212, 121, 0.95), 0 0 8px rgba(255, 212, 121, 0.6);
+  }
+}
+
+.win-caught-item.win-caught-new {
+  background: rgba(255, 212, 121, 0.12);
+  border: 1px solid #ffd479;
+  animation: win-caught-new-pop 0.5s ease-out, win-caught-new-glow 1.8s ease-in-out 0.5s infinite;
+}
+
+.win-caught-new-badge {
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffd479;
+  color: #2a1e00;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 8px;
+  white-space: nowrap;
 }
 
 .win-score {
@@ -1506,6 +2067,13 @@ button.danger {
   opacity: 0.25;
 }
 
+/* Trade mode needs to see what it's picking - lifts the mystery styling
+   above for the duration of building a deal (see CollectionScreen.tsx). */
+.collection-card.locked.trade-reveal .collection-card-image {
+  filter: none;
+  opacity: 1;
+}
+
 .collection-card-name {
   font-size: 11px;
   text-align: center;
@@ -1519,6 +2087,11 @@ button.danger {
 .collection-card.locked .collection-card-name {
   color: #6a6a80;
   letter-spacing: 2px;
+}
+
+.collection-card.locked.trade-reveal .collection-card-name {
+  color: #e8e8f0;
+  letter-spacing: normal;
 }
 
 .collection-card-count {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchGlobalRanking, type AuthUser, type GlobalRankingRow } from './api';
 import { usePresenceStore } from './presence/presenceStore';
+import { useSoundStore } from './sound/soundStore';
 import { rankDisplay } from './rankIcons';
 
 interface HomeScreenProps {
@@ -9,6 +10,7 @@ interface HomeScreenProps {
   onContinue: () => void;
   onRace: () => void;
   onCollection: () => void;
+  onTradeMarket: () => void;
   onSettings: () => void;
   onOnlineUsers: () => void;
   onLogout: () => void;
@@ -20,11 +22,14 @@ export function HomeScreen({
   onContinue,
   onRace,
   onCollection,
+  onTradeMarket,
   onSettings,
   onOnlineUsers,
   onLogout,
 }: HomeScreenProps) {
   const onlineCount = usePresenceStore((s) => s.onlineUsers.length);
+  const soundMuted = useSoundStore((s) => s.muted);
+  const toggleSoundMuted = useSoundStore((s) => s.toggleMuted);
   const [ranking, setRanking] = useState<GlobalRankingRow[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,9 +51,11 @@ export function HomeScreen({
           </button>
           <button onClick={onRace}>🏁 מרוץ נגד חבר</button>
           <button onClick={onCollection}>🎒 אוסף הפוקימונים שלי</button>
+          <button onClick={onTradeMarket}>🔄 שוק החלפות</button>
           <button onClick={onOnlineUsers} className="online-users-button">
             🟢 מחוברים כעת{onlineCount > 0 ? ` (${onlineCount})` : ''}
           </button>
+          <button onClick={toggleSoundMuted}>{soundMuted ? '🔇 השתק' : '🔊 קול'}</button>
           <button onClick={onSettings}>⚙️ הגדרות</button>
           <button onClick={onLogout}>התנתק</button>
         </div>

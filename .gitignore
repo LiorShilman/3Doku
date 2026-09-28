@@ -6,4 +6,5 @@ dist/
 *.sqlite-shm
 server/certs/
 server/logs/
+server/backups/
 .claude/

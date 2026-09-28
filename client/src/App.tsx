@@ -23,7 +23,11 @@ import { SettingsScreen } from './SettingsScreen';
 import { RaceScreen } from './race/RaceScreen';
 import { abandonActiveRace } from './race/raceSession';
 import { CollectionScreen } from './pokemon/CollectionScreen';
-import { loadPokedex, pokemonImageUrl } from './pokemon/pokedex';
+import { TradeMarketScreen } from './pokemon/TradeMarketScreen';
+import { getPokedexEntry, loadPokedex, pokemonImageUrl } from './pokemon/pokedex';
+import { FireworksOverlay } from './FireworksOverlay';
+import { useSoundStore } from './sound/soundStore';
+import { unlockAudioOnFirstInteraction } from './sound/soundManager';
 import { usePresenceStore } from './presence/presenceStore';
 import { rankDisplay } from './rankIcons';
 import { OnlineUsersModal } from './presence/OnlineUsersModal';
@@ -120,6 +124,8 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
   const pauseGame = useGameStore((s) => s.pauseGame);
   const viewMode = useGameStore((s) => s.viewMode);
   const toggleViewMode = useGameStore((s) => s.toggleViewMode);
+  const soundMuted = useSoundStore((s) => s.muted);
+  const toggleSoundMuted = useSoundStore((s) => s.toggleMuted);
   const elapsed = useElapsedMs(!solved && !paused, startedAt);
   const puzzle = useGameStore((s) => s.puzzle);
 
@@ -165,6 +171,8 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
 
   const placements = useGameStore((s) => s.placements);
   const placedCount = placements.length;
+  const placementSprites = useGameStore((s) => s.placementSprites);
+  const newSpeciesThisLevel = useGameStore((s) => s.newSpeciesThisLevel);
 
   const savedLevel = useRef(levelIndex);
   useEffect(() => {
@@ -212,6 +220,35 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
     fn();
   };
 
+  // The win menu itself waits a beat before appearing, so the player briefly
+  // sees their own fully-solved board (the whole point of a puzzle game's
+  // "aha" moment) instead of it being instantly buried under a menu. This
+  // also widens the ghost-click safety window above for free, since
+  // winShownAt is now set to when the menu ACTUALLY renders, not the
+  // instant the puzzle was solved underneath it.
+  const [showWinMenu, setShowWinMenu] = useState(false);
+  const WIN_MENU_DELAY_MS = 1500;
+  useEffect(() => {
+    if (!solved) {
+      setShowWinMenu(false);
+      return;
+    }
+    const timeout = setTimeout(() => {
+      winShownAt.current = Date.now();
+      setShowWinMenu(true);
+    }, WIN_MENU_DELAY_MS);
+    return () => clearTimeout(timeout);
+  }, [solved, puzzle?.id]);
+
+  // Lets the player step back to the clean, solved board on demand (not
+  // just the brief automatic glimpse above) - toggled by a button in the
+  // win card itself, and reset per level so it never lingers into a
+  // different puzzle's win screen.
+  const [viewingSolvedBoard, setViewingSolvedBoard] = useState(false);
+  useEffect(() => {
+    setViewingSolvedBoard(false);
+  }, [puzzle?.id]);
+
   // Shown continuously in the HUD (not just when the player happens to be
   // near the top of the visible leaderboard) - fetched once on entering the
   // game and refreshed after every new submission, since that's the only
@@ -226,7 +263,6 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
     if (!solved || solvedAtMs === null || !puzzle) return;
     if (submittedForLevel.current === puzzle.id) return;
     submittedForLevel.current = puzzle.id;
-    winShownAt.current = Date.now();
 
     // Advances the *saved* progress the moment the level is won, not only
     // when the player clicks "next level" - otherwise closing the tab (or
@@ -343,6 +379,7 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
           <button onClick={resetPuzzle}>איפוס</button>
           <button onClick={toggleFullscreen}>מסך מלא</button>
           <button onClick={toggleViewMode}>{viewMode === '3d' ? '🔲 תצוגת 2D' : '🧊 תצוגת 3D'}</button>
+          <button onClick={toggleSoundMuted}>{soundMuted ? '🔇 השתק' : '🔊 קול'}</button>
           <button onClick={handleGoHome}>🏠 תפריט</button>
           <button onClick={onLogout}>התנתק</button>
         </div>
@@ -397,13 +434,43 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
         </div>
       )}
 
-      {solved && (
+      {solved && !showWinMenu && <FireworksOverlay />}
+
+      {solved && showWinMenu && viewingSolvedBoard && (
+        // The win card is hidden, not unmounted (see below) - this just
+        // brings it back. A dark full-screen overlay would defeat the
+        // point of looking at the board, so this is a small floating
+        // button instead, out of the way in a corner.
+        <button className="view-solved-board-back" onClick={() => setViewingSolvedBoard(false)}>
+          🏆 חזרה לתפריט
+        </button>
+      )}
+
+      {solved && showWinMenu && !viewingSolvedBoard && (
         <div className="win-banner">
           <div className="win-card">
             <h1>פתרת שלב {levelIndex + 1}! 🎉</h1>
+
+            {Object.keys(placementSprites).length > 0 && (
+              <div className="win-caught-recap">
+                {Object.entries(placementSprites).map(([cellKey, pokedexNumber]) => {
+                  const entry = getPokedexEntry(pokedexNumber);
+                  if (!entry) return null;
+                  const isNew = newSpeciesThisLevel.has(pokedexNumber);
+                  return (
+                    <div key={cellKey} className={`win-caught-item${isNew ? ' win-caught-new' : ''}`}>
+                      <img src={pokemonImageUrl(entry)} alt={entry.name} />
+                      {isNew && <span className="win-caught-new-badge">✨ חדש!</span>}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
             <p>זמן: {formatMs(solvedAtMs ?? 0)} · טעויות: {mistakes} · רמזים: {hintsUsed}</p>
             <p className="win-score">ניקוד: {score}</p>
             <div className="win-actions">
+              <button onClick={() => setViewingSolvedBoard(true)}>👁️ הצג לוח פתור</button>
               <button onClick={() => guardGhostClick(resetPuzzle)}>שחק שוב</button>
               <button onClick={() => guardGhostClick(nextLevel)} className="primary">
                 ← שלב הבא
@@ -439,7 +506,7 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
 export default function App() {
   const [user, setUser] = useState<AuthUser | null | undefined>(undefined); // undefined = still checking
   const [progressReady, setProgressReady] = useState(false);
-  const [view, setView] = useState<'home' | 'game' | 'race' | 'collection' | 'settings'>('home');
+  const [view, setView] = useState<'home' | 'game' | 'race' | 'collection' | 'tradeMarket' | 'settings'>('home');
   const [showOnlineUsers, setShowOnlineUsers] = useState(false);
   const loadLevel = useGameStore((s) => s.loadLevel);
   const startNewGame = useGameStore((s) => s.startNewGame);
@@ -452,6 +519,11 @@ export default function App() {
       .then(setUser)
       .catch(() => setUser(null));
     loadPokedex();
+    // Registered as early as possible (before login, even) - mobile
+    // browsers need audio "unlocked" by a real tap before it can reliably
+    // play later from async code (see soundManager.ts), and the login
+    // screen's own buttons are the very first tap most sessions ever make.
+    unlockAudioOnFirstInteraction();
   }, []);
 
   useEffect(() => {
@@ -514,6 +586,7 @@ export default function App() {
         onContinue={handleContinue}
         onRace={() => setView('race')}
         onCollection={() => setView('collection')}
+        onTradeMarket={() => setView('tradeMarket')}
         onSettings={() => setView('settings')}
         onOnlineUsers={() => setShowOnlineUsers(true)}
         onLogout={handleLogout}
@@ -523,6 +596,8 @@ export default function App() {
     content = <RaceScreen user={user} onExit={() => setView('home')} />;
   } else if (view === 'collection') {
     content = <CollectionScreen onExit={() => setView('home')} />;
+  } else if (view === 'tradeMarket') {
+    content = <TradeMarketScreen user={user} onExit={() => setView('home')} />;
   } else if (view === 'settings') {
     content = <SettingsScreen user={user} onUserUpdated={setUser} onNewGame={handleNewGame} onExit={() => setView('home')} />;
   } else {
