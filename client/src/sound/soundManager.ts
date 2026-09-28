@@ -101,20 +101,26 @@ function ensureReverbSend(ctx: AudioContext): ConvolverNode {
 // click at the very start; the exponential decay is what makes it sound like
 // a plucked/percussive blip instead of a dull organ tone cutting off.
 //
-// Two oscillators a few cents apart (not one) drive each note - the slight
-// beating between them is what a chorus/unison effect is built from, and is
-// most of the difference between a "thin" single sine and a "full"-sounding
-// tone. Both pass through a gentle lowpass before the envelope, rounding off
-// the harsh upper harmonics (especially on the sawtooth/square waves) into
-// something warmer, and both the dry signal and a reverb send go to the
-// output so short blips still have a touch of natural-sounding space.
+// `bendTo`, when given, glides the pitch from `freq` to that frequency over
+// the note's duration - a rising or falling sweep reads clearly as
+// "positive"/"negative" even through a single tiny mono phone speaker, which
+// is not true of the detune/filter/reverb polish below (a few cents of
+// chorus and a touch of stereo-ish reverb space are real improvements on
+// real speakers or headphones, but they're subtle enough to disappear
+// entirely on cheap hardware - a pitch bend is a blunt, unmissable cue by
+// comparison, which is why the sounds most likely to be judged "did
+// anything change?" on a phone (mark/place/invalid) lean on it hardest).
+//
+// Two oscillators a few cents apart (not one) still drive each note for
+// some fullness, through a gentle lowpass and a shared reverb send.
 function note(
   ctx: AudioContext,
   freq: number,
   startOffset: number,
   duration: number,
   peak: number,
-  type: OscillatorType
+  type: OscillatorType,
+  bendTo?: number
 ): void {
   const t0 = ctx.currentTime + startOffset;
   const stopAt = t0 + duration + 0.02;
@@ -133,15 +139,45 @@ function note(
   gain.connect(ctx.destination);
   gain.connect(ensureReverbSend(ctx));
 
-  for (const cents of [-6, 6]) {
+  for (const cents of [-7, 7]) {
     const osc = ctx.createOscillator();
     osc.type = type;
-    osc.frequency.value = freq;
+    osc.frequency.setValueAtTime(freq, t0);
+    if (bendTo) osc.frequency.exponentialRampToValueAtTime(bendTo, t0 + duration);
     osc.detune.value = cents;
     osc.connect(filter);
     osc.start(t0);
     osc.stop(stopAt);
   }
+}
+
+// A very short burst of filtered noise, mixed alongside a tonal note (or on
+// its own) - a broadband transient like this cuts through even a bad
+// speaker the way a pure tone's attack sometimes doesn't, which is what
+// makes it read as a distinct "click"/percussive punch rather than just a
+// softer version of the same tone.
+function click(ctx: AudioContext, startOffset: number, peak: number, toneHz = 2500): void {
+  const t0 = ctx.currentTime + startOffset;
+  const duration = 0.03;
+  const bufferSize = Math.floor(ctx.sampleRate * duration);
+  const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+
+  const src = ctx.createBufferSource();
+  src.buffer = buffer;
+
+  const filter = ctx.createBiquadFilter();
+  filter.type = 'bandpass';
+  filter.frequency.value = toneHz;
+  filter.Q.value = 1.2;
+
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(peak, t0);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t0 + duration);
+
+  src.connect(filter).connect(gain).connect(ctx.destination);
+  src.start(t0);
 }
 
 // C5, E5, G5, C6, E6 - handy note names for the arpeggios below.
@@ -158,14 +194,26 @@ const players: Record<SoundName, (ctx: AudioContext) => void> = {
   // no network round-trip involved, which makes it the simplest possible
   // way to tell "is sound working on this device at all" apart from the
   // catch chime (async, after a server response) or the solve fanfare (only
-  // once per level).
-  mark: (ctx) => note(ctx, 720, 0, 0.05, 0.12, 'square'),
+  // once per level). A rising pitch bend plus a percussive click - both cut
+  // through a small phone speaker far more reliably than a flat single tone.
+  mark: (ctx) => {
+    click(ctx, 0, 0.2, 3200);
+    note(ctx, 500, 0, 0.05, 0.16, 'square', 950);
+  },
 
-  place: (ctx) => note(ctx, 520, 0, 0.09, 0.18, 'triangle'),
+  // A punchier "clack" than a bare tone - click for the attack, a quick
+  // upward bend for the satisfying "it snapped into place" feel.
+  place: (ctx) => {
+    click(ctx, 0, 0.18, 1800);
+    note(ctx, 380, 0, 0.11, 0.22, 'triangle', 640);
+  },
 
+  // An unmistakable downward "wah-wah" - each note bends DOWN in pitch, not
+  // just two fixed low tones, which reads as "wrong" clearly even on a
+  // speaker too small to reproduce their actual bass frequencies well.
   invalid: (ctx) => {
-    note(ctx, 180, 0, 0.14, 0.2, 'sawtooth');
-    note(ctx, 140, 0.09, 0.16, 0.18, 'sawtooth');
+    note(ctx, 320, 0, 0.16, 0.24, 'sawtooth', 150);
+    note(ctx, 260, 0.1, 0.18, 0.22, 'sawtooth', 110);
   },
 
   // Catch chimes escalate with rarity - more notes, brighter tone, longer
@@ -174,40 +222,42 @@ const players: Record<SoundName, (ctx: AudioContext) => void> = {
   // attemptPlace) which only plays these for a genuinely new species, never
   // a duplicate.
   'catch-common': (ctx) => {
-    note(ctx, C5, 0, 0.12, 0.15, 'sine');
-    note(ctx, E5, 0.09, 0.16, 0.15, 'sine');
+    note(ctx, C5, 0, 0.12, 0.2, 'sine');
+    note(ctx, E5, 0.09, 0.16, 0.2, 'sine');
   },
   'catch-uncommon': (ctx) => {
-    note(ctx, C5, 0, 0.1, 0.15, 'sine');
-    note(ctx, E5, 0.08, 0.1, 0.15, 'sine');
-    note(ctx, G5, 0.16, 0.18, 0.16, 'sine');
+    note(ctx, C5, 0, 0.1, 0.2, 'sine');
+    note(ctx, E5, 0.08, 0.1, 0.2, 'sine');
+    note(ctx, G5, 0.16, 0.18, 0.22, 'sine');
   },
   'catch-rare': (ctx) => {
-    note(ctx, C5, 0, 0.09, 0.14, 'triangle');
-    note(ctx, E5, 0.07, 0.09, 0.14, 'triangle');
-    note(ctx, G5, 0.14, 0.09, 0.15, 'triangle');
-    note(ctx, C6, 0.21, 0.22, 0.18, 'triangle');
+    note(ctx, C5, 0, 0.09, 0.19, 'triangle');
+    note(ctx, E5, 0.07, 0.09, 0.19, 'triangle');
+    note(ctx, G5, 0.14, 0.09, 0.2, 'triangle');
+    note(ctx, C6, 0.21, 0.22, 0.24, 'triangle');
   },
   'catch-legendary': (ctx) => {
-    [C5, E5, G5, C6, E6].forEach((f, i) => note(ctx, f, i * 0.08, 0.14, 0.16, 'triangle'));
-    note(ctx, C6, 0.48, 0.55, 0.18, 'sine');
-    note(ctx, E6, 0.48, 0.55, 0.15, 'sine');
-    note(ctx, G6, 0.48, 0.6, 0.13, 'sine');
+    click(ctx, 0, 0.15, 4000);
+    [C5, E5, G5, C6, E6].forEach((f, i) => note(ctx, f, i * 0.08, 0.14, 0.22, 'triangle'));
+    note(ctx, C6, 0.48, 0.55, 0.24, 'sine');
+    note(ctx, E6, 0.48, 0.55, 0.2, 'sine');
+    note(ctx, G6, 0.48, 0.6, 0.18, 'sine');
   },
 
   // Timed to land alongside the fireworks overlay (see FireworksOverlay.tsx
   // and App.tsx's WIN_MENU_DELAY_MS window) - a short rising run into a held
   // chord.
   solve: (ctx) => {
-    [C5, E5, G5, C6].forEach((f, i) => note(ctx, f, i * 0.1, 0.16, 0.18, 'triangle'));
-    note(ctx, C6, 0.42, 0.5, 0.2, 'sine');
-    note(ctx, E6, 0.42, 0.5, 0.16, 'sine');
-    note(ctx, G6, 0.42, 0.55, 0.13, 'sine');
+    [C5, E5, G5, C6].forEach((f, i) => note(ctx, f, i * 0.1, 0.16, 0.24, 'triangle'));
+    note(ctx, C6, 0.42, 0.5, 0.26, 'sine');
+    note(ctx, E6, 0.42, 0.5, 0.21, 'sine');
+    note(ctx, G6, 0.42, 0.55, 0.18, 'sine');
   },
 
   trade: (ctx) => {
-    note(ctx, 880, 0, 0.08, 0.16, 'sine');
-    note(ctx, 1108.73, 0.06, 0.16, 0.16, 'sine');
+    click(ctx, 0, 0.15, 2600);
+    note(ctx, 880, 0, 0.08, 0.2, 'sine');
+    note(ctx, 1108.73, 0.06, 0.16, 0.2, 'sine');
   },
 };
 
