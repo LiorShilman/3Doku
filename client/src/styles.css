@@ -577,10 +577,6 @@ button:disabled:hover {
 
 /* ---- Online users / notifications ---- */
 
-.online-users-button {
-  position: relative;
-}
-
 @keyframes online-dot-pulse {
   0%,
   100% {
@@ -1613,6 +1609,58 @@ button:disabled:hover {
   border: 1px solid #8b7cff;
   color: #fff;
   font-weight: 700;
+}
+
+.home-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.home-icon-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 4px;
+  border-radius: 12px;
+  border: 1px solid rgba(140, 140, 200, 0.22);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e8e8f0;
+  cursor: pointer;
+}
+
+.home-icon-emoji {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.home-icon-label {
+  font-size: 11px;
+  color: #cfcfe0;
+  white-space: nowrap;
+}
+
+.home-icon-badge {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  background: #ff3b5c;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 400px) {
+  .home-icon-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .settings-section {

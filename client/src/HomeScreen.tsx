@@ -57,19 +57,53 @@ export function HomeScreen({
           <button onClick={onContinue} className="primary">
             המשך משחק - שלב {levelIndex + 1}
           </button>
-          <button onClick={onRace}>🏁 מרוץ נגד חבר</button>
-          <button onClick={onCollection}>🎒 אוסף הפוקימונים שלי</button>
-          <button onClick={onTradeMarket}>🔄 שוק החלפות</button>
-          <button onClick={onMyProfile}>👤 הפרופיל שלי</button>
-          <button onClick={onFriends}>
-            👥 חברים{incomingFriendRequests > 0 ? ` (${incomingFriendRequests})` : ''}
+        </div>
+
+        {/* Everything past the main "continue" action is secondary
+            navigation, not a fresh decision every visit - a compact icon
+            grid keeps the home screen scannable at a glance instead of a
+            tall stack of full-width text buttons that kept growing every
+            time a new feature (trade market, friends, profile, sound...)
+            got its own home-screen entry. */}
+        <div className="home-icon-grid">
+          <button className="home-icon-btn" onClick={onRace}>
+            <span className="home-icon-emoji">🏁</span>
+            <span className="home-icon-label">מרוץ</span>
           </button>
-          <button onClick={onOnlineUsers} className="online-users-button">
-            🟢 מחוברים כעת{onlineCount > 0 ? ` (${onlineCount})` : ''}
+          <button className="home-icon-btn" onClick={onCollection}>
+            <span className="home-icon-emoji">🎒</span>
+            <span className="home-icon-label">אוסף</span>
           </button>
-          <button onClick={toggleSoundMuted}>{soundMuted ? '🔇 השתק' : '🔊 קול'}</button>
-          <button onClick={onSettings}>⚙️ הגדרות</button>
-          <button onClick={onLogout}>התנתק</button>
+          <button className="home-icon-btn" onClick={onTradeMarket}>
+            <span className="home-icon-emoji">🔄</span>
+            <span className="home-icon-label">חנות</span>
+          </button>
+          <button className="home-icon-btn" onClick={onMyProfile}>
+            <span className="home-icon-emoji">👤</span>
+            <span className="home-icon-label">פרופיל</span>
+          </button>
+          <button className="home-icon-btn" onClick={onFriends}>
+            <span className="home-icon-emoji">👥</span>
+            <span className="home-icon-label">חברים</span>
+            {incomingFriendRequests > 0 && <span className="home-icon-badge">{incomingFriendRequests}</span>}
+          </button>
+          <button className="home-icon-btn" onClick={onOnlineUsers}>
+            <span className="home-icon-emoji">🟢</span>
+            <span className="home-icon-label">מחוברים</span>
+            {onlineCount > 0 && <span className="home-icon-badge">{onlineCount}</span>}
+          </button>
+          <button className="home-icon-btn" onClick={toggleSoundMuted}>
+            <span className="home-icon-emoji">{soundMuted ? '🔇' : '🔊'}</span>
+            <span className="home-icon-label">קול</span>
+          </button>
+          <button className="home-icon-btn" onClick={onSettings}>
+            <span className="home-icon-emoji">⚙️</span>
+            <span className="home-icon-label">הגדרות</span>
+          </button>
+          <button className="home-icon-btn" onClick={onLogout}>
+            <span className="home-icon-emoji">🚪</span>
+            <span className="home-icon-label">התנתק</span>
+          </button>
         </div>
 
         <div className="leaderboard home-ranking">
