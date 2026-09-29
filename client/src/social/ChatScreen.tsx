@@ -11,8 +11,16 @@ interface ChatScreenProps {
   onExit: () => void;
 }
 
-function formatTime(iso: string): string {
-  return new Date(iso.replace(' ', 'T') + 'Z').toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+// Messages loaded from the server come back as SQLite's "YYYY-MM-DD
+// HH:MM:SS" (UTC, no timezone marker) and need that conversion - but the
+// optimistic messages appended locally the moment you send or receive one
+// live (see below) are already built with toISOString(), which is already
+// valid and already ends in 'Z'. Blindly appending another 'Z' onto an
+// already-ISO string produced "...000ZZ", an invalid date - only normalize
+// the SQLite shape, and pass an already-ISO string through untouched.
+function formatTime(raw: string): string {
+  const iso = raw.includes('T') ? raw : raw.replace(' ', 'T') + 'Z';
+  return new Date(iso).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
 }
 
 export function ChatScreen({ user, initialFriendId, initialFriendName, onExit }: ChatScreenProps) {
