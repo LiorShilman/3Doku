@@ -1,5 +1,12 @@
 import { Router } from 'express';
-import { getProgress, saveProgress, deleteUserScores, deletePokemonCollection, deletePokemonRolls } from '../db.js';
+import {
+  getProgress,
+  saveProgress,
+  resetProgressToZero,
+  deleteUserScores,
+  deletePokemonCollection,
+  deletePokemonRolls,
+} from '../db.js';
 import { requireAuth } from './auth.js';
 
 export const progressRouter = Router();
@@ -22,7 +29,7 @@ progressRouter.post('/', requireAuth, (req, res) => {
 // Pokemon collection. Doesn't touch race stats, which aren't part of level
 // progression and were never asked to reset.
 progressRouter.post('/reset', requireAuth, (req, res) => {
-  saveProgress(req.user!.id, 0);
+  resetProgressToZero(req.user!.id);
   deleteUserScores(req.user!.id);
   deletePokemonCollection(req.user!.id);
   deletePokemonRolls(req.user!.id);

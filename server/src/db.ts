@@ -220,11 +220,33 @@ export function getProgress(userId: number): number {
   return row?.level_index ?? 0;
 }
 
+// Never allowed to move a player's progress BACKWARD - only the explicit
+// "New Game" reset (see resetProgressToZero below) is allowed to lower it.
+// A real incident: a player who'd legitimately reached level 50 had their
+// saved progress overwritten back down to level 0 by some client-side race
+// (a stale retry, a second device, a failed request landing after a newer
+// one - the exact trigger was never conclusively pinned down). Whatever the
+// mechanism, this makes that whole class of bug a no-op instead of silent
+// data loss: a write with a lower value than what's already stored simply
+// doesn't move the stored value down.
 export function saveProgress(userId: number, levelIndex: number): void {
   db.prepare(
     `INSERT INTO progress (user_id, level_index, updated_at) VALUES (?, ?, datetime('now'))
-     ON CONFLICT(user_id) DO UPDATE SET level_index = excluded.level_index, updated_at = excluded.updated_at`
+     ON CONFLICT(user_id) DO UPDATE SET
+       level_index = MAX(excluded.level_index, progress.level_index),
+       updated_at = CASE WHEN excluded.level_index > progress.level_index THEN excluded.updated_at ELSE progress.updated_at END`
   ).run(userId, levelIndex);
+}
+
+// Only the explicit "New Game" reset (see routes/progress.ts's /reset) goes
+// through here - deliberately bypasses saveProgress's monotonic guard above,
+// since going back to 0 is the one legitimate case where progress is
+// actually meant to move backward.
+export function resetProgressToZero(userId: number): void {
+  db.prepare(
+    `INSERT INTO progress (user_id, level_index, updated_at) VALUES (?, 0, datetime('now'))
+     ON CONFLICT(user_id) DO UPDATE SET level_index = 0, updated_at = excluded.updated_at`
+  ).run(userId);
 }
 
 export interface StoredLevel {
