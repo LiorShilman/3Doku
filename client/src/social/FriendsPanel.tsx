@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useFriendsStore } from './friendsStore';
 
-interface FriendsScreenProps {
+interface FriendsPanelProps {
   onViewProfile: (userId: number, displayName: string) => void;
   onChat: (userId: number, displayName: string) => void;
-  onExit: () => void;
 }
 
-export function FriendsScreen({ onViewProfile, onChat, onExit }: FriendsScreenProps) {
+// The content of what used to be a standalone "friends" page - now embedded
+// as a tab on the profile screen instead, since a whole separate page for
+// managing friends/requests/search was more navigation than the feature
+// actually needed.
+export function FriendsPanel({ onViewProfile, onChat }: FriendsPanelProps) {
   const { friends, incoming, outgoing, candidates, loading, error, loadAll, sendRequest, accept, decline } =
     useFriendsStore();
   const [actingId, setActingId] = useState<number | null>(null);
@@ -31,12 +34,7 @@ export function FriendsScreen({ onViewProfile, onChat, onExit }: FriendsScreenPr
   const addable = candidates.filter((c) => c.status !== 'friends');
 
   return (
-    <div className="friends-shell">
-      <div className="friends-header">
-        <h1>👥 חברים</h1>
-        <button onClick={onExit}>חזרה לתפריט</button>
-      </div>
-
+    <div className="friends-panel">
       {error && <p className="online-users-error">לא ניתן לטעון את רשימת החברים כרגע</p>}
       {loading && friends.length === 0 && !error && <p className="trade-side-empty">טוען...</p>}
 
@@ -103,7 +101,7 @@ export function FriendsScreen({ onViewProfile, onChat, onExit }: FriendsScreenPr
       </section>
 
       <section className="friends-section">
-        <h2>הוספת חברים</h2>
+        <h2>חיפוש שחקנים והוספת חברים</h2>
         {addable.length === 0 && <p className="trade-side-empty">אין עוד שחקנים להוסיף כרגע</p>}
         <ul className="friends-list">
           {addable.map((c) => (

@@ -11,7 +11,6 @@ interface HomeScreenProps {
   onContinue: () => void;
   onRace: () => void;
   onTradeMarket: () => void;
-  onFriends: () => void;
   onMyProfile: () => void;
   onSettings: () => void;
   onOnlineUsers: () => void;
@@ -24,7 +23,6 @@ export function HomeScreen({
   onContinue,
   onRace,
   onTradeMarket,
-  onFriends,
   onMyProfile,
   onSettings,
   onOnlineUsers,
@@ -75,10 +73,6 @@ export function HomeScreen({
           <button className="home-icon-btn" onClick={onMyProfile}>
             <span className="home-icon-emoji">👤</span>
             <span className="home-icon-label">פרופיל</span>
-          </button>
-          <button className="home-icon-btn" onClick={onFriends}>
-            <span className="home-icon-emoji">👥</span>
-            <span className="home-icon-label">חברים</span>
             {incomingFriendRequests > 0 && <span className="home-icon-badge">{incomingFriendRequests}</span>}
           </button>
           <button className="home-icon-btn" onClick={onOnlineUsers}>

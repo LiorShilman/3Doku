@@ -2167,30 +2167,10 @@ button.danger {
   border-radius: 999px;
 }
 
-/* ---- Friends ---- */
+/* ---- Friends (embedded as a profile-screen tab, see ProfileScreen.tsx) ---- */
 
-.friends-shell {
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh;
-  overflow-y: auto;
-  background: radial-gradient(circle at 50% 0%, #16162a 0%, #0a0a12 60%);
-  padding: 28px 32px 60px;
-  box-sizing: border-box;
-}
-
-.friends-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 700px;
-  margin: 0 auto 20px;
-}
-
-.friends-header h1 {
-  color: #b9b6ff;
-  margin: 0;
-  font-size: 26px;
+.friends-panel {
+  margin-top: 8px;
 }
 
 .friends-section {
@@ -2250,6 +2230,39 @@ button.danger {
 
 .profile-shell .collection-header h1 {
   font-size: 22px;
+}
+
+.profile-tabs {
+  max-width: 1100px;
+  margin: 0 auto 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.profile-tabs button {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(140, 140, 200, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+  color: #cfcfe0;
+  cursor: pointer;
+}
+
+.profile-tabs button.active {
+  background: rgba(108, 92, 231, 0.28);
+  border-color: rgba(139, 124, 255, 0.6);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Sits right above the collection grid it actually affects, not up in the
+   page header where it used to live on the old standalone "אוסף" screen. */
+.collection-trade-toolbar {
+  max-width: 1100px;
+  margin: 0 auto 16px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .profile-stats {
@@ -2424,10 +2437,6 @@ button.danger {
 }
 
 @media (max-width: 700px) {
-  .friends-shell {
-    padding: 20px 14px 60px;
-  }
-
   .chat-shell {
     flex-direction: column;
   }
