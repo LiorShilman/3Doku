@@ -10,7 +10,6 @@ interface HomeScreenProps {
   levelIndex: number;
   onContinue: () => void;
   onRace: () => void;
-  onCollection: () => void;
   onTradeMarket: () => void;
   onFriends: () => void;
   onMyProfile: () => void;
@@ -24,7 +23,6 @@ export function HomeScreen({
   levelIndex,
   onContinue,
   onRace,
-  onCollection,
   onTradeMarket,
   onFriends,
   onMyProfile,
@@ -69,10 +67,6 @@ export function HomeScreen({
           <button className="home-icon-btn" onClick={onRace}>
             <span className="home-icon-emoji">🏁</span>
             <span className="home-icon-label">מרוץ</span>
-          </button>
-          <button className="home-icon-btn" onClick={onCollection}>
-            <span className="home-icon-emoji">🎒</span>
-            <span className="home-icon-label">אוסף</span>
           </button>
           <button className="home-icon-btn" onClick={onTradeMarket}>
             <span className="home-icon-emoji">🔄</span>

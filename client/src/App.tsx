@@ -22,7 +22,6 @@ import { HomeScreen } from './HomeScreen';
 import { SettingsScreen } from './SettingsScreen';
 import { RaceScreen } from './race/RaceScreen';
 import { abandonActiveRace } from './race/raceSession';
-import { CollectionScreen } from './pokemon/CollectionScreen';
 import { TradeMarketScreen } from './pokemon/TradeMarketScreen';
 import { getPokedexEntry, loadPokedex, pokemonImageUrl } from './pokemon/pokedex';
 import { FireworksOverlay } from './FireworksOverlay';
@@ -510,7 +509,7 @@ export default function App() {
   const [user, setUser] = useState<AuthUser | null | undefined>(undefined); // undefined = still checking
   const [progressReady, setProgressReady] = useState(false);
   const [view, setView] = useState<
-    'home' | 'game' | 'race' | 'collection' | 'tradeMarket' | 'friends' | 'profile' | 'chat' | 'settings'
+    'home' | 'game' | 'race' | 'tradeMarket' | 'friends' | 'profile' | 'chat' | 'settings'
   >('home');
   const [showOnlineUsers, setShowOnlineUsers] = useState(false);
   const [profileTarget, setProfileTarget] = useState<{ userId: number; displayName: string } | null>(null);
@@ -592,7 +591,6 @@ export default function App() {
         levelIndex={levelIndex}
         onContinue={handleContinue}
         onRace={() => setView('race')}
-        onCollection={() => setView('collection')}
         onTradeMarket={() => setView('tradeMarket')}
         onFriends={() => setView('friends')}
         onMyProfile={() => {
@@ -606,8 +604,6 @@ export default function App() {
     );
   } else if (view === 'race') {
     content = <RaceScreen user={user} onExit={() => setView('home')} />;
-  } else if (view === 'collection') {
-    content = <CollectionScreen onExit={() => setView('home')} />;
   } else if (view === 'tradeMarket') {
     content = <TradeMarketScreen user={user} onExit={() => setView('home')} />;
   } else if (view === 'friends') {
@@ -625,7 +621,7 @@ export default function App() {
       />
     );
   } else if (view === 'profile' && profileTarget) {
-    content = <ProfileScreen userId={profileTarget.userId} onExit={() => setView('home')} />;
+    content = <ProfileScreen user={user} userId={profileTarget.userId} onExit={() => setView('home')} />;
   } else if (view === 'chat' && chatTarget) {
     content = (
       <ChatScreen
