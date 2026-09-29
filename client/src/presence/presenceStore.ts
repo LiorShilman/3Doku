@@ -18,9 +18,15 @@ type SendResult = { ok: true } | { error: string };
 interface PresenceState {
   onlineUsers: OnlineUser[];
   incomingNotification: IncomingNotification | null;
+  // Which friend's chat thread (if any) the player currently has open on
+  // the dedicated chat page - see ChatScreen.tsx, which sets this so a
+  // message from that exact person shows up live in the open thread instead
+  // of ALSO popping the toast for a conversation already on screen.
+  activeChatPartnerId: number | null;
   connect: (currentUserId: number) => void;
   sendNotification: (toUserId: number, message: string) => Promise<SendResult>;
   dismissNotification: () => void;
+  setActiveChatPartner: (userId: number | null) => void;
 }
 
 // The socket itself is a module-level singleton (see race/socket.ts) shared
@@ -31,9 +37,10 @@ interface PresenceState {
 // process the same broadcast N times.
 let listenersRegistered = false;
 
-export const usePresenceStore = create<PresenceState>((set) => ({
+export const usePresenceStore = create<PresenceState>((set, get) => ({
   onlineUsers: [],
   incomingNotification: null,
+  activeChatPartnerId: null,
 
   connect: (currentUserId) => {
     if (listenersRegistered) return;
@@ -44,6 +51,10 @@ export const usePresenceStore = create<PresenceState>((set) => ({
       set({ onlineUsers: list.filter((u) => u.userId !== currentUserId) });
     });
     socket.on('notify:receive', (data: IncomingNotification) => {
+      // Already visible live in the open chat thread (see ChatScreen.tsx's
+      // own notify:receive listener) - showing the toast too would be
+      // redundant for a conversation already on screen.
+      if (get().activeChatPartnerId === data.fromUserId) return;
       set({ incomingNotification: data });
     });
   },
@@ -54,4 +65,5 @@ export const usePresenceStore = create<PresenceState>((set) => ({
     }),
 
   dismissNotification: () => set({ incomingNotification: null }),
+  setActiveChatPartner: (userId) => set({ activeChatPartnerId: userId }),
 }));

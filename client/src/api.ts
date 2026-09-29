@@ -284,3 +284,97 @@ export async function saveProgress(levelIndex: number): Promise<void> {
 export async function resetProgress(): Promise<void> {
   await fetch(`${API_BASE}/api/progress/reset`, { method: 'POST', credentials: 'include' });
 }
+
+export interface Friend {
+  user_id: number;
+  display_name: string;
+}
+
+export interface FriendRequest {
+  user_id: number;
+  display_name: string;
+  created_at: string;
+}
+
+export interface FriendCandidate {
+  userId: number;
+  displayName: string;
+  status: 'none' | 'friends' | 'pending-outgoing' | 'pending-incoming';
+}
+
+export async function fetchFriends(): Promise<Friend[]> {
+  const res = await fetch(`${API_BASE}/api/friends`, { credentials: 'include' });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
+  return (await res.json()).friends;
+}
+
+export async function fetchFriendRequests(): Promise<{ incoming: FriendRequest[]; outgoing: FriendRequest[] }> {
+  const res = await fetch(`${API_BASE}/api/friends/requests`, { credentials: 'include' });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
+  return res.json();
+}
+
+export async function fetchFriendCandidates(): Promise<FriendCandidate[]> {
+  const res = await fetch(`${API_BASE}/api/friends/candidates`, { credentials: 'include' });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
+  return (await res.json()).candidates;
+}
+
+export async function sendFriendRequest(toUserId: number): Promise<void> {
+  const res = await fetch(`${API_BASE}/api/friends/request`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ toUserId }),
+  });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
+}
+
+export async function acceptFriendRequest(userId: number): Promise<void> {
+  const res = await fetch(`${API_BASE}/api/friends/${userId}/accept`, { method: 'POST', credentials: 'include' });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
+}
+
+// Also used to cancel a request you sent, or unfriend someone - see
+// server/src/routes/friends.ts's /decline for why it's the same operation.
+export async function removeFriendship(userId: number): Promise<void> {
+  const res = await fetch(`${API_BASE}/api/friends/${userId}/decline`, { method: 'POST', credentials: 'include' });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
+}
+
+export interface UserStats {
+  totalSolves: number;
+  avgTimeMs: number | null;
+  avgSolvesPerDay: number | null;
+  memberSince: string;
+}
+
+export async function fetchProfile(userId: number): Promise<{ displayName: string; stats: UserStats }> {
+  const res = await fetch(`${API_BASE}/api/friends/${userId}/profile`, { credentials: 'include' });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
+  return res.json();
+}
+
+export async function fetchFriendCollection(userId: number): Promise<PokemonCollectionRow[]> {
+  const res = await fetch(`${API_BASE}/api/friends/${userId}/collection`, { credentials: 'include' });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
+  return (await res.json()).collection;
+}
+
+export interface ChatMessage {
+  id: number;
+  from_user_id: number;
+  to_user_id: number;
+  message: string;
+  created_at: string;
+}
+
+// Sending itself goes through the existing socket (see presenceStore.ts's
+// sendNotification / presence.ts's notify:send, which persists every
+// message it relays) - this is only for loading a conversation's history
+// when the chat page opens.
+export async function fetchConversation(userId: number): Promise<ChatMessage[]> {
+  const res = await fetch(`${API_BASE}/api/chat/${userId}`, { credentials: 'include' });
+  if (!res.ok) throw new Error(await parseErrorBody(res));
+  return (await res.json()).messages;
+}

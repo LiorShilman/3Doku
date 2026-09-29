@@ -1,5 +1,5 @@
 import type { Server as SocketServer } from 'socket.io';
-import { findValidSessionUser } from './db.js';
+import { findValidSessionUser, findUserById, sendChatMessage } from './db.js';
 import { getSessionTokenFromCookieHeader } from './auth.js';
 
 // Same-user, multiple tabs/devices (phone + a browser tab left open, say) -
@@ -53,17 +53,29 @@ export function registerPresenceHandlers(io: SocketServer): void {
         const message = typeof data.message === 'string' ? data.message.trim().slice(0, MAX_MESSAGE_LENGTH) : '';
         if (!toUserId || !message) return ack?.({ error: 'הודעה לא תקינה' });
         if (toUserId === user.id) return ack?.({ error: 'אי אפשר לשלוח הודעה לעצמך' });
+        if (!findUserById(toUserId)) return ack?.({ error: 'משתמש לא קיים' });
+
+        // Every notification sent this way also becomes a permanent chat
+        // history entry (see the dedicated chat page, routes/chat.ts) -
+        // regardless of friendship, so a message sent through this
+        // always-available quick panel is never lost even if the two
+        // players aren't (yet) friends. Persisted unconditionally, whether
+        // or not the recipient happens to be online right now - this is the
+        // same send path the dedicated chat page uses to message a friend
+        // who isn't currently connected; only the live delivery below is
+        // conditional on that.
+        sendChatMessage(user.id, toUserId, message);
 
         const target = online.get(toUserId);
-        if (!target || target.socketIds.size === 0) return ack?.({ error: 'המשתמש כבר לא מחובר' });
-
-        for (const socketId of target.socketIds) {
-          io.to(socketId).emit('notify:receive', {
-            fromUserId: user.id,
-            fromDisplayName: user.display_name,
-            message,
-            sentAt: Date.now(),
-          });
+        if (target) {
+          for (const socketId of target.socketIds) {
+            io.to(socketId).emit('notify:receive', {
+              fromUserId: user.id,
+              fromDisplayName: user.display_name,
+              message,
+              sentAt: Date.now(),
+            });
+          }
         }
         ack?.({ ok: true });
       }

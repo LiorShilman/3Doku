@@ -111,6 +111,36 @@ db.exec(`
     pokedex_number INTEGER NOT NULL,
     PRIMARY KEY (user_id, level_index, region)
   );
+
+  -- One row per pair, always stored with user_a < user_b so there's never a
+  -- duplicate row for the same two people regardless of who asked first;
+  -- requested_by records who actually sent the request, so the recipient
+  -- (not the sender) is the only one who can accept it. A declined request
+  -- or a broken-off friendship simply deletes the row - there's no
+  -- 'declined' status to remember, so a fresh request can always be sent
+  -- again later.
+  CREATE TABLE IF NOT EXISTS friendships (
+    user_a INTEGER NOT NULL REFERENCES users(id),
+    user_b INTEGER NOT NULL REFERENCES users(id),
+    status TEXT NOT NULL DEFAULT 'pending',
+    requested_by INTEGER NOT NULL REFERENCES users(id),
+    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY (user_a, user_b)
+  );
+
+  -- Direct messages between two players - both the free-text notifications
+  -- sent via the existing online-users panel (see presence.ts's notify:send)
+  -- and messages sent from the dedicated chat page land here, so either
+  -- entry point builds the same persistent conversation history.
+  CREATE TABLE IF NOT EXISTS chat_messages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    from_user_id INTEGER NOT NULL REFERENCES users(id),
+    to_user_id INTEGER NOT NULL REFERENCES users(id),
+    message TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+  CREATE INDEX IF NOT EXISTS idx_chat_messages_from_to ON chat_messages (from_user_id, to_user_id, created_at);
+  CREATE INDEX IF NOT EXISTS idx_chat_messages_to_from ON chat_messages (to_user_id, from_user_id, created_at);
 `);
 
 export interface UserRow {
@@ -144,6 +174,16 @@ export function findUserByEmail(email: string): UserRow | undefined {
 
 export function findUserById(id: number): UserRow | undefined {
   return db.prepare(`SELECT * FROM users WHERE id = ?`).get(id) as UserRow | undefined;
+}
+
+// Every other registered user - for the "add a friend" candidate list (see
+// routes/friends.ts's /candidates). A family-scale app's whole user table is
+// small enough that this needs no pagination or search.
+export function listOtherUsers(userId: number): { id: number; display_name: string }[] {
+  return db.prepare(`SELECT id, display_name FROM users WHERE id != ? ORDER BY display_name`).all(userId) as {
+    id: number;
+    display_name: string;
+  }[];
 }
 
 // Only the display name is editable from the settings screen - email/password
@@ -601,4 +641,175 @@ export function recentClientEvents(userId: number, limit = 200): ClientEventRow[
   return db
     .prepare(`SELECT * FROM client_events WHERE user_id = ? ORDER BY id DESC LIMIT ?`)
     .all(userId, limit) as ClientEventRow[];
+}
+
+// friendships is keyed (user_a, user_b) with user_a < user_b always, so
+// every read/write goes through this to get a consistent, order-independent
+// pair regardless of which of the two users is "me" in a given call.
+function pairKey(userId: number, otherUserId: number): [number, number] {
+  return userId < otherUserId ? [userId, otherUserId] : [otherUserId, userId];
+}
+
+export type FriendshipStatus = 'pending' | 'accepted';
+
+export interface FriendshipRow {
+  user_a: number;
+  user_b: number;
+  status: FriendshipStatus;
+  requested_by: number;
+  created_at: string;
+}
+
+export function getFriendship(userId: number, otherUserId: number): FriendshipRow | undefined {
+  const [a, b] = pairKey(userId, otherUserId);
+  return db.prepare(`SELECT * FROM friendships WHERE user_a = ? AND user_b = ?`).get(a, b) as FriendshipRow | undefined;
+}
+
+export function areFriends(userId: number, otherUserId: number): boolean {
+  return getFriendship(userId, otherUserId)?.status === 'accepted';
+}
+
+// Returns null on success, or a reason it couldn't be sent (already
+// friends, or a request already pending in either direction) - the caller
+// turns that into the HTTP error.
+export function sendFriendRequest(fromUserId: number, toUserId: number): 'already-friends' | 'already-pending' | null {
+  const existing = getFriendship(fromUserId, toUserId);
+  if (existing?.status === 'accepted') return 'already-friends';
+  if (existing?.status === 'pending') return 'already-pending';
+  const [a, b] = pairKey(fromUserId, toUserId);
+  db.prepare(`INSERT INTO friendships (user_a, user_b, status, requested_by) VALUES (?, ?, 'pending', ?)`).run(
+    a,
+    b,
+    fromUserId
+  );
+  return null;
+}
+
+// Only the recipient (not the original sender) can accept - returns false if
+// there's no matching pending request from that specific person to accept.
+export function acceptFriendRequest(userId: number, fromUserId: number): boolean {
+  const existing = getFriendship(userId, fromUserId);
+  if (!existing || existing.status !== 'pending' || existing.requested_by !== fromUserId) return false;
+  const [a, b] = pairKey(userId, fromUserId);
+  db.prepare(`UPDATE friendships SET status = 'accepted' WHERE user_a = ? AND user_b = ?`).run(a, b);
+  return true;
+}
+
+// Same operation whether it's declining an incoming request, cancelling an
+// outgoing one, or ending an existing friendship - all three are just "this
+// pair no longer has a row", after which a fresh request can start clean.
+export function removeFriendship(userId: number, otherUserId: number): void {
+  const [a, b] = pairKey(userId, otherUserId);
+  db.prepare(`DELETE FROM friendships WHERE user_a = ? AND user_b = ?`).run(a, b);
+}
+
+export interface FriendRow {
+  user_id: number;
+  display_name: string;
+}
+
+export function listFriends(userId: number): FriendRow[] {
+  return db
+    .prepare(
+      `SELECT users.id AS user_id, users.display_name AS display_name
+       FROM friendships
+       JOIN users ON users.id = CASE WHEN friendships.user_a = ? THEN friendships.user_b ELSE friendships.user_a END
+       WHERE (friendships.user_a = ? OR friendships.user_b = ?) AND friendships.status = 'accepted'
+       ORDER BY users.display_name`
+    )
+    .all(userId, userId, userId) as FriendRow[];
+}
+
+export interface FriendRequestRow {
+  user_id: number;
+  display_name: string;
+  created_at: string;
+}
+
+// Requests sent TO this user, still awaiting their decision.
+export function listIncomingFriendRequests(userId: number): FriendRequestRow[] {
+  return db
+    .prepare(
+      `SELECT users.id AS user_id, users.display_name AS display_name, friendships.created_at AS created_at
+       FROM friendships
+       JOIN users ON users.id = CASE WHEN friendships.user_a = ? THEN friendships.user_b ELSE friendships.user_a END
+       WHERE (friendships.user_a = ? OR friendships.user_b = ?)
+         AND friendships.status = 'pending'
+         AND friendships.requested_by != ?
+       ORDER BY friendships.created_at DESC`
+    )
+    .all(userId, userId, userId, userId) as FriendRequestRow[];
+}
+
+// Requests this user sent, still awaiting the other side.
+export function listOutgoingFriendRequests(userId: number): FriendRequestRow[] {
+  return db
+    .prepare(
+      `SELECT users.id AS user_id, users.display_name AS display_name, friendships.created_at AS created_at
+       FROM friendships
+       JOIN users ON users.id = CASE WHEN friendships.user_a = ? THEN friendships.user_b ELSE friendships.user_a END
+       WHERE (friendships.user_a = ? OR friendships.user_b = ?)
+         AND friendships.status = 'pending'
+         AND friendships.requested_by = ?
+       ORDER BY friendships.created_at DESC`
+    )
+    .all(userId, userId, userId, userId) as FriendRequestRow[];
+}
+
+export interface UserStats {
+  totalSolves: number;
+  avgTimeMs: number | null;
+  avgSolvesPerDay: number | null;
+  memberSince: string;
+}
+
+/**
+ * Derived entirely from the durable `scores` table (never the temporary
+ * client_events diagnostic trail) - total puzzles solved, their average
+ * time, and a rough "solves per active day" rate (total solves divided by
+ * the number of distinct calendar days that have at least one score,
+ * counting from when the account was created). A day with zero solves
+ * doesn't extend the average down further, only days actually played do.
+ */
+export function getUserStats(userId: number): UserStats {
+  const user = findUserById(userId)!;
+  const summary = db
+    .prepare(`SELECT COUNT(*) AS total, AVG(time_ms) AS avg_time FROM scores WHERE user_id = ?`)
+    .get(userId) as { total: number; avg_time: number | null };
+  const activeDays = db
+    .prepare(`SELECT COUNT(DISTINCT DATE(created_at)) AS days FROM scores WHERE user_id = ?`)
+    .get(userId) as { days: number };
+  return {
+    totalSolves: summary.total,
+    avgTimeMs: summary.avg_time,
+    avgSolvesPerDay: activeDays.days > 0 ? summary.total / activeDays.days : null,
+    memberSince: user.created_at,
+  };
+}
+
+export function sendChatMessage(fromUserId: number, toUserId: number, message: string): void {
+  db.prepare(`INSERT INTO chat_messages (from_user_id, to_user_id, message) VALUES (?, ?, ?)`).run(
+    fromUserId,
+    toUserId,
+    message
+  );
+}
+
+export interface ChatMessageRow {
+  id: number;
+  from_user_id: number;
+  to_user_id: number;
+  message: string;
+  created_at: string;
+}
+
+export function getConversation(userId: number, otherUserId: number, limit = 200): ChatMessageRow[] {
+  return db
+    .prepare(
+      `SELECT * FROM chat_messages
+       WHERE (from_user_id = ? AND to_user_id = ?) OR (from_user_id = ? AND to_user_id = ?)
+       ORDER BY id DESC LIMIT ?`
+    )
+    .all(userId, otherUserId, otherUserId, userId, limit)
+    .reverse() as ChatMessageRow[];
 }

@@ -32,6 +32,9 @@ import { usePresenceStore } from './presence/presenceStore';
 import { rankDisplay } from './rankIcons';
 import { OnlineUsersModal } from './presence/OnlineUsersModal';
 import { NotificationToast } from './presence/NotificationToast';
+import { FriendsScreen } from './social/FriendsScreen';
+import { ProfileScreen } from './social/ProfileScreen';
+import { ChatScreen } from './social/ChatScreen';
 
 interface GlobalRankingModalProps {
   currentUserId: number;
@@ -506,8 +509,12 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
 export default function App() {
   const [user, setUser] = useState<AuthUser | null | undefined>(undefined); // undefined = still checking
   const [progressReady, setProgressReady] = useState(false);
-  const [view, setView] = useState<'home' | 'game' | 'race' | 'collection' | 'tradeMarket' | 'settings'>('home');
+  const [view, setView] = useState<
+    'home' | 'game' | 'race' | 'collection' | 'tradeMarket' | 'friends' | 'profile' | 'chat' | 'settings'
+  >('home');
   const [showOnlineUsers, setShowOnlineUsers] = useState(false);
+  const [profileTarget, setProfileTarget] = useState<{ userId: number; displayName: string } | null>(null);
+  const [chatTarget, setChatTarget] = useState<{ userId: number; displayName: string } | null>(null);
   const loadLevel = useGameStore((s) => s.loadLevel);
   const startNewGame = useGameStore((s) => s.startNewGame);
   const resumeGame = useGameStore((s) => s.resumeGame);
@@ -587,6 +594,11 @@ export default function App() {
         onRace={() => setView('race')}
         onCollection={() => setView('collection')}
         onTradeMarket={() => setView('tradeMarket')}
+        onFriends={() => setView('friends')}
+        onMyProfile={() => {
+          setProfileTarget({ userId: user.id, displayName: user.displayName });
+          setView('profile');
+        }}
         onSettings={() => setView('settings')}
         onOnlineUsers={() => setShowOnlineUsers(true)}
         onLogout={handleLogout}
@@ -598,6 +610,31 @@ export default function App() {
     content = <CollectionScreen onExit={() => setView('home')} />;
   } else if (view === 'tradeMarket') {
     content = <TradeMarketScreen user={user} onExit={() => setView('home')} />;
+  } else if (view === 'friends') {
+    content = (
+      <FriendsScreen
+        onViewProfile={(userId, displayName) => {
+          setProfileTarget({ userId, displayName });
+          setView('profile');
+        }}
+        onChat={(userId, displayName) => {
+          setChatTarget({ userId, displayName });
+          setView('chat');
+        }}
+        onExit={() => setView('home')}
+      />
+    );
+  } else if (view === 'profile' && profileTarget) {
+    content = <ProfileScreen userId={profileTarget.userId} onExit={() => setView('home')} />;
+  } else if (view === 'chat' && chatTarget) {
+    content = (
+      <ChatScreen
+        user={user}
+        initialFriendId={chatTarget.userId}
+        initialFriendName={chatTarget.displayName}
+        onExit={() => setView('home')}
+      />
+    );
   } else if (view === 'settings') {
     content = <SettingsScreen user={user} onUserUpdated={setUser} onNewGame={handleNewGame} onExit={() => setView('home')} />;
   } else {

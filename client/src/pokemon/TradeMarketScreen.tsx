@@ -18,18 +18,42 @@ interface TradeMarketScreenProps {
   onExit: () => void;
 }
 
-function ItemRow({ items }: { items: TradeItem[] }) {
+// How many of this species the current viewer (not the seller) already
+// owns - shown on both sides of every deal so, for example, someone
+// considering an offer can tell at a glance "I only have one of the card
+// being requested from me" before giving away their only copy, without
+// having to alt-tab to the collection screen to check first.
+function ownedQty(pokedexNumber: number, myCollection: PokemonCollectionRow[]): number {
+  return myCollection.find((c) => c.pokedex_number === pokedexNumber)?.times_caught ?? 0;
+}
+
+function ItemRow({
+  items,
+  myCollection,
+  warnIfLow,
+}: {
+  items: TradeItem[];
+  myCollection: PokemonCollectionRow[];
+  warnIfLow: boolean;
+}) {
   return (
     <div className="trade-deal-items">
       {items.map((item) => {
         const entry = getPokedexEntry(item.pokedexNumber);
         if (!entry) return null;
+        const owned = ownedQty(item.pokedexNumber, myCollection);
+        // On the request side, having 1 or 0 is worth a warning color - 0
+        // means the deal isn't even acceptable, 1 means accepting it would
+        // hand over your only copy. On the offer side there's nothing to
+        // warn about; it's just useful "do I already have this?" context.
+        const lowOwned = warnIfLow && owned <= 1;
         return (
           <div key={item.pokedexNumber} className={`trade-deal-item rarity-${entry.rarity}`}>
             <div className="trade-deal-item-glow" />
             <img src={pokemonImageUrl(entry)} alt={entry.name} />
             {item.qty > 1 && <span className="trade-deal-item-qty">×{item.qty}</span>}
             <span className="trade-deal-item-name">{entry.name}</span>
+            <span className={`trade-deal-item-owned${lowOwned ? ' low' : ''}`}>יש לך: {owned}</span>
           </div>
         );
       })}
@@ -149,12 +173,12 @@ export function TradeMarketScreen({ user, onExit }: TradeMarketScreenProps) {
                 <div className="trade-deal-columns">
                   <div>
                     <span className="trade-deal-label">מציע</span>
-                    <ItemRow items={deal.offer} />
+                    <ItemRow items={deal.offer} myCollection={myCollection} warnIfLow={false} />
                   </div>
                   <span className="trade-deal-arrow">⇄</span>
                   <div>
                     <span className="trade-deal-label">מבקש</span>
-                    <ItemRow items={deal.request} />
+                    <ItemRow items={deal.request} myCollection={myCollection} warnIfLow={!mine} />
                   </div>
                 </div>
 

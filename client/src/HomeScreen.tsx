@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchGlobalRanking, type AuthUser, type GlobalRankingRow } from './api';
 import { usePresenceStore } from './presence/presenceStore';
 import { useSoundStore } from './sound/soundStore';
+import { useFriendsStore } from './social/friendsStore';
 import { rankDisplay } from './rankIcons';
 
 interface HomeScreenProps {
@@ -11,6 +12,8 @@ interface HomeScreenProps {
   onRace: () => void;
   onCollection: () => void;
   onTradeMarket: () => void;
+  onFriends: () => void;
+  onMyProfile: () => void;
   onSettings: () => void;
   onOnlineUsers: () => void;
   onLogout: () => void;
@@ -23,6 +26,8 @@ export function HomeScreen({
   onRace,
   onCollection,
   onTradeMarket,
+  onFriends,
+  onMyProfile,
   onSettings,
   onOnlineUsers,
   onLogout,
@@ -30,6 +35,8 @@ export function HomeScreen({
   const onlineCount = usePresenceStore((s) => s.onlineUsers.length);
   const soundMuted = useSoundStore((s) => s.muted);
   const toggleSoundMuted = useSoundStore((s) => s.toggleMuted);
+  const incomingFriendRequests = useFriendsStore((s) => s.incoming.length);
+  const loadFriendsStore = useFriendsStore((s) => s.loadAll);
   const [ranking, setRanking] = useState<GlobalRankingRow[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -37,7 +44,8 @@ export function HomeScreen({
     fetchGlobalRanking()
       .then(setRanking)
       .catch((err) => setError(err.message));
-  }, []);
+    loadFriendsStore();
+  }, [loadFriendsStore]);
 
   return (
     <div className="home-shell">
@@ -52,6 +60,10 @@ export function HomeScreen({
           <button onClick={onRace}>🏁 מרוץ נגד חבר</button>
           <button onClick={onCollection}>🎒 אוסף הפוקימונים שלי</button>
           <button onClick={onTradeMarket}>🔄 שוק החלפות</button>
+          <button onClick={onMyProfile}>👤 הפרופיל שלי</button>
+          <button onClick={onFriends}>
+            👥 חברים{incomingFriendRequests > 0 ? ` (${incomingFriendRequests})` : ''}
+          </button>
           <button onClick={onOnlineUsers} className="online-users-button">
             🟢 מחוברים כעת{onlineCount > 0 ? ` (${onlineCount})` : ''}
           </button>

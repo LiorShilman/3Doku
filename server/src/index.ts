@@ -12,6 +12,8 @@ import { progressRouter } from './routes/progress.js';
 import { levelsRouter } from './routes/levels.js';
 import { pokemonRouter } from './routes/pokemon.js';
 import { tradesRouter } from './routes/trades.js';
+import { friendsRouter } from './routes/friends.js';
+import { chatRouter } from './routes/chat.js';
 import { debugRouter } from './routes/debug.js';
 import { registerRaceHandlers } from './race.js';
 import { registerPresenceHandlers } from './presence.js';
@@ -45,6 +47,8 @@ app.use('/api/levels', levelsRouter);
 app.use('/api/leaderboard', leaderboardRouter);
 app.use('/api/pokemon', pokemonRouter);
 app.use('/api/trades', tradesRouter);
+app.use('/api/friends', friendsRouter);
+app.use('/api/chat', chatRouter);
 app.use('/api/debug', debugRouter);
 
 const port = Number(process.env.PORT) || 4000;
