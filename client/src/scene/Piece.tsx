@@ -12,16 +12,32 @@ interface PieceProps {
 
 const ASPECT = 492 / 700; // piece.png width / height
 
+const POP_IN_MS = 180; // matches board2d-pop's timing in styles.css, for a consistent feel between the 2D and 3D boards
+
 export function Piece({ position, conflict, spriteUrl }: PieceProps) {
   // BASE_URL (not a hardcoded leading slash) so this still resolves once IIS
   // serves the production build under /3Doku/ instead of the domain root.
   const texture = useTexture(spriteUrl ?? `${import.meta.env.BASE_URL}piece.png`);
   const height = 1.05;
   const width = height * ASPECT;
+  const meshRef = useRef<Mesh>(null);
+  // Board.tsx wraps each Piece in its own <Suspense>, so a newly-seen sprite
+  // (the real Pokemon, swapped in a moment after the placeholder piece.png)
+  // blips the mesh out and remounts it once that texture loads - this plays
+  // a quick scale pop-in on every such mount, so that remount reads as an
+  // intentional reveal rather than the piece instantly, silently changing
+  // into a different creature.
+  const mountedAt = useRef(performance.now());
+  useFrame(() => {
+    if (!meshRef.current) return;
+    const t = Math.min(1, (performance.now() - mountedAt.current) / POP_IN_MS);
+    meshRef.current.scale.setScalar(0.55 + 0.45 * t);
+  });
 
   return (
     <Billboard position={position}>
       <mesh
+        ref={meshRef}
         position={[0, 0, 0]}
         castShadow
         // A placed piece is locked - Board.tsx's own cell handler already

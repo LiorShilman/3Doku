@@ -174,6 +174,15 @@ export function Board2D() {
                       style={{ background: isConflictPiece ? '#ff3b5c' : colorForRegion(region) }}
                     />
                     <img
+                      // Keyed on the sprite itself (not just rendered once per
+                      // cell) so the pop-in animation (board2d-pop, see
+                      // styles.css) replays when the placeholder piece.png is
+                      // swapped for the real server-assigned Pokemon a moment
+                      // later - without this, that swap just silently changed
+                      // the existing <img>'s src with no animation, reading as
+                      // a jarring instant glitch instead of an intentional
+                      // reveal.
+                      key={pokedexNumber ?? 'placeholder'}
                       src={spriteEntry ? pokemonImageUrl(spriteEntry) : `${import.meta.env.BASE_URL}piece.png`}
                       alt=""
                       className={isConflictPiece ? 'board-2d-piece-img conflict' : 'board-2d-piece-img'}
