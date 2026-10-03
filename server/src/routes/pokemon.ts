@@ -31,7 +31,8 @@ pokemonRouter.post('/catch', requireAuth, (req, res) => {
 
   let pokedexNumber = getPokemonRoll(req.user!.id, levelIndex, region);
   if (pokedexNumber === undefined) {
-    savePokemonRoll(req.user!.id, levelIndex, region, rollRandomPokedexNumber());
+    const owned = new Set(getPokemonCollection(req.user!.id).map((c) => c.pokedex_number));
+    savePokemonRoll(req.user!.id, levelIndex, region, rollRandomPokedexNumber(owned));
     // Re-read rather than trusting the value just rolled - if a second,
     // near-simultaneous request for this same never-before-rolled region
     // beat this one to the INSERT (see savePokemonRoll's ON CONFLICT DO

@@ -37,8 +37,17 @@ const MIN_SIZE = 5;
 const MAX_SIZE = 9;
 const LEVELS_PER_SIZE_STEP = 13;
 
-/** Board size ramps 5->9 over the first ~53 levels (one step every 13 levels), then holds at 9 forever - matches the pacing of the reference game (9x9 by level 55) instead of maxing out by level 19. No 4x4 tutorial size - too trivial to be worth a level. */
+// A second, much later tier - held at 9x9 for a long stretch (levels ~53 to
+// 499) before stepping up once more, rather than drip-feeding a new size
+// every few levels forever. See server/src/puzzles.ts's background
+// pre-generation, which specifically exists because this jump makes
+// generation noticeably slower right at this threshold.
+const TIER_2_SIZE = 10;
+const TIER_2_LEVEL = 500;
+
+/** Board size ramps 5->9 over the first ~53 levels (one step every 13 levels), holds at 9 until level 500, then steps up once more to 10 - matches the pacing of the reference game (9x9 by level 55) instead of maxing out by level 19. No 4x4 tutorial size - too trivial to be worth a level. */
 export function sizeForLevel(level: number): number {
+  if (level >= TIER_2_LEVEL) return TIER_2_SIZE;
   const idx = Math.max(0, level - 1);
   return Math.min(MIN_SIZE + Math.floor(idx / LEVELS_PER_SIZE_STEP), MAX_SIZE);
 }

@@ -1,9 +1,17 @@
 import { generatePuzzleForLevel, levelNumberFromId, sizeForLevel, type PuzzleDefinition } from '@3doku/shared';
 import { getStoredLevel, storeLevel, getRecentStoredRegionsJson } from './db.js';
+import { generateInWorker, schedulePregeneration } from './pregeneration.js';
 
 // How many of the most recent same-size levels a new one must differ from -
 // see getRecentStoredRegionsJson for why this is a window, not full history.
 const DEDUP_WINDOW = 40;
+
+// Below this size, generation is fast (well under a second even on a worst
+// case) - not worth a worker thread's spin-up overhead. At and above it
+// (levels 500+, see sizeForLevel), generation can take up to a minute, so it
+// always goes through a worker instead of blocking the whole server - see
+// generationWorker.ts and pregeneration.ts.
+const SLOW_GENERATION_SIZE = 10;
 
 /**
  * Levels are generated once and persisted to the DB, not regenerated per request:
@@ -17,18 +25,30 @@ const DEDUP_WINDOW = 40;
  * before accepting a new one rules that out for the levels anyone would
  * plausibly notice back-to-back.
  */
-export function getLevel(levelIndex: number): PuzzleDefinition {
+export async function getLevel(levelIndex: number): Promise<PuzzleDefinition> {
   const stored = getStoredLevel(levelIndex);
   if (stored) {
-    return { id: `level-${levelIndex}`, size: stored.size, regions: JSON.parse(stored.regions_json) };
+    const puzzle: PuzzleDefinition = { id: `level-${levelIndex}`, size: stored.size, regions: JSON.parse(stored.regions_json) };
+    // Keep the lookahead buffer topped up every time a 500+ level is
+    // actually reached, not just the first time it's generated - so even if
+    // an earlier background pass stalled or only partially completed, later
+    // requests keep nudging it forward.
+    schedulePregeneration(levelIndex);
+    return puzzle;
   }
-  const existing = getRecentStoredRegionsJson(sizeForLevel(levelIndex), DEDUP_WINDOW);
-  const puzzle = generatePuzzleForLevel(levelIndex, (regions) => existing.has(JSON.stringify(regions)));
+
+  const size = sizeForLevel(levelIndex);
+  const existingRegions = getRecentStoredRegionsJson(size, DEDUP_WINDOW);
+  const puzzle =
+    size >= SLOW_GENERATION_SIZE
+      ? { id: `level-${levelIndex}`, ...(await generateInWorker(levelIndex, [...existingRegions])) }
+      : generatePuzzleForLevel(levelIndex, (regions) => existingRegions.has(JSON.stringify(regions)));
   storeLevel(levelIndex, puzzle.size, JSON.stringify(puzzle.regions));
+  schedulePregeneration(levelIndex);
   return puzzle;
 }
 
-export function getPuzzle(id: string): PuzzleDefinition | undefined {
+export async function getPuzzle(id: string): Promise<PuzzleDefinition | undefined> {
   const level = levelNumberFromId(id);
   if (level === null) return undefined;
   return getLevel(level);

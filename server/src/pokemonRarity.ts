@@ -36,13 +36,29 @@ const RARITY_WEIGHTS: Record<Rarity, number> = {
 };
 const TOTAL_WEIGHT = Object.values(RARITY_WEIGHTS).reduce((a, b) => a + b, 0);
 
-export function rollRandomPokedexNumber(): number {
+// How often the roll prefers a species the player doesn't own yet, once the
+// tier it landed on still has any left - not 100%, so duplicates (the raw
+// material for the trade market) keep showing up even for a player who
+// hasn't finished that tier, rather than only once they've completed it.
+const NEW_SPECIES_BIAS = 0.8;
+
+// A deep collection makes a uniform-within-tier roll mostly land on
+// duplicates by sheer pigeonhole - a veteran player near level 500 has
+// likely already caught most commons, so most of their catches stopped
+// being new a long time ago. Once the tier is picked (rarity still matters -
+// a legendary catch should stay special), this biases the pick WITHIN that
+// tier toward whatever the player hasn't caught yet, so a big collection
+// keeps growing instead of just piling up more of what it already has.
+export function rollRandomPokedexNumber(ownedPokedexNumbers: ReadonlySet<number>): number {
   let roll = Math.random() * TOTAL_WEIGHT;
   for (const rarity of Object.keys(RARITY_WEIGHTS) as Rarity[]) {
     const weight = RARITY_WEIGHTS[rarity];
     if (roll < weight) {
       const pool = pools[rarity];
-      return pool[Math.floor(Math.random() * pool.length)];
+      const notOwned = pool.filter((n) => !ownedPokedexNumbers.has(n));
+      const preferNew = notOwned.length > 0 && Math.random() < NEW_SPECIES_BIAS;
+      const effectivePool = preferNew ? notOwned : pool;
+      return effectivePool[Math.floor(Math.random() * effectivePool.length)];
     }
     roll -= weight;
   }
