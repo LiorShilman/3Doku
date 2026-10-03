@@ -3,10 +3,14 @@ import { getLevel } from '../puzzles.js';
 
 export const levelsRouter = Router();
 
-levelsRouter.get('/:levelIndex', async (req, res) => {
+levelsRouter.get('/:levelIndex', (req, res) => {
   const levelIndex = Number(req.params.levelIndex);
   if (!Number.isInteger(levelIndex) || levelIndex < 1) {
     return res.status(400).json({ error: 'levelIndex must be a positive integer' });
   }
-  res.json({ puzzle: await getLevel(levelIndex) });
+  const result = getLevel(levelIndex);
+  if (result.status === 'generating') {
+    return res.status(202).json({ status: 'generating' });
+  }
+  res.json({ puzzle: result.puzzle });
 });

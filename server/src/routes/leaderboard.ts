@@ -23,9 +23,9 @@ leaderboardRouter.get('/global/me', requireAuth, (req, res) => {
   res.json({ me: myGlobalRank(req.user!.id) ?? null });
 });
 
-leaderboardRouter.get('/:puzzleId', async (req, res) => {
+leaderboardRouter.get('/:puzzleId', (req, res) => {
   const { puzzleId } = req.params;
-  if (!(await getPuzzle(puzzleId))) return res.status(404).json({ error: 'unknown puzzle' });
+  if (!getPuzzle(puzzleId)) return res.status(404).json({ error: 'unknown puzzle' });
   res.json({ scores: topScores(puzzleId) });
 });
 
@@ -46,9 +46,9 @@ function isPositionArray(value: unknown): value is Position[] {
 
 // Identity comes from the authenticated session, never the request body - a client
 // can no longer claim someone else's name on the leaderboard.
-leaderboardRouter.post('/:puzzleId/submit', requireAuth, async (req, res) => {
+leaderboardRouter.post('/:puzzleId/submit', requireAuth, (req, res) => {
   const { puzzleId } = req.params;
-  const puzzle = await getPuzzle(puzzleId);
+  const puzzle = getPuzzle(puzzleId);
   if (!puzzle) return res.status(404).json({ error: 'unknown puzzle' });
 
   const body = req.body as SubmitBody;

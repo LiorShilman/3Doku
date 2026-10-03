@@ -244,11 +244,28 @@ export async function updateDisplayName(displayName: string): Promise<AuthUser> 
   return data.user;
 }
 
+// Large (10x10+) levels can take up to ~60s to generate server-side the first
+// time anyone reaches them (see server/src/pregeneration.ts) - the server
+// never holds a request open that long for it, since a real production
+// incident showed mobile networks/NAT kill an idle connection well under
+// that. Instead it responds 202 right away and this polls short requests
+// until the level is ready. 2.5s x 40 = 100s, comfortably above the
+// measured 62s worst case.
+const LEVEL_POLL_INTERVAL_MS = 2500;
+const LEVEL_POLL_MAX_ATTEMPTS = 40;
+
 export async function fetchLevel(levelNumber: number): Promise<PuzzleDefinition> {
-  const res = await fetch(`${API_BASE}/api/levels/${levelNumber}`);
-  if (!res.ok) throw new Error(await parseErrorBody(res));
-  const data = await res.json();
-  return data.puzzle;
+  for (let attempt = 0; attempt < LEVEL_POLL_MAX_ATTEMPTS; attempt++) {
+    const res = await fetch(`${API_BASE}/api/levels/${levelNumber}`);
+    if (res.status === 202) {
+      await new Promise((resolve) => setTimeout(resolve, LEVEL_POLL_INTERVAL_MS));
+      continue;
+    }
+    if (!res.ok) throw new Error(await parseErrorBody(res));
+    const data = await res.json();
+    return data.puzzle;
+  }
+  throw new Error('השלב לוקח יותר זמן מהצפוי להיבנות - נסה שוב בעוד רגע');
 }
 
 export async function fetchProgress(): Promise<number> {

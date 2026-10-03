@@ -121,6 +121,8 @@ interface GameState {
   loading: boolean;
   /** Set when loadLevel's fetch fails (network/server issue) - otherwise the app was showing an infinite "loading level" spinner with no way out. */
   loadError: string | null;
+  /** The levelIndex loadLevel was actually trying to fetch when it failed - `levelIndex` itself is only updated on success, so the "try again" button (App.tsx) must retry THIS, not `levelIndex` (which still points at the last successfully loaded level, one behind the one that actually failed). */
+  failedLevelIndex: number | null;
   placements: Position[];
   eliminated: Set<string>;
   manualMarks: Set<string>;
@@ -297,6 +299,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   puzzle: null,
   loading: true,
   loadError: null,
+  failedLevelIndex: null,
   placements: [],
   eliminated: new Set<string>(),
   manualMarks: new Set<string>(),
@@ -638,7 +641,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       currentSolved: before.solved,
       currentPlacementsCount: before.placements.length,
     });
-    set({ loading: true, loadError: null, puzzle: null });
+    set({ loading: true, loadError: null, failedLevelIndex: null, puzzle: null });
     try {
       const puzzle = await fetchLevel(levelIndex + 1);
       const nextState = initialBoardState(puzzle);
@@ -649,13 +652,17 @@ export const useGameStore = create<GameState>((set, get) => ({
         newStartedAt: nextState.startedAt,
         newSolved: nextState.solved,
       });
-      set({ levelIndex, loadError: null, ...nextState });
+      set({ levelIndex, loadError: null, failedLevelIndex: null, ...nextState });
     } catch (err) {
       // Otherwise a failed fetch (network blip, server hiccup, an expired
       // session the server rejects) left the player staring at "loading
       // level..." forever, with no error and no way to retry.
       logEvent('loadLevel_error', { requestedLevelIndex: levelIndex, error: err instanceof Error ? err.message : String(err) });
-      set({ loading: false, loadError: err instanceof Error ? err.message : 'שגיאה בטעינת השלב' });
+      set({
+        loading: false,
+        loadError: err instanceof Error ? err.message : 'שגיאה בטעינת השלב',
+        failedLevelIndex: levelIndex,
+      });
     }
   },
 

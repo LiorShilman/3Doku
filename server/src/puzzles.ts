@@ -1,17 +1,19 @@
 import { generatePuzzleForLevel, levelNumberFromId, sizeForLevel, type PuzzleDefinition } from '@3doku/shared';
 import { getStoredLevel, storeLevel, getRecentStoredRegionsJson } from './db.js';
-import { generateInWorker, schedulePregeneration } from './pregeneration.js';
+import { kickOffGeneration, schedulePregeneration } from './pregeneration.js';
 
 // How many of the most recent same-size levels a new one must differ from -
 // see getRecentStoredRegionsJson for why this is a window, not full history.
 const DEDUP_WINDOW = 40;
 
 // Below this size, generation is fast (well under a second even on a worst
-// case) - not worth a worker thread's spin-up overhead. At and above it
-// (levels 500+, see sizeForLevel), generation can take up to a minute, so it
-// always goes through a worker instead of blocking the whole server - see
-// generationWorker.ts and pregeneration.ts.
+// case) - resolved synchronously, right here. At and above it (levels 500+,
+// see sizeForLevel), generation can take up to a minute, so it's handed off
+// to a worker thread instead (see pregeneration.ts) and this returns a
+// 'generating' status rather than the caller waiting on it.
 const SLOW_GENERATION_SIZE = 10;
+
+export type LevelFetchResult = { status: 'ready'; puzzle: PuzzleDefinition } | { status: 'generating' };
 
 /**
  * Levels are generated once and persisted to the DB, not regenerated per request:
@@ -24,8 +26,14 @@ const SLOW_GENERATION_SIZE = 10;
  * did exactly that in testing (30 apart). Checking against the recent window
  * before accepting a new one rules that out for the levels anyone would
  * plausibly notice back-to-back.
+ *
+ * Never holds a slow (10x10+) generation on the caller - see routes/levels.ts,
+ * which turns a 'generating' result into a 202 the client polls on. A real
+ * production incident came from the opposite approach: awaiting the worker
+ * right here kept one HTTP request open for up to a minute, and a player's
+ * phone dropped that connection well before the server actually finished.
  */
-export async function getLevel(levelIndex: number): Promise<PuzzleDefinition> {
+export function getLevel(levelIndex: number): LevelFetchResult {
   const stored = getStoredLevel(levelIndex);
   if (stored) {
     const puzzle: PuzzleDefinition = { id: `level-${levelIndex}`, size: stored.size, regions: JSON.parse(stored.regions_json) };
@@ -34,22 +42,24 @@ export async function getLevel(levelIndex: number): Promise<PuzzleDefinition> {
     // an earlier background pass stalled or only partially completed, later
     // requests keep nudging it forward.
     schedulePregeneration(levelIndex);
-    return puzzle;
+    return { status: 'ready', puzzle };
   }
 
   const size = sizeForLevel(levelIndex);
-  const existingRegions = getRecentStoredRegionsJson(size, DEDUP_WINDOW);
-  const puzzle =
-    size >= SLOW_GENERATION_SIZE
-      ? { id: `level-${levelIndex}`, ...(await generateInWorker(levelIndex, [...existingRegions])) }
-      : generatePuzzleForLevel(levelIndex, (regions) => existingRegions.has(JSON.stringify(regions)));
-  storeLevel(levelIndex, puzzle.size, JSON.stringify(puzzle.regions));
-  schedulePregeneration(levelIndex);
-  return puzzle;
+  if (size < SLOW_GENERATION_SIZE) {
+    const existingRegions = getRecentStoredRegionsJson(size, DEDUP_WINDOW);
+    const puzzle = generatePuzzleForLevel(levelIndex, (regions) => existingRegions.has(JSON.stringify(regions)));
+    storeLevel(levelIndex, puzzle.size, JSON.stringify(puzzle.regions));
+    return { status: 'ready', puzzle };
+  }
+
+  kickOffGeneration(levelIndex);
+  return { status: 'generating' };
 }
 
-export async function getPuzzle(id: string): Promise<PuzzleDefinition | undefined> {
+export function getPuzzle(id: string): PuzzleDefinition | undefined {
   const level = levelNumberFromId(id);
   if (level === null) return undefined;
-  return getLevel(level);
+  const result = getLevel(level);
+  return result.status === 'ready' ? result.puzzle : undefined;
 }

@@ -110,6 +110,7 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
   const clearNewPokemonBanner = useGameStore((s) => s.clearNewPokemonBanner);
   const boardBottomScreenY = useGameStore((s) => s.boardBottomScreenY);
   const loadError = useGameStore((s) => s.loadError);
+  const failedLevelIndex = useGameStore((s) => s.failedLevelIndex);
   const loadLevel = useGameStore((s) => s.loadLevel);
   const assistMode = useGameStore((s) => s.assistMode);
   const toggleAssistMode = useGameStore((s) => s.toggleAssistMode);
@@ -296,7 +297,7 @@ function Game({ user, onLogout, onGoHome }: GameProps) {
             <p>⚠️ לא ניתן לטעון את השלב</p>
             <p className="level-load-error-detail">{loadError}</p>
             <div className="home-actions">
-              <button onClick={() => loadLevel(levelIndex)} className="primary">
+              <button onClick={() => loadLevel(failedLevelIndex ?? levelIndex)} className="primary">
                 נסה שוב
               </button>
               <button onClick={onGoHome}>🏠 תפריט</button>
